@@ -3,14 +3,12 @@
 \alias{gramize_data}
 \title{Build n-gram table}
 \usage{
-gramize_data(dat, d2, d3, scale)
+gramize_data(dat, dists, scale = FALSE)
 }
 \arguments{
 \item{dat}{sequence table.}
 
-\item{d2}{distances for 2-grams.}
-
-\item{d3}{distances for 3-grams.}
+\item{dists}{list of distances, see Examples}
 
 \item{scale}{\code{logical}, if \code{TRUE} output data is normalized.}
 }
@@ -18,9 +16,15 @@ gramize_data(dat, d2, d3, scale)
 a dataframe of all n-grams counts.
 }
 \description{
-Builds table containing counts of 1-, 2- and 3- grams from numeric sequence table.
+Builds table containing counts n-grams from numeric sequence table.
 }
 \details{
 Input data must be a matrix or data frame of numeric elements.
+}
+\examples{
+random_seqs <- matrix(sample(1L:4, 800, replace = TRUE), nrow = 40)
+#distance for 1-grams, 2-grams and 3-grams
+dist_list <- list(matrix(0L:7), expand.grid(0L:3, 0L:3))
+gramize_data(random_seqs, dist_list)
 }
 

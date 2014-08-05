@@ -20,7 +20,7 @@ Creates vector of all posible n_grams.
 Input data must be a matrix or data frame of numeric elements.
 }
 \examples{
-#bigrams for nucleotides
-create_ngrams(2, 1L:4)
+#bigrams for standard aminoacids
+create_ngrams(2, 1L:20)
 }
 
