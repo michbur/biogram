@@ -63,7 +63,7 @@ create_ngrams <- function(n, u, possible_grams = NULL) {
   grid_list <- lapply(1L:n, function(i) u)
   res <- apply(expand.grid(grid_list), 1, function(x)
     paste(x, collapse = "."))
-  if (!is.null(NULL))
+  if (!is.null(possible_grams))
     res <- as.vector(sapply(res, function(i) paste(1L:possible_grams, i, sep = "_")))
   res
 }
