@@ -101,7 +101,7 @@ count_ngrams <- function(seq, feature_list, n, d = 0, pos = FALSE, scale = FALSE
   }
   
   if (pos) {
-    paste(1L:length(grams), grams, sep = "_")
+    grams <- paste(1L:length(grams), grams, sep = "_")
   } 
   
   res <- sapply(feature_list, function(i)
