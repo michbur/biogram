@@ -47,11 +47,13 @@ mdcount_ngrams <- function(seqs, n_gram, dists, pos, scale) {
 #' Creates vector of all posible n_grams.
 #'
 #' @param n size of gram (i.e. 2-grams: "11", "12", ...).
-#' @param u unigrams.
+#' @param u unigrams (\code{integer}, \code{numeric} or \code{character} vector).
 #' @param possible_grams number of possible n-grams. If not \code{NULL} n-grams do not
 #' contain information about position
 #' @return a character vector. Elements of n-gram are separated by dot.
-#' @details Input data must be a matrix or data frame of numeric elements.
+#' @note Input data must be a matrix or data frame of numeric elements.
+#' @details N-gram coding: \code{p_1.2.1} means position \code{p}, \code{1.2.1} means 
+#' unigrams constituing n-gram.  
 #' @export
 #' @examples 
 #' #bigrams for standard aminoacids

@@ -8,7 +8,7 @@ create_ngrams(n, u, possible_grams = NULL)
 \arguments{
 \item{n}{size of gram (i.e. 2-grams: "11", "12", ...).}
 
-\item{u}{unigrams.}
+\item{u}{unigrams (\code{integer}, \code{numeric} or \code{character} vector).}
 
 \item{possible_grams}{number of possible n-grams. If not \code{NULL} n-grams do not
 contain information about position}
@@ -20,6 +20,10 @@ a character vector. Elements of n-gram are separated by dot.
 Creates vector of all posible n_grams.
 }
 \details{
+N-gram coding: \code{p_1.2.1} means position \code{p}, \code{1.2.1} means
+unigrams constituing n-gram.
+}
+\note{
 Input data must be a matrix or data frame of numeric elements.
 }
 \examples{
