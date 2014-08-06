@@ -3,12 +3,14 @@
 \alias{gramize_data}
 \title{Build n-gram table}
 \usage{
-gramize_data(dat, dists, scale = FALSE)
+gramize_data(dat, dists, pos = FALSE, scale = FALSE)
 }
 \arguments{
 \item{dat}{sequence table.}
 
 \item{dists}{list of distances, see Examples}
+
+\item{pos}{\code{logical}, if \code{TRUE} n_grams contains position information.}
 
 \item{scale}{\code{logical}, if \code{TRUE} output data is normalized.}
 }

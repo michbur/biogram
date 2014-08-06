@@ -15,15 +15,19 @@
 #' gramize_data(random_seqs, dist_list)
 #' 
 
-gramize_data <- function(dat, dists, scale = FALSE) {
+gramize_data <- function(dat, dists, pos = FALSE, scale = FALSE) {
   res <- lapply(dists, function(i)
-    mdcount_ngrams(dat, length(length(i[,1]) + 1), i, scale = scale))
+    mdcount_ngrams(dat, length(length(i[,1]) + 1), i, pos = pos, scale = scale))
   do.call(cbind, res)
 }
 
 #helper function, calculate n-grams for multiple distances
-mdcount_ngrams <- function(seqs, n_gram, dists, scale) {
-  cur_features <- create_ngrams(n_gram, 1:4)
+mdcount_ngrams <- function(seqs, n_gram, dists, pos, scale) {
+  #possible number of n-grams
+  possib_grams <- NULL
+  if(pos)
+    possib_grams <- ncol(seqs) - n_gram
+  cur_features <- create_ngrams(n_gram, 1:4, pos)
   do.call(cbind, lapply(1:nrow(dists), function(cur_dist) {
     gram_table <- apply(seqs, 1, function(single_seq) 
       count_ngrams(seq = single_seq, 
@@ -44,17 +48,24 @@ mdcount_ngrams <- function(seqs, n_gram, dists, scale) {
 #'
 #' @param n size of gram (i.e. 2-grams: "11", "12", ...).
 #' @param u unigrams.
+#' @param possible_grams number of possible n-grams. If not \code{NULL} n-grams do not
+#' contain information about position
 #' @return a character vector. Elements of n-gram are separated by dot.
 #' @details Input data must be a matrix or data frame of numeric elements.
 #' @export
 #' @examples 
 #' #bigrams for standard aminoacids
 #' create_ngrams(2, 1L:20)
+#' #bigrams for standard aminoacids with positions, 10 nucleotide long sequence
+#' create_ngrams(2, 1L:20, 9)
 
-create_ngrams <- function(n, u) {
+create_ngrams <- function(n, u, possible_grams = NULL) {
   grid_list <- lapply(1L:n, function(i) u)
-  apply(expand.grid(grid_list), 1, function(x)
+  res <- apply(expand.grid(grid_list), 1, function(x)
     paste(x, collapse = "."))
+  if (!is.null(NULL))
+    res <- as.vector(sapply(res, function(i) paste(1L:possible_grams, i, sep = "_")))
+  res
 }
 
 #' Detect and count n-grams in single sequence
@@ -66,6 +77,7 @@ create_ngrams <- function(n, u) {
 #' @param n size of n-grams.
 #' @param d distance between elements of n-gram (0 means consecutive elements). See
 #' Details.
+#' @param pos \code{logical}, if \code{TRUE} n_grams contains position information.
 #' @param scale \code{logical}, if \code{TRUE} output data is normalized.
 #' @return a named \code{integer} vector. Elements of n-gram are separated by dot.
 #' @note List of possible n-grams must be calculated outside of the function.
@@ -74,12 +86,12 @@ create_ngrams <- function(n, u) {
 #' \code{d} = c(2, 0, 1) means A__AA_A.
 #' @export
 #' @seealso For convenient wrapper for multidistance calculations 
-#' see \code{\link{mdcount_ngrams}}.
+#' see \code{\link{gramize_data}}.
 #' @examples 
 #' #trigrams for nucleotides
 #' count_ngrams(sample(1L:4, 30, replace = TRUE), create_ngrams(3, 1L:4), 3)
 
-count_ngrams <- function(seq, feature_list, n, d = 0, scale = FALSE) {
+count_ngrams <- function(seq, feature_list, n, d = 0, pos = FALSE, scale = FALSE) {
   #feature list(list of possible n-grams) is outside, because count_ngrams is meant to
   #be inside the loop
   if (n > 1) {
@@ -87,8 +99,14 @@ count_ngrams <- function(seq, feature_list, n, d = 0, scale = FALSE) {
   } else {
     grams <- seq
   }
+  
+  if (pos) {
+    paste(1L:length(grams), grams, sep = "_")
+  } 
+  
   res <- sapply(feature_list, function(i)
-    sum(i == grams))
+      sum(i == grams))
+  
   if (scale)
     res <- res/(length(seq) - n - sum(d) + 1)
   res

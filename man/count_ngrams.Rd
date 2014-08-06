@@ -3,7 +3,7 @@
 \alias{count_ngrams}
 \title{Detect and count n-grams in single sequence}
 \usage{
-count_ngrams(seq, feature_list, n, d = 0, scale = FALSE)
+count_ngrams(seq, feature_list, n, d = 0, pos = FALSE, scale = FALSE)
 }
 \arguments{
 \item{seq}{\code{integer} vector describing sequence.}
@@ -14,6 +14,8 @@ count_ngrams(seq, feature_list, n, d = 0, scale = FALSE)
 
 \item{d}{distance between elements of n-gram (0 means consecutive elements). See
 Details.}
+
+\item{pos}{\code{logical}, if \code{TRUE} n_grams contains position information.}
 
 \item{scale}{\code{logical}, if \code{TRUE} output data is normalized.}
 }
@@ -37,6 +39,6 @@ count_ngrams(sample(1L:4, 30, replace = TRUE), create_ngrams(3, 1L:4), 3)
 }
 \seealso{
 For convenient wrapper for multidistance calculations
-see \code{\link{mdcount_ngrams}}.
+see \code{\link{gramize_data}}.
 }
 

@@ -3,12 +3,15 @@
 \alias{create_ngrams}
 \title{Get all possible n-grams}
 \usage{
-create_ngrams(n, u)
+create_ngrams(n, u, possible_grams = NULL)
 }
 \arguments{
 \item{n}{size of gram (i.e. 2-grams: "11", "12", ...).}
 
 \item{u}{unigrams.}
+
+\item{possible_grams}{number of possible n-grams. If not \code{NULL} n-grams do not
+contain information about position}
 }
 \value{
 a character vector. Elements of n-gram are separated by dot.
@@ -22,5 +25,7 @@ Input data must be a matrix or data frame of numeric elements.
 \examples{
 #bigrams for standard aminoacids
 create_ngrams(2, 1L:20)
+#bigrams for standard aminoacids with positions, 10 nucleotide long sequence
+create_ngrams(2, 1L:20, 9)
 }
 
