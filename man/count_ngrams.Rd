@@ -3,14 +3,14 @@
 \alias{count_ngrams}
 \title{Detect and count n-grams in single sequence}
 \usage{
-count_ngrams(seq, feature_list, n, d = 0, pos = FALSE, scale = FALSE)
+count_ngrams(seq, n, u, d = 0, pos = FALSE, scale = FALSE)
 }
 \arguments{
 \item{seq}{\code{integer} vector describing sequence.}
 
-\item{feature_list}{list of features (see Note).}
-
 \item{n}{size of n-grams.}
+
+\item{u}{unigrams (\code{integer}, \code{numeric} or \code{character} vector).}
 
 \item{d}{distance between elements of n-gram (0 means consecutive elements). See
 Details.}
@@ -32,10 +32,15 @@ when \code{n} = 3, \code{d} = c(1, 2) means A_A__A. For \code{n} = 4,
 }
 \note{
 List of possible n-grams must be calculated outside of the function.
+
+does not work: n = 1 and dist != 0
 }
 \examples{
 #trigrams for nucleotides
-count_ngrams(sample(1L:4, 30, replace = TRUE), create_ngrams(3, 1L:4), 3)
+count_ngrams(sample(1L:4, 50, replace = TRUE), 3, 1L:4, pos = TRUE)
+#multigrams
+seqs <- matrix(sample(1L:4, 600, replace = TRUE), ncol = 50)
+count_ngrams(seqs, c(1, 2, 3), 1L:4, pos = TRUE)
 }
 \seealso{
 For convenient wrapper for multidistance calculations
