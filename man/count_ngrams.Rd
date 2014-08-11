@@ -3,7 +3,8 @@
 \alias{count_ngrams}
 \title{Detect and count n-grams in single sequence}
 \usage{
-count_ngrams(seq, n, u, d = 0, pos = FALSE, scale = FALSE)
+count_ngrams(seq, n, u, d = 0, pos = FALSE, scale = FALSE,
+  threshold = 0)
 }
 \arguments{
 \item{seq}{\code{integer} vector describing sequence.}

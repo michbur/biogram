@@ -25,7 +25,7 @@
 #' seqs <- matrix(sample(1L:4, 600, replace = TRUE), ncol = 50)
 #' count_ngrams(seqs, c(1, 2, 3), 1L:4, pos = TRUE)
 
-count_ngrams <- function(seq, n, u, d = 0, pos = FALSE, scale = FALSE) {
+count_ngrams <- function(seq, n, u, d = 0, pos = FALSE, scale = FALSE, threshold = 0) {
   
   if (class(seq) == "matrix") {
     len_seq <- ncol(seq)
@@ -39,19 +39,32 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE, scale = FALSE) {
       max_grams <- len_seq - current_n - sum(current_d) + 1
       ngram_ind <- get_ngrams_ind(len_seq, current_n, current_d)
       
-      if (pos)
-        possib_ngrams <- create_ngrams(current_n, u, max_grams)
-      
       if (class(seq) == "matrix") {
-        res <- apply(seq, 1, function(i)
-          count_ngrams_helper(i, feature_list = possib_ngrams, current_n, 
-                              ind = ngram_ind, pos))
+        grams <- apply(seq, 1, function(i)
+          seq2ngrams(i, current_n, ind = ngram_ind, max_grams))
+        ncol_grams <- ncol(grams)
+        if (pos) {
+          n_grams_number <- length(current_n, u, max_grams)
+          res <- vapply(1L:ncol(grams), function(ngram_column)
+            unlist(lapply(possib_ngrams, function(current_ngram)
+              grams[, ngram_column] == current_ngram)), rep(0, n_grams_number))
+        } else {
+          res <- vapply(possib_ngrams, function(current_ngram)
+            vapply(1L:ncol_grams, function(ngram_column)
+              sum(grams[, ngram_column] == current_ngram), 0), rep(0, ncol_grams))
+        }
+        
       } else {
         res <- count_ngrams_helper(seq, feature_list = possib_ngrams, current_n, 
-                            ind = ngram_ind, pos)
+                                   ind = ngram_ind, pos)
       }
       
       names(res) <- paste0(names(res), "_", paste(attr(ngram_ind, "d"), collapse = "_"))
+      
+      if (threshold > 0) {
+        ind_sums <- rowSums(res)
+        res <- res[ind_sums >= threshold, ]
+      }
       
       if (scale)
         res <- res/max_grams
@@ -80,6 +93,22 @@ count_ngrams_helper <- function(seq, feature_list, n, ind, pos) {
   
   sapply(feature_list, function(i)
     sum(i == grams))
+}
+
+seq2ngrams <- function(seq, ind, max_grams) {
+  #TO DO implement position
+  #feature list(list of possible n-grams) is outside, because count_ngrams is meant to
+  #be inside the loop
+  #same for indices
+  if (length(ind) > 1) {
+    element_matrix <- vapply(ind, function(i) seq[i], rep(0, max_grams))
+    grams <- apply(element_matrix, 1, function(x) 
+      paste(x, collapse="."))
+  } else {
+    grams <- seq
+  }
+  
+  grams
 }
 
 
