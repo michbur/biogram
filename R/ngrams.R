@@ -35,19 +35,22 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE, scale = FALSE, threshold
   
   do.call(cbind, lapply(n, function(current_n) {
     possib_ngrams <- create_ngrams(current_n, u)
-    t(do.call(cbind, lapply(d, function(current_d) {
+    do.call(cbind, lapply(d, function(current_d) {
       max_grams <- len_seq - current_n - sum(current_d) + 1
       ngram_ind <- get_ngrams_ind(len_seq, current_n, current_d)
       
       if (class(seq) == "matrix") {
         grams <- apply(seq, 1, function(i)
-          seq2ngrams(i, current_n, ind = ngram_ind, max_grams))
+          seq2ngrams(i, ind = ngram_ind, max_grams))
         ncol_grams <- ncol(grams)
         if (pos) {
-          n_grams_number <- length(current_n, u, max_grams)
-          res <- vapply(1L:ncol(grams), function(ngram_column)
+          n_grams_number <- length(create_ngrams(current_n, u, max_grams))
+          res <- t(vapply(1L:ncol(grams), function(ngram_column)
             unlist(lapply(possib_ngrams, function(current_ngram)
-              grams[, ngram_column] == current_ngram)), rep(0, n_grams_number))
+              grams[, ngram_column] == current_ngram)), rep(0, n_grams_number)))
+          
+          colnames(res) <- create_ngrams(current_n, u, max_grams)
+          res
         } else {
           res <- vapply(possib_ngrams, function(current_ngram)
             vapply(1L:ncol_grams, function(ngram_column)
@@ -59,7 +62,7 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE, scale = FALSE, threshold
                                    ind = ngram_ind, pos)
       }
       
-      names(res) <- paste0(names(res), "_", paste(attr(ngram_ind, "d"), collapse = "_"))
+      
       
       if (threshold > 0) {
         ind_sums <- rowSums(res)
@@ -70,7 +73,7 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE, scale = FALSE, threshold
         res <- res/max_grams
       
       res
-    })))
+    }))
   }))
 }
 
