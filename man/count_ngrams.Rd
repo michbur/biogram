@@ -30,9 +30,10 @@ a named \code{integer} vector. Elements of n-gram are separated by dot.
 Counts all n-grams present in given sequence.
 }
 \details{
-The length of \code{distance} vector should be always n - 1. For example
+The length of \code{distance} vector should be always \code{n} - 1. For example
 when \code{n} = 3, \code{d} = c(1, 2) means A_A__A. For \code{n} = 4,
-\code{d} = c(2, 0, 1) means A__AA_A.
+\code{d} = c(2, 0, 1) means A__AA_A. If vector \code{d} has length 1, it is recycled to
+length \code{n} - 1.
 }
 \note{
 List of possible n-grams must be calculated outside of the function.

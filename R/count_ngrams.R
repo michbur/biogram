@@ -13,9 +13,10 @@
 #' two groups (larger or equal to threshold, smaller than threshold).
 #' @return a named \code{integer} vector. Elements of n-gram are separated by dot.
 #' @note List of possible n-grams must be calculated outside of the function.
-#' @details The length of \code{distance} vector should be always n - 1. For example 
+#' @details The length of \code{distance} vector should be always \code{n} - 1. For example 
 #' when \code{n} = 3, \code{d} = c(1, 2) means A_A__A. For \code{n} = 4, 
-#' \code{d} = c(2, 0, 1) means A__AA_A.
+#' \code{d} = c(2, 0, 1) means A__AA_A. If vector \code{d} has length 1, it is recycled to
+#' length \code{n} - 1.
 #' @note does not work: n = 1 and dist != 0
 #' @export
 #' @seealso 
@@ -37,29 +38,30 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE, scale = FALSE, threshold
   len_seq <- ncol(seq)
   
   do.call(cbind, lapply(n, function(current_n) {
+    #create list of n-grams for given n
     possib_ngrams <- create_ngrams(current_n, u)
+    
     do.call(cbind, lapply(d, function(current_d) {
-      max_grams <- len_seq - current_n - sum(current_d) + 1
+      #look for n-gram indices for given d
       ngram_ind <- get_ngrams_ind(len_seq, current_n, current_d)
       
-      if (class(seq) == "matrix") {
-        grams <- apply(seq, 1, function(i)
-          seq2ngrams(i, ind = ngram_ind, max_grams))
-        ncol_grams <- ncol(grams)
-        if (pos) {
-          n_grams_number <- length(create_ngrams(current_n, u, max_grams))
-          res <- t(vapply(1L:ncol(grams), function(ngram_column)
-            unlist(lapply(possib_ngrams, function(current_ngram)
-              grams[, ngram_column] == current_ngram)), rep(0, n_grams_number)))
-          
-          colnames(res) <- create_ngrams(current_n, u, max_grams)
-          res
-        } else {
-          res <- vapply(possib_ngrams, function(current_ngram)
-            vapply(1L:ncol_grams, function(ngram_column)
-              sum(grams[, ngram_column] == current_ngram), 0), rep(0, ncol_grams))
-        }
+      #use attr(ngram_ind, "d") instead of current_d because of distance recycling
+      max_grams <- len_seq - current_n - sum(attr(ngram_ind, "d")) + 1
+      grams <- apply(seq, 1, function(i)
+        seq2ngrams(i, ind = ngram_ind, max_grams))
+      ncol_grams <- ncol(grams)
+      if (pos) {
+        n_grams_number <- length(create_ngrams(current_n, u, max_grams))
+        res <- t(vapply(1L:ncol(grams), function(ngram_column)
+          unlist(lapply(possib_ngrams, function(current_ngram)
+            grams[, ngram_column] == current_ngram)), rep(0, n_grams_number)))
         
+        colnames(res) <- create_ngrams(current_n, u, max_grams)
+        res
+      } else {
+        res <- vapply(possib_ngrams, function(current_ngram)
+          vapply(1L:ncol_grams, function(ngram_column)
+            sum(grams[, ngram_column] == current_ngram), 0), rep(0, ncol_grams))
       }
       
       if (threshold > 0) {
