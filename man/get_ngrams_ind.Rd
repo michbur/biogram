@@ -8,7 +8,7 @@ get_ngrams_ind(len_seq, n, d)
 \arguments{
 \item{len_seq}{\code{integer} value describing sequence's length.}
 
-\item{n}{size of n-grams.}
+\item{n}{\code{integer} vector of n-grams' sizes.}
 
 \item{d}{distance between elements of n-gram (0 means consecutive elements). See
 Details.}

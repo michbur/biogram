@@ -55,17 +55,26 @@ get_ngrams_ind <- function(len_seq, n, d) {
   if(length(d) != 1 && length(d) != n - 1)
     stop("Length of d must be 1 or n - 1")
   
-  #if distance vector is too short, recycle it
-  if(length(d) == 1 && n > 2)
-    d <- rep(d, n - 1)
   
-  if(sum(d) > 0) {
-    ind[-1] <- lapply(1L:length(d), function(i)
-      ind[[i + 1]] + sum(d[1L:i]))
-    not_taken <- ind[[1]][(length(ind[[1]]) - sum(d) + 1):length(ind[[1]])]
-    ind <- lapply(ind, function(i) i[-not_taken])
+  if(n > 1) {
+    #if distance vector is too short, recycle it
+    if(length(d) == 1 && n > 2)
+      d <- rep(d, n - 1)
+    
+    if(sum(d) > 0) {
+      ind[-1] <- lapply(1L:length(d), function(i)
+        ind[[i + 1]] + sum(d[1L:i]))
+      not_taken <- ind[[1]][(length(ind[[1]]) - sum(d) + 1):length(ind[[1]])]
+      ind <- lapply(ind, function(i) i[-not_taken])
+    }
+    
+    attr(ind, "d") <- d
+  } else {
+    #distance is a nonsense for unigrams
+    attr(ind, "d") <- 0
   }
-  attr(ind, "d") <- d
+  
+  
   
   ind
 }

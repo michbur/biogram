@@ -9,7 +9,7 @@ create_ngrams(n, u, possible_grams = NULL)
 \item{possible_grams}{number of possible n-grams. If not \code{NULL} n-grams do not
 contain information about position}
 
-\item{n}{size of n-grams.}
+\item{n}{\code{integer} vector of n-grams' sizes.}
 
 \item{u}{unigrams (\code{integer}, \code{numeric} or \code{character} vector).}
 }

@@ -9,7 +9,7 @@ count_ngrams(seq, n, u, d = 0, pos = FALSE, scale = FALSE,
 \arguments{
 \item{seq}{\code{integer} vector or matrix describing sequence(s).}
 
-\item{n}{size of n-grams.}
+\item{n}{\code{integer} vector of n-grams' sizes.}
 
 \item{u}{unigrams (\code{integer}, \code{numeric} or \code{character} vector).}
 

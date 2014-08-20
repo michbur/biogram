@@ -3,7 +3,7 @@
 #' Counts all n-grams present in given sequence.
 #'
 #' @param seq \code{integer} vector or matrix describing sequence(s). 
-#' @param n size of n-grams.
+#' @param n \code{integer} vector of n-grams' sizes.
 #' @param u unigrams (\code{integer}, \code{numeric} or \code{character} vector).
 #' @param d distance between elements of n-gram (0 means consecutive elements). See
 #' Details.
@@ -44,24 +44,29 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE, scale = FALSE, threshold
     do.call(cbind, lapply(d, function(current_d) {
       #look for n-gram indices for given d
       ngram_ind <- get_ngrams_ind(len_seq, current_n, current_d)
-      
+  
       #use attr(ngram_ind, "d") instead of current_d because of distance recycling
       max_grams <- len_seq - current_n - sum(attr(ngram_ind, "d")) + 1
+      
+      #extract n-grams from sequene
       grams <- apply(seq, 1, function(i)
         seq2ngrams(i, ind = ngram_ind, max_grams))
       ncol_grams <- ncol(grams)
       if (pos) {
-        n_grams_number <- length(create_ngrams(current_n, u, max_grams))
+        #get positioned possible n-grams
+        pos_possib_ngrams <- create_ngrams(current_n, u, max_grams)
+        n_grams_number <- length(pos_possib_ngrams)
+        
         res <- t(vapply(1L:ncol(grams), function(ngram_column)
           unlist(lapply(possib_ngrams, function(current_ngram)
             grams[, ngram_column] == current_ngram)), rep(0, n_grams_number)))
         
-        colnames(res) <- create_ngrams(current_n, u, max_grams)
+        colnames(res) <- pos_possib_ngrams
         res
       } else {
-        res <- vapply(possib_ngrams, function(current_ngram)
+        res <- t(vapply(possib_ngrams, function(current_ngram)
           vapply(1L:ncol_grams, function(ngram_column)
-            sum(grams[, ngram_column] == current_ngram), 0), rep(0, ncol_grams))
+            sum(grams[, ngram_column] == current_ngram), 0), rep(0, ncol_grams)))
       }
       
       if (threshold > 0) {
@@ -71,7 +76,8 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE, scale = FALSE, threshold
       
       if (scale)
         res <- res/max_grams
-      
+      colnames(res) <- paste(colnames(res), paste0(attr(ngram_ind, "d"), collapse = "_"), 
+                             sep = "_")
       res
     }))
   }))
