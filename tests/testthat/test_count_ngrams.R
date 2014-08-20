@@ -6,8 +6,8 @@ test_that("Count ngrams for different distances",{
   
   len1 <- sum(count_ngrams(sample_seq, 3, 1L:4, d = 0))
   len2 <- sum(count_ngrams(sample_seq, 3, 1L:4, d = 1))
-  len3 <- sum(count_ngrams(sample_seq, 3, 1L:4, d = list(c(2, 1))))
-  len4 <- sum(count_ngrams(sample_seq, 3, 1L:4, d = list(c(2, 2))))
+  len3 <- sum(count_ngrams(sample_seq, 3, 1L:4, d = c(2, 1)))
+  len4 <- sum(count_ngrams(sample_seq, 3, 1L:4, d = c(2, 2)))
   
   expect_equal(len1, 28)
   expect_equal(len2, 26)

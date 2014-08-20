@@ -8,10 +8,10 @@ get_ngrams_ind(len_seq, n, d)
 \arguments{
 \item{len_seq}{\code{integer} value describing sequence's length.}
 
-\item{n}{\code{integer} vector of n-grams' sizes.}
+\item{n}{\code{integer} size of n-gram.}
 
-\item{d}{distance between elements of n-gram (0 means consecutive elements). See
-Details.}
+\item{d}{\code{integer} vector of distances between elements of n-gram (0 means
+consecutive elements). See Details.}
 }
 \value{
 A list with number of elements equal to \code{n}. Every element is a
