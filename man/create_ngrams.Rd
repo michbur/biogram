@@ -17,7 +17,7 @@ contain information about position}
 a character vector. Elements of n-gram are separated by dot.
 }
 \description{
-Creates vector of all posible n_grams.
+Creates vector of all posible n_grams (for given \code{n}).
 }
 \details{
 N-gram coding: \code{p_1.2.1} means position \code{p}, \code{1.2.1} means

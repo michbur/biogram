@@ -2,9 +2,8 @@
 #'
 #' @description biogram specialises in analysis of n-grams (k-tuples) from nucleotide or
 #' protein sequences.
-#' 
-#' @author Michal Burdukiewicz
 #' @importFrom bit as.bit
+#' @author Michal Burdukiewicz
 #' @docType package
 #' @name biogram-package
 #' @aliases biogram

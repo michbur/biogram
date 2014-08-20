@@ -7,7 +7,7 @@ count_ngrams(seq, n, u, d = 0, pos = FALSE, scale = FALSE,
   threshold = 0)
 }
 \arguments{
-\item{seq}{\code{integer} vector describing sequence.}
+\item{seq}{\code{integer} vector or matrix describing sequence(s).}
 
 \item{n}{size of n-grams.}
 
@@ -19,6 +19,9 @@ Details.}
 \item{pos}{\code{logical}, if \code{TRUE} n_grams contains position information.}
 
 \item{scale}{\code{logical}, if \code{TRUE} output data is normalized.}
+
+\item{threshold}{\code{integer}, if not equal to 0, data is binarized into
+two groups (larger or equal to threshold, smaller than threshold).}
 }
 \value{
 a named \code{integer} vector. Elements of n-gram are separated by dot.
@@ -44,7 +47,7 @@ seqs <- matrix(sample(1L:4, 600, replace = TRUE), ncol = 50)
 count_ngrams(seqs, c(1, 2, 3), 1L:4, pos = TRUE)
 }
 \seealso{
-For convenient wrapper for multidistance calculations
-see \code{\link{gramize_data}}.
+Create vector of possible n-grams: \code{\link{create_ngrams}}.
+Get indices of n-grams: \code{\link{get_ngrams_ind}}.
 }
 

@@ -16,6 +16,7 @@
 #' feat <- sample(0L:1, 100, replace = TRUE)
 #' prop <- c(100 - sum(tar), sum(tar))/100
 #' entr <- - sum(prop*log(prop))
+#' library(bit) #used to code vector as bit
 #' calc_ig_single(feat, as.bit(tar), 100, sum(tar), entr)
 
 calc_ig_single <- function(feature, target_b, len_target, pos_target, ES) {
@@ -49,6 +50,7 @@ calc_ig_single <- function(feature, target_b, len_target, pos_target, ES) {
 #' @export
 #' @examples tar <- sample(0L:1, 100, replace = TRUE)
 #' feat <- sample(0L:1, 100, replace = TRUE)
+#' library(bit) #used to code vector as bit
 #' fast_crosstable(as.bit(tar), 100, sum(tar),  feat)
 
 fast_crosstable <- function(target_b, len_target, pos_target, feature) {
@@ -79,8 +81,8 @@ fast_crosstable <- function(target_b, len_target, pos_target, feature) {
 #' and 1 values.
 #' @seealso \code{\link{test_ig}} for Monte Carlo information gain test.
 #' @export
-#' @examples calc_ig(sample(0L:1, 100, replace = TRUE), 
-#' matrix(sample(0L:1, 400, replace = TRUE), ncol = 4))
+#' @examples 
+#' calc_ig(sample(0L:1, 100, replace = TRUE), matrix(sample(0L:1, 400, replace = TRUE), ncol = 4))
 
 calc_ig <- function(target, features) {
   tar_bit <- as.bit(target)

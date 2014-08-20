@@ -37,6 +37,7 @@ Binary vector means numeric vector with 0 or 1.
 \examples{
 tar <- sample(0L:1, 100, replace = TRUE)
 feat <- sample(0L:1, 100, replace = TRUE)
+library(bit) #used to code vector as bit
 fast_crosstable(as.bit(tar), 100, sum(tar),  feat)
 }
 
