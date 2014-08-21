@@ -12,14 +12,16 @@
 #' @param threshold \code{integer}, if not equal to 0, data is binarized into
 #' two groups (larger or equal to threshold, smaller than threshold).
 #' @return a \code{integer} matrix with named columns. Elements of n-gram are separated 
-#' by dot. If \code{pos}, left side of name means actual position of the n-gram 
-#' (separated by \code{_}). Right side of name is vector of distance(s) used separated by
-#' \code{_}.
+#' by dot. If \code{pos}, the left side of name means actual position of the n-gram 
+#' (separated by \code{_}). the Right side of name is vector of distance(s) used separated by
+#' \code{_}. See \code{Note} for examples.
 #' @note List of possible n-grams must be calculated outside of the function.
 #' @details The length of \code{distance} vector should be always \code{n} - 1. For example 
 #' when \code{n} = 3, \code{d} = c(1, 2) means A_A__A. For \code{n} = 4, 
 #' \code{d} = c(2, 0, 1) means A__AA_A. If vector \code{d} has length 1, it is recycled to
 #' length \code{n} - 1.
+#' @note 46_4.4.4_0_1 means n-gram 44_4 on position 46.
+#' 12_2.1_2 means n-gram 2__1 on position 12.
 #' @export
 #' @seealso 
 #' Create vector of possible n-grams: \code{\link{create_ngrams}}.
@@ -53,7 +55,7 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE, scale = FALSE, threshold
   
   #extract n-grams from sequene
   grams <- vapply(1L:n_seqs, function(i)
-    seq2ngrams(seq[i, ], ind = ngram_ind, max_grams), rep("a", max_grams))
+    seq2ngrams_helper(seq[i, ], ind = ngram_ind, max_grams), rep("a", max_grams))
   
   if (pos) {
     #get positioned possible n-grams
@@ -107,7 +109,8 @@ count_ngrams_helper <- function(seq, feature_list, n, ind, pos) {
     sum(i == grams))
 }
 
-seq2ngrams <- function(seq, ind, max_grams) {
+#ultrafast function for n-gram extraction
+seq2ngrams_helper <- function(seq, ind, max_grams) {
   #get all consecutive n-grams from sequence
   #length(ind) > 1 - equivalent of n > 1 
   if (length(ind) > 1) {
@@ -123,3 +126,4 @@ seq2ngrams <- function(seq, ind, max_grams) {
   #all n-grams from seuqence - character vector
   grams
 }
+

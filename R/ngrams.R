@@ -36,12 +36,11 @@ create_ngrams <- function(n, u, possible_grams = NULL) {
 #' vector containing locations of given n-gram letter. For example, first element of
 #' list contain indices of first letter of all n-grams. The attribute \code{d} of output
 #' contains distances between letter used to compute locations (see Details).
-#' @details The length of \code{d} vector should be always n - 1. For example 
-#' when \code{n} = 3, \code{d} = c(1, 2) means A_A__A. For \code{n} = 4, 
-#' \code{d} = c(2, 0, 1) means A__AA_A. Shorter \code{d} vectors will be recycled.
+#' @details A format of \code{d} vector is discussed in details of \
+#' code{\link{count_ngrams}}.
 #' @export
 #' @examples 
-#' #trigrams in sequence of length 10
+#' #positions trigrams in sequence of length 10
 #' get_ngrams_ind(10, 9, 0)
 
 get_ngrams_ind <- function(len_seq, n, d) {
@@ -74,12 +73,48 @@ get_ngrams_ind <- function(len_seq, n, d) {
     attr(ind, "d") <- 0
   }
   
-  
-  
   ind
 }
 
 
+#' Extract n-grams from sequence
+#'
+#' Extracts vector of n-grams present in sequence(s).
+#'
+#' @inheritParams count_ngrams
+#' @details A format of \code{d} vector is discussed in details of \
+#' code{\link{count_ngrams}}.
+#' @return A list with number of elements equal to \code{n}. Every element is a 
+#' vector containing locations of given n-gram letter. For example, first element of
+#' list contain indices of first letter of all n-grams. The attribute \code{d} of output
+#' contains distances between letter used to compute locations (see Details).
+#' @export
+#' @examples 
+#' #trigrams from multiple sequences
+#' seqs <- matrix(sample(1L:4, 600, replace = TRUE), ncol = 50)
+#' seq2ngrams(seqs, 3, 1L:4)
 
-
-
+seq2ngrams <- function(seq, n, u, d = 0) {
+  
+  #if sequence is not a matrix (single sequence), convert it to matrix with 1 row
+  if (class(seq) != "matrix")
+    seq <- matrix(seq, nrow = 1)
+  
+  #length of sequence
+  len_seq <- ncol(seq)
+  #number of sequences
+  n_seqs <- nrow(seq)
+  
+  #look for n-gram indices for d
+  ngram_ind <- get_ngrams_ind(len_seq, n, d)
+  
+  #use attr(ngram_ind, "d") instead of d because of distance recycling
+  max_grams <- len_seq - n - sum(attr(ngram_ind, "d")) + 1
+  
+  #extract n-grams from sequene
+  vapply(1L:n_seqs, function(i) {
+    grams <- seq2ngrams_helper(seq[i, ], ind = ngram_ind, max_grams)
+    paste(grams, paste0(attr(ngram_ind, "d"), collapse = "_"), 
+          sep = "_")
+    }, rep("a", max_grams))
+}

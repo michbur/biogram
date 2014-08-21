@@ -25,9 +25,9 @@ two groups (larger or equal to threshold, smaller than threshold).}
 }
 \value{
 a \code{integer} matrix with named columns. Elements of n-gram are separated
-by dot. If \code{pos}, left side of name means actual position of the n-gram
-(separated by \code{_}). Right side of name is vector of distance(s) used separated by
-\code{_}.
+by dot. If \code{pos}, the left side of name means actual position of the n-gram
+(separated by \code{_}). the Right side of name is vector of distance(s) used separated by
+\code{_}. See \code{Note} for examples.
 }
 \description{
 Counts all n-grams present in sequences.
@@ -40,6 +40,9 @@ length \code{n} - 1.
 }
 \note{
 List of possible n-grams must be calculated outside of the function.
+
+46_4.4.4_0_1 means n-gram 44_4 on position 46.
+12_2.1_2 means n-gram 2__1 on position 12.
 }
 \examples{
 #trigrams for nucleotides
