@@ -53,6 +53,7 @@ count_ngrams(seqs, 3, 1L:4, pos = TRUE)
 }
 \seealso{
 Create vector of possible n-grams: \code{\link{create_ngrams}}.
+Get n-grams from analyzed sequence: \code{\link{seq2ngrams}}.
 Get indices of n-grams: \code{\link{get_ngrams_ind}}.
 }
 

@@ -25,6 +25,7 @@
 #' @export
 #' @seealso 
 #' Create vector of possible n-grams: \code{\link{create_ngrams}}.
+#' Get n-grams from analyzed sequence: \code{\link{seq2ngrams}}.
 #' Get indices of n-grams: \code{\link{get_ngrams_ind}}.
 #' @examples 
 #' #trigrams for nucleotides
