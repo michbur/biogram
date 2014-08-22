@@ -36,8 +36,8 @@ create_ngrams <- function(n, u, possible_grams = NULL) {
 #' vector containing locations of given n-gram letter. For example, first element of
 #' list contain indices of first letter of all n-grams. The attribute \code{d} of output
 #' contains distances between letter used to compute locations (see Details).
-#' @details A format of \code{d} vector is discussed in details of \
-#' code{\link{count_ngrams}}.
+#' @details A format of \code{d} vector is discussed in Details of 
+#' \code{\link{count_ngrams}}.
 #' @export
 #' @examples 
 #' #positions trigrams in sequence of length 10
@@ -82,12 +82,10 @@ get_ngrams_ind <- function(len_seq, n, d) {
 #' Extracts vector of n-grams present in sequence(s).
 #'
 #' @inheritParams count_ngrams
-#' @details A format of \code{d} vector is discussed in details of \
-#' code{\link{count_ngrams}}.
-#' @return A list with number of elements equal to \code{n}. Every element is a 
-#' vector containing locations of given n-gram letter. For example, first element of
-#' list contain indices of first letter of all n-grams. The attribute \code{d} of output
-#' contains distances between letter used to compute locations (see Details).
+#' @details A format of \code{d} vector is discussed in Details of 
+#' \code{\link{count_ngrams}}.
+#' @return A \code{character} matrix of n-grams, where every row corresponds to a
+#' different sequence.
 #' @export
 #' @examples 
 #' #trigrams from multiple sequences
@@ -108,13 +106,15 @@ seq2ngrams <- function(seq, n, u, d = 0) {
   #look for n-gram indices for d
   ngram_ind <- get_ngrams_ind(len_seq, n, d)
   
-  #use attr(ngram_ind, "d") instead of d because of distance recycling
-  max_grams <- len_seq - n - sum(attr(ngram_ind, "d")) + 1
+  max_grams <- calc_max_grams(len_seq, n, ngram_ind)
   
   #extract n-grams from sequene
-  vapply(1L:n_seqs, function(i) {
+  res <- t(vapply(1L:n_seqs, function(i) {
     grams <- seq2ngrams_helper(seq[i, ], ind = ngram_ind, max_grams)
     paste(grams, paste0(attr(ngram_ind, "d"), collapse = "_"), 
           sep = "_")
-    }, rep("a", max_grams))
+    }, rep("a", max_grams)))
+  if (max_grams == 1)
+    res <- t(res)
+  res
 }

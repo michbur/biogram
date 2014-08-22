@@ -16,17 +16,15 @@ seq2ngrams(seq, n, u, d = 0)
 consecutive elements). See Details.}
 }
 \value{
-A list with number of elements equal to \code{n}. Every element is a
-vector containing locations of given n-gram letter. For example, first element of
-list contain indices of first letter of all n-grams. The attribute \code{d} of output
-contains distances between letter used to compute locations (see Details).
+A \code{character} matrix of n-grams, where every row corresponds to a
+different sequence.
 }
 \description{
 Extracts vector of n-grams present in sequence(s).
 }
 \details{
-A format of \code{d} vector is discussed in details of \
-code{\link{count_ngrams}}.
+A format of \code{d} vector is discussed in Details of
+\code{\link{count_ngrams}}.
 }
 \examples{
 #trigrams from multiple sequences

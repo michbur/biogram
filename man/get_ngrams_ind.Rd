@@ -23,8 +23,8 @@ contains distances between letter used to compute locations (see Details).
 Computes list of n-gram elements positions in sequence.
 }
 \details{
-A format of \code{d} vector is discussed in details of \
-code{\link{count_ngrams}}.
+A format of \code{d} vector is discussed in Details of
+\code{\link{count_ngrams}}.
 }
 \examples{
 #positions trigrams in sequence of length 10

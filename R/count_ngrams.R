@@ -51,8 +51,7 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE, scale = FALSE, threshold
   #look for n-gram indices for d
   ngram_ind <- get_ngrams_ind(len_seq, n, d)
   
-  #use attr(ngram_ind, "d") instead of d because of distance recycling
-  max_grams <- len_seq - n - sum(attr(ngram_ind, "d")) + 1
+  max_grams <- calc_max_grams(len_seq, n, ngram_ind)
   
   #extract n-grams from sequene
   grams <- vapply(1L:n_seqs, function(i)
@@ -89,6 +88,17 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE, scale = FALSE, threshold
   res
 }
 
+#helper function calculating maximum number of n-grams possible. Throws an
+#error if there is no possibility of extracting n-gram from a sequence 
+#(when result is negative)
+
+calc_max_grams <- function(len_seq, n, ngram_ind){
+  #use attr(ngram_ind, "d") instead of d because of distance recycling
+  max_grams <- len_seq - n - sum(attr(ngram_ind, "d")) + 1
+  if (max_grams < 1)
+    stop("n-gram too long.")
+  max_grams
+}
 
 count_ngrams_helper <- function(seq, feature_list, n, ind, pos) {
   #feature list(list of possible n-grams) is outside, because count_ngrams is meant to
@@ -117,8 +127,16 @@ seq2ngrams_helper <- function(seq, ind, max_grams) {
   if (length(ind) > 1) {
     #element_matrix contains elements of n-gram in matrix structure
     element_matrix <- vapply(ind, function(i) seq[i], rep(0, max_grams))
-    grams <- vapply(1L:nrow(element_matrix), function(ith_row)
-      paste(element_matrix[ith_row, ], collapse="."), "a")
+    
+    #rare situation, only one n-gram in sequence
+    if(max_grams == 1) {
+      grams <- paste(element_matrix, collapse=".")
+    } else {
+      grams <- vapply(1L:nrow(element_matrix), function(ith_row)
+        paste(element_matrix[ith_row, ], collapse="."), "a")
+    }
+    
+    
   } else {
     #in case of unigrams take sequence - output must be character
     grams <- as.character(seq)
