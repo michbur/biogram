@@ -1,4 +1,4 @@
-#' Detect and count n-grams in sequences
+#' Detect And Count N-Grams In Sequences
 #'
 #' Counts all n-grams present in sequences.
 #'
@@ -8,29 +8,39 @@
 #' @param d \code{integer} vector of distances between elements of n-gram (0 means 
 #' consecutive elements). See Details.
 #' @param pos \code{logical}, if \code{TRUE} n_grams contains position information.
-#' @param scale \code{logical}, if \code{TRUE} output data is normalized.
+#' @param scale \code{logical}, if \code{TRUE} output data is normalized. Should be
+#' used only for n-grams without position information. See \code{Details}.
 #' @param threshold \code{integer}, if not equal to 0, data is binarized into
 #' two groups (larger or equal to threshold, smaller than threshold).
-#' @return a \code{integer} matrix with named columns. Elements of n-gram are separated 
-#' by dot. If \code{pos}, the left side of name means actual position of the n-gram 
-#' (separated by \code{_}). the Right side of name is vector of distance(s) used separated by
-#' \code{_}. See \code{Note} for examples.
-#' @note List of possible n-grams must be calculated outside of the function.
+#' @return a \code{\link[Matrix]{dgCMatrix-class}} matrix (if \code{pos} = \code{FALSE})
+#' or \code{\link[Matrix]{lgCMatrix-class}} matrix (if \code{pos} = \code{TRUE})
+#' with named columns. See \code{Details} for specifics of the column naming.
 #' @details The length of \code{distance} vector should be always \code{n} - 1. For example 
 #' when \code{n} = 3, \code{d} = c(1, 2) means A_A__A. For \code{n} = 4, 
 #' \code{d} = c(2, 0, 1) means A__AA_A. If vector \code{d} has length 1, it is recycled to
 #' length \code{n} - 1.
-#' @note 46_4.4.4_0_1 means n-gram 44_4 on position 46.
-#' 12_2.1_2 means n-gram 2__1 on position 12.
+#' 
+#' Column names are following a specific convention. Elements of n-gram are separated by 
+#' dot. If \code{pos} = \code{TRUE}, the left side of name means actual position of the 
+#' n-gram (separated by \code{_}). the Right side of name is vector of distance(s) 
+#' used separated by \code{_}.
+#' 
+#' Examples of naming notation:
+#' \itemize{
+#' \item{46_4.4.4_0_1 means n-gram 44_4 on position 46.}
+#' \item{12_2.1_2 means n-gram 2__1 on position 12.}
+#' }
 #' @export
 #' @seealso 
 #' Create vector of possible n-grams: \code{\link{create_ngrams}}.
 #' Get n-grams from analyzed sequence: \code{\link{seq2ngrams}}.
 #' Get indices of n-grams: \code{\link{get_ngrams_ind}}.
+#' Convert result of \code{count_ngrams} to \code{numeric} matrix: 
+#' \code{\link{Matrix2matrix}}.
 #' @examples 
-#' #trigrams for nucleotides
-#' count_ngrams(sample(1L:4, 50, replace = TRUE), 3, 1L:4, pos = TRUE)
-#' #trigrams from multiple sequences
+#' #trigrams without position for nucleotides
+#' count_ngrams(sample(1L:4, 50, replace = TRUE), 3, 1L:4, pos = FALSE)
+#' #trigrams with position from multiple nucleotide sequences
 #' seqs <- matrix(sample(1L:4, 600, replace = TRUE), ncol = 50)
 #' count_ngrams(seqs, 3, 1L:4, pos = TRUE)
 
@@ -39,6 +49,9 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE, scale = FALSE, threshold
   #if sequence is not a matrix (single sequence), convert it to matrix with 1 row
   if (class(seq) != "matrix")
     seq <- matrix(seq, nrow = 1)
+  
+  if (scale && pos)
+    stop("Scaling a sparse matrix.")
   
   #length of sequence
   len_seq <- ncol(seq)
@@ -53,27 +66,28 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE, scale = FALSE, threshold
   
   max_grams <- calc_max_grams(len_seq, n, ngram_ind)
   
-  #extract n-grams from sequene
+  #extract n-grams from sequence
   grams <- vapply(1L:n_seqs, function(i)
     seq2ngrams_helper(seq[i, ], ind = ngram_ind, max_grams), rep("a", max_grams))
   
   if (pos) {
     #get positioned possible n-grams
     pos_possib_ngrams <- create_ngrams(n, u, max_grams)
-    n_pos_possib_ngrams <- length(pos_possib_ngrams)
     
     #it turned out to be faster than matrix substitution
-    res <- t(vapply(1L:n_seqs, function(current_sequence)
-      vapply(possib_ngrams, function(current_ngram)
-        grams[, current_sequence] == current_ngram, rep(0, max_grams)), 
-      rep(0, n_pos_possib_ngrams)))
+    res <- do.call(cBind, lapply(possib_ngrams, function(current_ngram)
+      do.call(rBind, lapply(1L:n_seqs, function(current_sequence)
+        Matrix(grams[, current_sequence] == current_ngram, nrow = 1, sparse = TRUE, 
+               doDiag = FALSE)))))
+    
     colnames(res) <- pos_possib_ngrams
     
-    res
   } else {
-    res <- t(vapply(possib_ngrams, function(current_ngram)
-      vapply(1L:n_seqs, function(current_sequence)
-        sum(grams[, current_sequence] == current_ngram), 0), rep(0, n_seqs)))
+    res <- do.call(cBind, lapply(possib_ngrams, function(current_ngram)
+      Matrix(vapply(1L:n_seqs, function(current_sequence)
+        sum(grams[, current_sequence] == current_ngram), 0), sparse = TRUE, 
+        doDiag = FALSE)))
+    colnames(res) <- possib_ngrams
   }
   
   if (threshold > 0) {
@@ -83,6 +97,7 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE, scale = FALSE, threshold
   
   if (scale)
     res <- res/max_grams
+  
   colnames(res) <- paste(colnames(res), paste0(attr(ngram_ind, "d"), collapse = "_"), 
                          sep = "_")
   res

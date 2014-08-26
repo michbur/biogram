@@ -1,4 +1,4 @@
-#' Get all possible n-grams
+#' Get All Possible N-Grams
 #'
 #' Creates vector of all posible n_grams (for given \code{n}).
 #'
@@ -26,7 +26,7 @@ create_ngrams <- function(n, u, possible_grams = NULL) {
 }
 
 
-#' Get indices of n-grams
+#' Get Indices of N-Grams
 #'
 #' Computes list of n-gram elements positions in sequence.
 #'
@@ -77,7 +77,7 @@ get_ngrams_ind <- function(len_seq, n, d) {
 }
 
 
-#' Extract n-grams from sequence
+#' Extract n-grams From Sequence
 #'
 #' Extracts vector of n-grams present in sequence(s).
 #'
@@ -113,8 +113,39 @@ seq2ngrams <- function(seq, n, u, d = 0) {
     grams <- seq2ngrams_helper(seq[i, ], ind = ngram_ind, max_grams)
     paste(grams, paste0(attr(ngram_ind, "d"), collapse = "_"), 
           sep = "_")
-    }, rep("a", max_grams)))
+  }, rep("a", max_grams)))
   if (max_grams == 1)
     res <- t(res)
   res
+}
+
+#' Sparse Matrix to Numeric Matrix
+#'
+#' Converts objects of \code{\link[Matrix]{dgCMatrix-class}} or 
+#' \code{\link[Matrix]{lgCMatrix-class}} to numeric matrix.
+#'
+#' @param object \code{\link[Matrix]{dgCMatrix-class}} or 
+#' \code{\link[Matrix]{lgCMatrix-class}} matrix, usually a result of the 
+#' \code{\link{count_ngrams}} function.
+#' @return A \code{numeric} matrix of n-grams.
+#' @export
+#' @examples 
+#' x1 <- count_ngrams(sample(1L:4, 50, replace = TRUE), 3, 1L:4, pos = FALSE)
+#' class(x1)
+#' x2 <- Matrix2matrix(x1)
+#' class(x2)
+
+Matrix2matrix <- function(object) {
+  
+  #if sequence is not a matrix (single sequence), convert it to matrix with 1 row
+  if (!(class(object) %in% c("lgCMatrix", "dgCMatrix")))
+    stop("'x' must have class 'lgCMatrix' or 'dgCMatrix'.")
+  
+  matrix_object <- as(object, "matrix")
+  
+  #converts from logical to integer. Doesn't affect dgeMatrix, because they may be scaled
+  if(class(object) == "lgCMatrix")
+    storage.mode(matrix_object) <- "integer"
+  
+  matrix_object
 }
