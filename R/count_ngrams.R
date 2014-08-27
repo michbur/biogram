@@ -75,10 +75,26 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE, scale = FALSE, threshold
     pos_possib_ngrams <- create_ngrams(n, u, max_grams)
     
     #it turned out to be faster than matrix substitution
-    res <- do.call(cBind, lapply(possib_ngrams, function(current_ngram)
-      do.call(rBind, lapply(1L:n_seqs, function(current_sequence)
-        Matrix(grams[, current_sequence] == current_ngram, nrow = 1, sparse = TRUE, 
-               doDiag = FALSE)))))
+    #     res <- do.call(cBind, lapply(possib_ngrams, function(current_ngram) {
+    #       tmp_mat <- Matrix(grams[, 1] == current_ngram, nrow = 1, sparse = TRUE, 
+    #                         doDiag = FALSE)
+    #       for(current_sequence in 2L:n_seqs)
+    #         tmp_mat <- rBind(tmp_mat, Matrix(grams[, current_sequence] == current_ngram, 
+    #                                          nrow = 1, sparse = TRUE, doDiag = FALSE))
+    #       tmp_mat
+    #     }))
+    res <- lapply(possib_ngrams, function(current_ngram) {
+      tmp_mat <- Matrix(grams[, 1] == current_ngram, nrow = 1, sparse = TRUE, 
+                        doDiag = FALSE)
+      for(current_sequence in 2L:n_seqs)
+        tmp_mat <- rBind(tmp_mat, Matrix(grams[, current_sequence] == current_ngram, 
+                                         nrow = 1, sparse = TRUE, doDiag = FALSE))
+      tmp_mat
+    })
+    tmp_mat2 <- res[[2]]
+    for(i in 2L:length(res))
+      tmp_mat2 <- cbind(tmp_mat2, res[[i]])
+      
     
     colnames(res) <- pos_possib_ngrams
     
