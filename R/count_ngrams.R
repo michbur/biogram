@@ -35,8 +35,6 @@
 #' Create vector of possible n-grams: \code{\link{create_ngrams}}.
 #' Get n-grams from analyzed sequence: \code{\link{seq2ngrams}}.
 #' Get indices of n-grams: \code{\link{get_ngrams_ind}}.
-#' Convert result of \code{count_ngrams} to \code{numeric} matrix: 
-#' \code{\link{Matrix2matrix}}.
 #' @examples 
 #' #trigrams without position for nucleotides
 #' count_ngrams(sample(1L:4, 50, replace = TRUE), 3, 1L:4, pos = FALSE)
@@ -81,10 +79,10 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE, scale = FALSE, threshold
     colnames(res) <- pos_possib_ngrams
     
   } else {
-    res <- do.call(cBind, lapply(possib_ngrams, function(current_ngram)
-      Matrix(vapply(1L:n_seqs, function(current_sequence)
-        sum(grams[, current_sequence] == current_ngram), 0), sparse = TRUE, 
-        doDiag = FALSE)))
+    
+    res <- do.call(cbind, lapply(possib_ngrams, function(current_ngram)
+      as.simple_triplet_matrix(vapply(1L:n_seqs, function(current_sequence)
+        sum(grams[, current_sequence] == current_ngram), 0))))
     colnames(res) <- possib_ngrams
   }
   
