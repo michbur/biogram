@@ -137,7 +137,7 @@ seq2ngrams_helper <- function(seq, ind, max_grams) {
   #length(ind) > 1 - equivalent of n > 1 
   if (length(ind) > 1) {
     #element_matrix contains elements of n-gram in matrix structure
-    element_matrix <- vapply(ind, function(i) seq[i], rep(0, max_grams))
+    element_matrix <- vapply(ind, function(i) seq[i], rep(seq[1], max_grams))
     
     #rare situation, only one n-gram in sequence
     if(max_grams == 1) {
