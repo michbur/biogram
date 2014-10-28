@@ -11,6 +11,9 @@
 #' @details Input looks strange, but the function was build to be as fast 
 #' as possible subroutine of \code{\link{calc_ig}}, which works on
 #' many features but only one target.
+#' @note During calculations \eqn{0 \log 0  = 0}. For justification see References.
+#' @references Cover TM, Thomas JA \emph{Elements of Information Theory, 2nd Edition}
+#' Wiley, 2006.
 #' @export
 #' @examples tar <- sample(0L:1, 100, replace = TRUE)
 #' feat <- sample(0L:1, 100, replace = TRUE)
@@ -23,11 +26,17 @@ calc_ig_single <- function(feature, target_b, len_target, pos_target, ES) {
   crosstable <- fast_crosstable(target_b, len_target, pos_target, feature)
   counts_feature <- c(crosstable[2] + crosstable[4], crosstable[1] + crosstable[3])
   
+  log_crosstable <- c(log(crosstable[1]/counts_feature[2]),
+                      log(crosstable[3]/counts_feature[2]),
+                      log(crosstable[2]/counts_feature[1]),
+                      log(crosstable[4]/counts_feature[1]))
+  log_crosstable[log_crosstable == -Inf] <- 0
+  
   #entropy - conditional entrophy
-  ES + (crosstable[1] * log(crosstable[1]/counts_feature[2]) +
-          crosstable[3] * log(crosstable[3]/counts_feature[2]) +
-          crosstable[2] * log(crosstable[2]/counts_feature[1]) + 
-          crosstable[4] * log(crosstable[4]/counts_feature[1]))/len_target
+  ES + (crosstable[1] * log_crosstable[1] +
+          crosstable[3] * log_crosstable[2] +
+          crosstable[2] * log_crosstable[3] + 
+          crosstable[4] * log_crosstable[4])/len_target
 }
 
 
