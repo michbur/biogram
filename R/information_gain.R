@@ -104,22 +104,3 @@ calc_ig <- function(target, features) {
     calc_ig_single(single_feature, tar_bit, l_tar, pos_tar, ES))
 }
 
-
-#' Test information gains
-#'
-#' Computes p-value of features' information gain.
-#'
-#' @inheritParams calc_ig
-#' @param times number of times procedure should be repetead
-#' @return a numeric vector of lenth equal to the number of features containing computed
-#' information gain values.
-#' @note Both \code{target} and \code{features} must be binary, i.e. contain only 0 
-#' and 1 values.
-#' @seealso \code{\link{calc_ig}}
-#' @export
-#' @examples calc_ig(sample(0L:1, 100, replace = TRUE), 
-#' matrix(sample(0L:1, 400, replace = TRUE), ncol = 4))
-
-test_ig <- function(target, features, times)
-  rowMeans(calc_ig(target, features) <= 
-             replicate(times, calc_ig(sample(target), features)))
