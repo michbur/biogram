@@ -1,6 +1,6 @@
 #' Permutation test for feature selection
 #'
-#' Performs a feature selection on N-gram data using a Fisher's 
+#' Performs a feature selection on positioned N-gram data using a Fisher's 
 #' permutation test.
 #'
 #' @inheritParams calc_ig
