@@ -1,0 +1,56 @@
+---
+title: "Permutation test properties"
+author: "Piotr Sobczyk"
+date: "09.11.2014"
+output: html_document
+---
+
+Let us consider a permutation test for testing dependance between target
+variable and a large number of features based on information gain.
+Both target and all the features have Bernoulli distribution.
+
+We are interested in the following questions:
+
+1. What is the power of this test for reasonable alternatives?
+1. How severely it depends on number of positive cases in feature?
+1. How sparse features are we able to detect at the given significance 
+  level? It could be good to show that in a table.
+1. How to deal with multiple testing? How to reduce number of false positives
+  features?
+1. How to boost signal exploiting the fact of having two similar 
+  features that are significant?
+
+We will start with question number 4.
+
+Suppose that we have a test at significance level 0.01. 
+Furthermore suppose that we wish to test 9-grams with alphabet of four and
+sequences of 20. Then the number of variables is about 5 million. 
+$20 \cdot 250\cdot 10^3 = 5 \cdot 10^6$.
+In settings like that, just because of significance level, we will get 
+$5 \cdot 10^4$ significant features, even if none of them is
+codependant with target.
+
+The reason is that we perform multiple-testing, which effectively makes our 
+significance level much higher.
+
+The classical method to deal with that is Bonferroni correction.
+Insted of testing each of m tests at significance level $\alpha$ we 
+test them at level $\alpha/m$. Thanks to that we have a desired significance 
+level, however power drops rapidly (because confidence intervals are much wider).
+There are some slightly more powerful methods like Holm's correction, 
+but it is unlikely to solve our problem..
+
+#### Possible solution - controlling False Discovery Rate
+We could use Benjamini-Hochberg procedure. Here instead of controlling 
+probability of one false discovery (false positive test result), 
+we control fraction of false discoveries to all discoveries.
+This is a well established method that yields much higher power.
+Possible problem is that B-H procedure controls FDR only when test statistics
+are independant which is not the case here. Still we can use it, 
+and evaluate results.
+
+
+To summarize, when analyzing n-gram for big value of n we are going to 
+get a lot of false discoveries. We either find a way of selecting the true ones
+with some post-hoc method or we can control the fraction of false discoveries,
+which will decrease the power of our test.
