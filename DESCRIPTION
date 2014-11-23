@@ -8,11 +8,11 @@ Authors@R: c(
     email = "michalburdukiewicz@gmail.com",
     role = c("cre", "aut")),
     person("Piotr", "Sobczyk",
-    role = c("aut")))
-Description: n-grams are sequences of n items. This package allows 
-easy extraction of various n-grams from biological sequences (proteins 
-or nucleic acids). Function for extraction of significant n-grams are 
-also provided.
+    role = "aut"))
+Description: n-grams are sequences of n items. This package allows easy
+    extraction of various n-grams from biological sequences (proteins or
+    nucleic acids). Function for extraction of significant n-grams are also
+    provided.
 License: GPL-3
 Depends:
     R (>= 3.0.0),
