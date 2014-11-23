@@ -60,7 +60,7 @@ calc_ig_single <- function(feature, target_b, len_target, pos_target, ES) {
 #' @examples tar <- sample(0L:1, 100, replace = TRUE)
 #' feat <- sample(0L:1, 100, replace = TRUE)
 #' library(bit) #used to code vector as bit
-#' fast_crosstable(as.bit(tar), 100, sum(tar),  feat)
+#' fast_crosstable(as.bit(tar), length(tar), sum(tar),  feat)
 
 fast_crosstable <- function(target_b, len_target, pos_target, feature) {
   feature_b = as.bit(feature) #from bit library, faster than any other type
