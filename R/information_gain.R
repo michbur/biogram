@@ -88,7 +88,7 @@ fast_crosstable <- function(target_b, len_target, pos_target, feature) {
 #' containing computed information gain values.
 #' @note Both \code{target} and \code{features} must be binary, i.e. contain only 0 
 #' and 1 values.
-#' @seealso \code{\link{test_ig}} for Monte Carlo information gain test.
+#' @seealso INSERT WORKING LINK HERE for Monte Carlo information gain test.
 #' @export
 #' @examples 
 #' calc_ig(sample(0L:1, 100, replace = TRUE), matrix(sample(0L:1, 400, replace = TRUE), ncol = 4))

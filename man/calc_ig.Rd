@@ -26,6 +26,6 @@ and 1 values.
 calc_ig(sample(0L:1, 100, replace = TRUE), matrix(sample(0L:1, 400, replace = TRUE), ncol = 4))
 }
 \seealso{
-\code{\link{test_ig}} for Monte Carlo information gain test.
+INSERT WORKING LINK HERE for Monte Carlo information gain test.
 }
 
