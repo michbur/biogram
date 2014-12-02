@@ -8,6 +8,8 @@ Authors@R: c(
     email = "michalburdukiewicz@gmail.com",
     role = c("cre", "aut")),
     person("Piotr", "Sobczyk",
+    role = "aut"),
+    person("Chris", "Lauber",
     role = "aut"))
 Description: n-grams are sequences of n items. This package allows easy
     extraction of various n-grams from biological sequences (proteins or
