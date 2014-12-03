@@ -188,14 +188,14 @@ test_features_fast <- function(target, features, criterion = "ig") {
     if(criterion != "ig")
       stop("Only Information Gain criterion is avaialble")
     result <- NULL
-    result$estimate <- calc_ig(target = target, features = feature)
+    result[["estimate"]] <- calc_ig(target = target, features = feature)
     dist <- dists[[paste(sum(feature))]]
-    result$p.value <- 1-dist[3, which.max(dist[1,]>=result$estimate-1e-15)]
+    result[["p.value"]] <- 1 - dist[3, which.max(dist[1, ] >= result[["estimate"]] - 1e-15)]
     class(result) <- "htest"
-    result$data.name <- "Target variable, feature variable"
-    result$method <- "Information gain permutation test"
-    names(result$estimate) <- "IG for feature"
-    return(result)
+    result[["estimate"]] <- "Target variable, feature variable"
+    result[["method"]] <- "Information gain permutation test"
+    names(result[["estimate"]]) <- "IG for feature"
+    result
   })
 }
 

@@ -34,7 +34,8 @@ and 1 values.
 \examples{
 temp <- create_feature_target(10, 390, 0, 600)
 temp2 <- create_feature_target(9, 391, 1, 599)
-test_features_fast(temp[,1], cbind(temp[,2], temp[,2]))
+temp3 <- create_feature_target(8, 392, 0, 600)
+test_features_fast(temp[,1], cbind(temp[,2], temp2[,2], temp3[,2]))
 }
 \seealso{
 \code{\link{calc_ig}}, \code{\link{ig_distribution}}
