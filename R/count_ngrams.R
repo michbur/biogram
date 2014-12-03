@@ -12,9 +12,7 @@
 #' used only for n-grams without position information. See \code{Details}.
 #' @param threshold \code{integer}, if not equal to 0, data is binarized into
 #' two groups (larger or equal to threshold, smaller than threshold).
-#' @return a \code{\link[Matrix]{dgCMatrix-class}} matrix (if \code{pos} = \code{FALSE})
-#' or \code{\link[Matrix]{lgCMatrix-class}} matrix (if \code{pos} = \code{TRUE})
-#' with named columns. See \code{Details} for specifics of the column naming.
+#' @return a \code{\link[slam]{simple_triplet_matrix}}. See \code{Details} for specifics of the column naming.
 #' @details The length of \code{distance} vector should be always \code{n} - 1. For example 
 #' when \code{n} = 3, \code{d} = c(1, 2) means A_A__A. For \code{n} = 4, 
 #' \code{d} = c(2, 0, 1) means A__AA_A. If vector \code{d} has length 1, it is recycled to
@@ -49,7 +47,7 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE, scale = FALSE, threshold
     seq <- matrix(seq, nrow = 1)
   
   if (scale && pos)
-    stop("Scaling a sparse matrix.")
+    stop("Cannot scale positioned n-grams (scaling a sparse matrix).")
   
   #length of sequence
   len_seq <- ncol(seq)

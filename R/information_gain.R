@@ -60,7 +60,7 @@ calc_ig_single <- function(feature, target_b, len_target, pos_target, ES) {
 #' @examples tar <- sample(0L:1, 100, replace = TRUE)
 #' feat <- sample(0L:1, 100, replace = TRUE)
 #' library(bit) #used to code vector as bit
-#' fast_crosstable(as.bit(tar), 100, sum(tar),  feat)
+#' fast_crosstable(as.bit(tar), length(tar), sum(tar),  feat)
 
 fast_crosstable <- function(target_b, len_target, pos_target, feature) {
   feature_b = as.bit(feature) #from bit library, faster than any other type
@@ -88,7 +88,7 @@ fast_crosstable <- function(target_b, len_target, pos_target, feature) {
 #' containing computed information gain values.
 #' @note Both \code{target} and \code{features} must be binary, i.e. contain only 0 
 #' and 1 values.
-#' @seealso \code{\link{test_ig}} for Monte Carlo information gain test.
+#' @seealso INSERT WORKING LINK HERE for Monte Carlo information gain test.
 #' @export
 #' @examples 
 #' calc_ig(sample(0L:1, 100, replace = TRUE), matrix(sample(0L:1, 400, replace = TRUE), ncol = 4))

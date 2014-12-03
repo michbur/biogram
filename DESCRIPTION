@@ -3,9 +3,18 @@ Type: Package
 Title: N-Gram Analysis of Biological Sequences
 Version: 1.0
 Date: 2014-08-05
-Author: Michal Burdukiewicz
-Maintainer: Michal Burdukiewicz <michalburdukiewicz@gmail.com>
-Description: More about what it does (maybe more than one line)
+Authors@R: c(
+    person("Michal", "Burdukiewicz",
+    email = "michalburdukiewicz@gmail.com",
+    role = c("cre", "aut")),
+    person("Piotr", "Sobczyk",
+    role = "aut"),
+    person("Chris", "Lauber",
+    role = "aut"))
+Description: n-grams are sequences of n items. This package allows easy
+    extraction of various n-grams from biological sequences (proteins or
+    nucleic acids). Function for extraction of significant n-grams are also
+    provided.
 License: GPL-3
 Depends:
     R (>= 3.0.0),

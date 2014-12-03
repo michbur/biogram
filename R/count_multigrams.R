@@ -1,6 +1,6 @@
 #' Detect and count multiple n-grams in sequences
 #'
-#' Is a convinient wrapper around \code{\link{count_ngrams}} for counting multiple
+#' A convinient wrapper around \code{\link{count_ngrams}} for counting multiple
 #' values of \code{n} and \code{d}.
 #'
 #' @inheritParams count_ngrams
@@ -16,9 +16,9 @@
 #' @export
 #' @examples 
 #' seqs <- matrix(sample(1L:4, 600, replace = TRUE), ncol = 50)
-#' multicount_ngrams(list(list(2, 1), list(2, 3)), seqs, 1L:4, pos = TRUE)
+#' count_multigrams(list(list(2, 1), list(2, 3)), seqs, 1L:4, pos = TRUE)
 
-multicount_ngrams <- function(n_d, seq, u, d = 0, pos = FALSE, scale = FALSE, threshold = 0) {
+count_multigrams <- function(n_d, seq, u, d = 0, pos = FALSE, scale = FALSE, threshold = 0) {
   n_loops <- length(n_d)
   do.call(cbind, lapply(1L:n_loops, function(current_loop) {
       count_ngrams(seq, n_d[[current_loop]][[1]], u, n_d[[current_loop]][[2]], 

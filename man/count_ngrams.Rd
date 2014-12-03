@@ -25,9 +25,7 @@ used only for n-grams without position information. See \code{Details}.}
 two groups (larger or equal to threshold, smaller than threshold).}
 }
 \value{
-a \code{\link[Matrix]{dgCMatrix-class}} matrix (if \code{pos} = \code{FALSE})
-or \code{\link[Matrix]{lgCMatrix-class}} matrix (if \code{pos} = \code{TRUE})
-with named columns. See \code{Details} for specifics of the column naming.
+a \code{\link[slam]{simple_triplet_matrix}}. See \code{Details} for specifics of the column naming.
 }
 \description{
 Counts all n-grams present in sequences.

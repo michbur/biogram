@@ -221,8 +221,10 @@ test_features_fast <- function(target, features, criterion = "ig") {
 #' @examples calc_ig(sample(0L:1, 100, replace = TRUE), 
 #' matrix(sample(0L:1, 400, replace = TRUE), ncol = 4))
 test_features <- function(target, features, times, criterion = "ig") {
+  #TO DO implement more criterions, do stuff like switch
+  #add variant of https://github.com/michbur/chipPCR/blob/master/R/check.method.R
   if(criterion == "ig")
     chosen_test <- calc_ig
-  rowMeans(calc_ig(target, features) <= 
+  rowMeans(chosen_test(target, features) <= 
              replicate(times, chosen_test(sample(target), features)))
 }
