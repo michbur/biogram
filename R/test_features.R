@@ -163,9 +163,16 @@ ig_distribution <- function(target, feature, graphical.output = FALSE) {
 #' @export
 #' @examples
 #' temp <- create_feature_target(10, 390, 0, 600) 
-#' temp2 <- create_feature_target(9, 391, 1, 599) 
-#' test_features_fast(temp[,1], cbind(temp[,2], temp[,2]))
+#' temp2 <- create_feature_target(9, 391, 1, 599)
+#' temp3 <- create_feature_target(8, 392, 0, 600)
+#' test_features_fast(temp[,1], cbind(temp[,2], temp2[,2], temp3[,2]))
 test_features_fast <- function(target, features, criterion = "ig") {
+  feature_size <- unique(apply(features, 2, function(feature) {sum(feature)}))
+  dists <- lapply(feature_size, function(i){
+    t <- create_feature_target(i, sum(target)-i, 0, length(target)-sum(target)) 
+    return(i=ig_distribution(t[,1], t[,2], graphical.output = FALSE))
+  })
+  names(dists) <- feature_size
   apply(features, 2, function(feature) {
     feature <- as.matrix(feature, ncol=1)
     n <- length(target)
@@ -182,7 +189,7 @@ test_features_fast <- function(target, features, criterion = "ig") {
       stop("Only Information Gain criterion is avaialble")
     result <- NULL
     result$estimate <- calc_ig(target = target, features = feature)
-    dist <- ig_distribution(target, feature, graphical.output = FALSE)
+    dist <- dists[[paste(sum(feature))]]
     result$p.value <- 1-dist[3, which.max(dist[1,]>=result$estimate-1e-15)]
     class(result) <- "htest"
     result$data.name <- "Target variable, feature variable"
