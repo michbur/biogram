@@ -134,10 +134,11 @@ ig_distribution <- function(target, feature, graphical.output = FALSE) {
 #' test_features_fast(tar_feat1[,1], cbind(tar_feat1[,2], tar_feat2[,2], 
 #' tar_feat3[,2]))
 test_features_fast <- function(target, features, criterion = "ig") {
-  feature_size <- unique(apply(features, 2, function(feature) {sum(feature)}))
-  dists <- lapply(feature_size, function(i){
-    t <- create_feature_target(i, sum(target)-i, 0, length(target)-sum(target)) 
-    return(i=ig_distribution(t[,1], t[,2], graphical.output = FALSE))
+  feature_size <- unique(colSums(features))
+  
+  dists <- lapply(feature_size, function(i) {
+    t <- create_feature_target(i, sum(target) - i, 0, length(target) - sum(target)) 
+    ig_distribution(t[,1], t[,2], graphical.output = FALSE)
   })
   names(dists) <- feature_size
   apply(features, 2, function(feature) {
@@ -146,12 +147,13 @@ test_features_fast <- function(target, features, criterion = "ig") {
     if (length(feature) != n) {
       stop("target and feature have different lengths")
     }
-    if (length(target[target %in% c(0,1)]) != n ) {
+    if (!all(target %in% c(0, 1))) {
       stop("target is not {0,1}-valued vector")
     }
     if (length(feature[feature %in% c(0,1)]) != n ) {
       stop("feature is not {0,1}-valued vector")
     }
+    #TO DO - here we will go with swtich
     if(criterion != "ig")
       stop("Only Information Gain criterion is avaialble")
     result <- NULL
