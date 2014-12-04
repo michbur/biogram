@@ -10,7 +10,8 @@ ig_distribution(target, feature, graphical.output = FALSE)
 
 \item{feature}{{0,1}-valued feature vector}
 
-\item{graphical.output}{default value is FALSE}
+\item{graphical.output}{default value is FALSE, if TRUE
+probability density function is plotted}
 }
 \value{
 a matrix of 3 rows. First row are possible IG values,
@@ -21,7 +22,11 @@ a matrix of 3 rows. First row are possible IG values,
 Computes Information Gain distribution for feature, target under null hypothesis
 }
 \examples{
-temp <- create_feature_target(10, 375, 15, 600)
-ig_distribution(temp[,1], temp[,2], graphical.output = TRUE)
+target_feature <- create_feature_target(10, 375, 15, 600)
+ig_distribution(target = target_feature[,1], feature = target_feature[,2],
+graphical.output = TRUE)
+}
+\seealso{
+\code{\link{calc_ig}}
 }
 
