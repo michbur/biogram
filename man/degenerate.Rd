@@ -6,15 +6,15 @@
 degenerate(seq, aa_group)
 }
 \arguments{
-\item{seq}{\code{character} vector representing single aminoacid sequence.}
+\item{seq}{\code{character} vector representing single sequence.}
 
-\item{aa_group}{list of aminoacid groups to which sequence should be aggregated.}
+\item{aa_group}{list of groups to which elements of sequence should be aggregated.}
 }
 \value{
 a \code{character} vector.
 }
 \description{
-'Degenerates' protein sequence by aggregating aminoacids to bigger groups.
+'Degenerates' protein or nucleic sequence by aggregating aminoacids/nucleotides to bigger groups.
 }
 \examples{
 sample_seq <- c(1, 3, 1, 3, 4, 4, 3, 1, 2)

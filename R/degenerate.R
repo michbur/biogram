@@ -1,9 +1,9 @@
 #' Degenerate protein sequence
 #'
-#' 'Degenerates' protein sequence by aggregating aminoacids to bigger groups.
+#' 'Degenerates' protein or nucleic sequence by aggregating aminoacids/nucleotides to bigger groups.
 #' 
-#' @param seq \code{character} vector representing single aminoacid sequence.
-#' @param aa_group list of aminoacid groups to which sequence should be aggregated.
+#' @param seq \code{character} vector representing single sequence.
+#' @param aa_group list of groups to which elements of sequence should be aggregated.
 #' @keywords manip
 #' @return a \code{character} vector.
 #' @export
@@ -17,6 +17,9 @@
 #' table(deg_seq)
 
 degenerate <- function(seq, aa_group) {
+  if (!all(unique(seq) %in% unlist(aa_group)))
+    stop("The sequence contains elements not present in any of groups.")
+  
   for (i in 1L:length(aa_group)) {
     seq[seq %in% aa_group[[i]]] <- i
   }
