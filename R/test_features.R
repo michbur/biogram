@@ -38,7 +38,7 @@ create_feature_target <- function(n11, n01, n10, n00){
 #' target_feature <- create_feature_target(10, 375, 15, 600) 
 #' ig_distribution(target = target_feature[,1], feature = target_feature[,2], 
 #' graphical.output = TRUE)
-ig_distribution <- function(target, feature, graphical.output = FALSE) {
+ig_distribution <- function(target, feature, graphical.output = FALSE, criterion = "ig") {
   n <- length(target)
   if (length(feature) != n) {
     stop("target and feature have different lengths")
@@ -49,6 +49,9 @@ ig_distribution <- function(target, feature, graphical.output = FALSE) {
   if (length(feature[feature %in% c(0,1)]) != n ) {
     stop("feature is not {0,1}-valued vector")
   }
+  
+  if(criterion == "ig")
+    chosen_test <- calc_ig
   
   prob_log <- NULL
   ig <- NULL
@@ -65,7 +68,7 @@ ig_distribution <- function(target, feature, graphical.output = FALSE) {
                 log = TRUE)
     dane <- create_feature_target(i, non_zero_feat-i, non_zero_target-i,
                                   n-non_zero_target-non_zero_feat+i)
-    ig[i+1] <- calc_ig(dane[,1], dane[,2, drop=F])
+    ig[i+1] <- chosen_test(dane[,1], dane[,2, drop=F])
   }
   
   ig_dist_temp <- exp(prob_log)/sum(exp(prob_log))
@@ -105,7 +108,9 @@ ig_distribution <- function(target, feature, graphical.output = FALSE) {
     }
   }
 
-  dist <- rbind(ig_values, ig_distribution, cumsum(ig_distribution)-ig_distribution)
+  dist <- rbind(ig_values, 
+                ig_distribution, 
+                1-rev(cumsum(rev(ig_distribution))))
   rownames(dist) <- c("IG", "pdf", "cdf")
   return(dist)
 }
@@ -134,14 +139,10 @@ ig_distribution <- function(target, feature, graphical.output = FALSE) {
 #' test_features_fast(tar_feat1[,1], cbind(tar_feat1[,2], tar_feat2[,2], 
 #' tar_feat3[,2]))
 test_features_fast <- function(target, features, criterion = "ig") {
-  feature_size <- unique(apply(features, 2, function(feature) {sum(feature)}))
-  dists <- lapply(feature_size, function(i){
-    t <- create_feature_target(i, sum(target)-i, 0, length(target)-sum(target)) 
-    return(i=ig_distribution(t[,1], t[,2], graphical.output = FALSE))
-  })
-  names(dists) <- feature_size
+  if (criterion != "ig") {
+    stop("Only Information Gain criterion is currently implemented")
+  }
   apply(features, 2, function(feature) {
-    feature <- as.matrix(feature, ncol=1)
     n <- length(target)
     if (length(feature) != n) {
       stop("target and feature have different lengths")
@@ -152,8 +153,19 @@ test_features_fast <- function(target, features, criterion = "ig") {
     if (length(feature[feature %in% c(0,1)]) != n ) {
       stop("feature is not {0,1}-valued vector")
     }
-    if(criterion != "ig")
-      stop("Only Information Gain criterion is avaialble")
+  })
+  # compute distribution once
+  feature_size <- unique(apply(features, 2, function(feature) {sum(feature)}))
+  dists <- lapply(feature_size, function(i){
+    t <- create_feature_target(i, sum(target)-i, 0, length(target)-sum(target)) 
+    return(i=ig_distribution(t[,1], t[,2], graphical.output = FALSE, criterion = criterion))
+  })
+  names(dists) <- feature_size
+  
+  apply(features, 2, function(feature) {
+    feature <- as.matrix(feature, ncol=1)
+    n <- length(target)
+    
     result <- NULL
     result[["estimate"]] <- calc_ig(target = target, features = feature)
     dist <- dists[[paste(sum(feature))]]
