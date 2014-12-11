@@ -43,10 +43,10 @@ ig_distribution <- function(target, feature, graphical.output = FALSE, criterion
   if (length(feature) != n) {
     stop("target and feature have different lengths")
   }
-  if (length(target[target %in% c(0,1)]) != n ) {
+  if (!all(target %in% c(0, 1))) {
     stop("target is not {0,1}-valued vector")
   }
-  if (length(feature[feature %in% c(0,1)]) != n ) {
+  if (!all(feature %in% c(0,1)) ) {
     stop("feature is not {0,1}-valued vector")
   }
   
@@ -139,23 +139,24 @@ ig_distribution <- function(target, feature, graphical.output = FALSE, criterion
 #' test_features_fast(tar_feat1[,1], cbind(tar_feat1[,2], tar_feat2[,2], 
 #' tar_feat3[,2]))
 test_features_fast <- function(target, features, criterion = "ig") {
+  #TO DO - here we will go with switch
   if (criterion != "ig") {
     stop("Only Information Gain criterion is currently implemented")
   }
+
   apply(features, 2, function(feature) {
-    n <- length(target)
-    if (length(feature) != n) {
+    if (length(feature) != length(target)) {
       stop("target and feature have different lengths")
     }
-    if (length(target[target %in% c(0,1)]) != n ) {
+    if (!all(target %in% c(0, 1))) {
       stop("target is not {0,1}-valued vector")
     }
-    if (length(feature[feature %in% c(0,1)]) != n ) {
+    if (!all(feature %in% c(0,1)) ) {
       stop("feature is not {0,1}-valued vector")
     }
   })
   # compute distribution once
-  feature_size <- unique(apply(features, 2, function(feature) {sum(feature)}))
+  feature_size <- unique(colSums(features))
   dists <- lapply(feature_size, function(i){
     t <- create_feature_target(i, sum(target)-i, 0, length(target)-sum(target)) 
     return(i=ig_distribution(t[,1], t[,2], graphical.output = FALSE, criterion = criterion))

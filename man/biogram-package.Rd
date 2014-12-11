@@ -9,6 +9,6 @@ biogram specialises in analysis of n-grams (k-tuples) from nucleotide or
 protein sequences.
 }
 \author{
-Michal Burdukiewicz
+Michal Burdukiewicz, Piotr Sobczyk, Chris Lauber
 }
 
