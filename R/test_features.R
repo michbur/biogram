@@ -105,7 +105,7 @@ ig_distribution <- function(target, feature, graphical.output = FALSE) {
     }
   }
 
-  dist <- rbind(ig_values, ig_distribution, cumsum(ig_distribution))
+  dist <- rbind(ig_values, ig_distribution, cumsum(ig_distribution)-ig_distribution)
   rownames(dist) <- c("IG", "pdf", "cdf")
   return(dist)
 }
