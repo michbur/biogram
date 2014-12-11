@@ -4,7 +4,7 @@
 #' protein sequences.
 #' @import slam
 #' @importFrom bit as.bit
-#' @author Michal Burdukiewicz
+#' @author Michal Burdukiewicz, Piotr Sobczyk, Chris Lauber
 #' @docType package
 #' @name biogram-package
 #' @aliases biogram
