@@ -29,6 +29,7 @@ create_feature_target <- function(n11, n01, n10, n00){
 #' @param feature {0,1}-valued feature vector
 #' @param graphical.output default value is FALSE, if TRUE
 #'        probability density function is plotted
+#' @param criterion the criterion used for calculations of distribution.
 #' @export
 #' @return a matrix of 3 rows. First row are possible IG values, 
 #'  second in probability density function, third is cimulative 
