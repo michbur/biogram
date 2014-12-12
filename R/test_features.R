@@ -32,9 +32,12 @@ create_feature_target <- function(n11, n01, n10, n00){
 #' @param criterion the criterion used for calculations of distribution.
 #' @export
 #' @details both \code{target} and \code{feature} vectors may contain only 0 and 1.
-#' @return a matrix of 3 rows. First row are possible IG values, 
-#'  second in probability density function, third is cimulative 
-#'  distribution function
+#' @return A matrix of 3 rows:
+#' \describe{
+#'   \item{1st row:}{possible IG values.}
+#'   \item{2nd row:}{probability density function.}
+#'   \item{3rd row:}{cumulative distribution function.}
+#' }
 #' @seealso \code{\link{calc_ig}}
 #' @examples
 #' target_feature <- create_feature_target(10, 375, 15, 600) 
@@ -52,7 +55,9 @@ ig_distribution <- function(target, feature, graphical.output = FALSE, criterion
     stop("feature is not {0,1}-valued vector")
   }
   
-  if(criterion == "ig")
+  valid_criterion <- check_criterion(criterion)
+  #here implement switch as external function
+  if(valid_criterion == "ig")
     chosen_test <- calc_ig
   
   prob_log <- NULL

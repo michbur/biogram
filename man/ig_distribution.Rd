@@ -16,9 +16,12 @@ probability density function is plotted}
 \item{criterion}{the criterion used for calculations of distribution.}
 }
 \value{
-a matrix of 3 rows. First row are possible IG values,
- second in probability density function, third is cimulative
- distribution function
+A matrix of 3 rows:
+\describe{
+  \item{1st row:}{possible IG values.}
+  \item{2nd row:}{probability density function.}
+  \item{3rd row:}{cumulative distribution function.}
+}
 }
 \description{
 Computes Information Gain distribution for feature, target under null hypothesis
