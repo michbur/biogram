@@ -1,8 +1,7 @@
 context("Exact test and distribution under H0")
 
 test_that("Exact test and permutation test are consistent",{
-  # Note that this test might fail 1 in 100 times as we build
-  # confidence interavals
+  set.seed(1)
   tar_feat1 <- create_feature_target(10, 390, 0, 600) 
   tar_feat2 <- create_feature_target(9, 391, 1, 599)
   tar_feat3 <- create_feature_target(8, 392, 2, 598)
@@ -13,7 +12,7 @@ test_that("Exact test and permutation test are consistent",{
   perm.results <- test_features(target_feature[, 1, drop=FALSE], 
                 cbind(tar_feat1[,2], tar_feat2[,2], tar_feat3[,2]),
                 m)
-  alfa <- 0.01
+  alfa <- 0.1
   conf.intervals <- sapply(perm.results, 
                            function(x) {
                              x <- (x*m+0.5*qnorm(alfa)^2)/(m+qnorm(alfa)^2)
