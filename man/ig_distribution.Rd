@@ -3,7 +3,7 @@
 \alias{ig_distribution}
 \title{Computes Information Gain distribution for feature, target under null hypothesis}
 \usage{
-ig_distribution(target, feature, graphical.output = FALSE)
+ig_distribution(target, feature, graphical.output = FALSE, criterion = "ig")
 }
 \arguments{
 \item{target}{{0,1}-valued target vector}
@@ -12,6 +12,8 @@ ig_distribution(target, feature, graphical.output = FALSE)
 
 \item{graphical.output}{default value is FALSE, if TRUE
 probability density function is plotted}
+
+\item{criterion}{the criterion used for calculations of distribution.}
 }
 \value{
 a matrix of 3 rows. First row are possible IG values,

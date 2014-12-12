@@ -9,7 +9,7 @@ test_that("Exact test and permutation test are consistent",{
                      cbind(tar_feat1[,2], tar_feat2[,2], tar_feat3[,2]))
   
   m <- 10000
-  perm.results <- test_features(target_feature[, 1, drop=FALSE], 
+  perm.results <- test_features(tar_feat1[, 1, drop=FALSE], 
                 cbind(tar_feat1[,2], tar_feat2[,2], tar_feat3[,2]),
                 m)
   alfa <- 0.1
