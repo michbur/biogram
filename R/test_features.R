@@ -1,36 +1,37 @@
 #' Create feature according to given contingency matrix
 #'
-#' @param n11 number of elements for which both target and feature equal 1
+#' Creates a matrix of features and target based on the values from contingency matrix.
+#' 
+#' @param n11 number of elements for which both target and feature equal 1.
 #' @param n01 number of elements for which target and feature equal 1,0 
-#' respectively
+#' respectively.
 #' @param n10 number of elements for which target and feature equal 0,1 
-#' respectively
-#' @param n00 number of elements for which both target and feature equal 0
+#' respectively.
+#' @param n00 number of elements for which both target and feature equal 0.
 #' @export
-#' @return a matrix of 2 columns and n11+n10+n01+n00 rows. First column is
-#' target, second is feature
+#' @return a matrix of 2 columns and n11+n10+n01+n00 rows. Columns represent
+#' target and feature vectors, respectively.
 #' @examples
+#' #equivalent of 
+#' #         target
+#' #feature 10 375
+#' #        15 600
 #' target_feature <- create_feature_target(10, 375, 15, 600)
 create_feature_target <- function(n11, n01, n10, n00){
-  tar <- rep(1, n11)
-  feat <- rep(1, n11)
-  tar <- c(tar, rep(1, n01))
-  feat <- c(feat, rep(0, n01))
-  tar <- c(tar, rep(0, n10))
-  feat <- c(feat, rep(1, n10))
-  tar <- c(tar, rep(0, n00))
-  feat <- c(feat, rep(0, n00))
-  return(cbind(tar, feat))
+  tar <- c(rep(1, n11), rep(1, n01), rep(0, n10), rep(0, n00))
+  feat <- c(rep(1, n11), rep(0, n01), rep(1, n10), rep(0, n00))
+  cbind(tar, feat)
 }
 
 #' Computes Information Gain distribution for feature, target under null hypothesis
 #' 
-#' @param target {0,1}-valued target vector
-#' @param feature {0,1}-valued feature vector
-#' @param graphical.output default value is FALSE, if TRUE
+#' @param target \{0,1\}-valued target vector. See Details.
+#' @param feature \{0,1\}-valued feature vector. See Details.
+#' @param graphical.output default value is \code{FALSE}, if \code{TRUE}
 #'        probability density function is plotted
 #' @param criterion the criterion used for calculations of distribution.
 #' @export
+#' @details both \code{target} and \code{feature} vectors may contain only 0 and 1.
 #' @return a matrix of 3 rows. First row are possible IG values, 
 #'  second in probability density function, third is cimulative 
 #'  distribution function

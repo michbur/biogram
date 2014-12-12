@@ -6,24 +6,28 @@
 create_feature_target(n11, n01, n10, n00)
 }
 \arguments{
-\item{n11}{number of elements for which both target and feature equal 1}
+\item{n11}{number of elements for which both target and feature equal 1.}
 
 \item{n01}{number of elements for which target and feature equal 1,0
-respectively}
+respectively.}
 
 \item{n10}{number of elements for which target and feature equal 0,1
-respectively}
+respectively.}
 
-\item{n00}{number of elements for which both target and feature equal 0}
+\item{n00}{number of elements for which both target and feature equal 0.}
 }
 \value{
-a matrix of 2 columns and n11+n10+n01+n00 rows. First column is
-target, second is feature
+a matrix of 2 columns and n11+n10+n01+n00 rows. Columns represent
+target and feature vectors, respectively.
 }
 \description{
-Create feature according to given contingency matrix
+Creates a matrix of features and target based on the values from contingency matrix.
 }
 \examples{
+#equivalent of
+#         target
+#feature 10 375
+#        15 600
 target_feature <- create_feature_target(10, 375, 15, 600)
 }
 

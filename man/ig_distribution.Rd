@@ -6,11 +6,11 @@
 ig_distribution(target, feature, graphical.output = FALSE, criterion = "ig")
 }
 \arguments{
-\item{target}{{0,1}-valued target vector}
+\item{target}{\{0,1\}-valued target vector. See Details.}
 
-\item{feature}{{0,1}-valued feature vector}
+\item{feature}{\{0,1\}-valued feature vector. See Details.}
 
-\item{graphical.output}{default value is FALSE, if TRUE
+\item{graphical.output}{default value is \code{FALSE}, if \code{TRUE}
 probability density function is plotted}
 
 \item{criterion}{the criterion used for calculations of distribution.}
@@ -22,6 +22,9 @@ a matrix of 3 rows. First row are possible IG values,
 }
 \description{
 Computes Information Gain distribution for feature, target under null hypothesis
+}
+\details{
+both \code{target} and \code{feature} vectors may contain only 0 and 1.
 }
 \examples{
 target_feature <- create_feature_target(10, 375, 15, 600)
