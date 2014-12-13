@@ -11,7 +11,7 @@ check_criterion(input_criterion, criterion_names = c("ig"))
 \item{criterion_names}{list of implemented criterions, always in lowercase.}
 }
 \value{
-a chosen criterion.
+a list of three: cireterion name, its function and nice name for outputs.
 }
 \description{
 Checks if the criterion is viable or matches it to the list of implemented criterions.

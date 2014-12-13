@@ -5,18 +5,20 @@
 #' @param input_criterion \code{character} string, criterion from input.
 #' @param criterion_names list of implemented criterions, always in lowercase.
 #' @export
-#' @return a chosen criterion.
+#' @return a list of three: cireterion name, its function and nice name for outputs.
 
 check_criterion <- function(input_criterion, criterion_names = c("ig")) {
   #think twice about grep
-  res <- method.names[grepl(tolower(input_criterion), method.names)]
+  valid_name <- criterion_names[grepl(tolower(input_criterion), criterion_names)]
   
-  if (length(res) == 0)
+  if (length(valid_name) == 0)
     stop("Name ", input_criterion, " cannot be associated with any available criterion.")
   
-  if (length(res) > 1)
+  if (length(valid_name) > 1)
     stop("Name ", input_criterion, " is too ambiguous. Rerun with more precise name.")
   
+  criterion_data <- switch(valid_name,
+                               ig = list(crit_function = calc_ig, nice_name = "Information Gain"))
   #TO DO - should also return the full name of criterion for purpose of summaries/plots
-  res
+  c(crit_name = valid_name, criterion_data)
 }

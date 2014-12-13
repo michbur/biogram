@@ -57,8 +57,6 @@ ig_distribution <- function(target, feature, graphical.output = FALSE, criterion
   
   valid_criterion <- check_criterion(criterion)
   #here implement switch as external function
-  if(valid_criterion == "ig")
-    chosen_test <- calc_ig
   
   prob_log <- NULL
   ig <- NULL
@@ -75,15 +73,15 @@ ig_distribution <- function(target, feature, graphical.output = FALSE, criterion
                 log = TRUE)
     dane <- create_feature_target(i, non_zero_feat-i, non_zero_target-i,
                                   n-non_zero_target-non_zero_feat+i)
-    ig[i+1] <- chosen_test(dane[,1], dane[,2, drop=F])
+    ig[i+1] <- valid_criterion[["crit_function"]](dane[,1], dane[,2, drop=F])
   }
   
   ig_dist_temp <- exp(prob_log)/sum(exp(prob_log))
   if (graphical.output){
     par(mar=c(5,4,4,5)+0.1)
-    plot(0:min(non_zero_target,non_zero_feat), ig, col="red", 
+    plot(0L:min(non_zero_target,non_zero_feat), ig, col="red", 
          xlab="Number of cases with feature=1 and target=1",
-         ylab="Information gain")
+         ylab=valid_criterion[["nice_name"]])
     par(new=TRUE)
     plot(0:min(non_zero_target,non_zero_feat), ig_dist_temp, type="l", 
          col="green", xaxt="n", yaxt="n",xlab="",ylab="")
@@ -208,10 +206,8 @@ test_features_fast <- function(target, features, criterion = "ig") {
 #' @examples calc_ig(sample(0L:1, 100, replace = TRUE), 
 #' matrix(sample(0L:1, 400, replace = TRUE), ncol = 4))
 test_features <- function(target, features, times, criterion = "ig") {
-  #TO DO implement more criterions, do stuff like switch
-  #add variant of https://github.com/michbur/chipPCR/blob/master/R/check.method.R
-  if(criterion == "ig")
-    chosen_test <- calc_ig
-  rowMeans(chosen_test(target, features) <= 
-             replicate(times, chosen_test(sample(target), features)))
+
+  valid_criterion <- check_criterion(criterion)
+  rowMeans(valid_criterion[["crit_function"]](target, features) <= 
+             replicate(times, valid_criterion[["crit_function"]](sample(target), features)))
 }
