@@ -23,7 +23,7 @@ create_feature_target <- function(n11, n01, n10, n00){
   cbind(tar, feat)
 }
 
-#' Computes Information Gain distribution for feature, target under null hypothesis
+#' Computes criterion distribution for feature, target under null hypothesis
 #' 
 #' @param target \{0,1\}-valued target vector. See Details.
 #' @param feature \{0,1\}-valued feature vector. See Details.
@@ -34,16 +34,16 @@ create_feature_target <- function(n11, n01, n10, n00){
 #' @details both \code{target} and \code{feature} vectors may contain only 0 and 1.
 #' @return A matrix of 3 rows:
 #' \describe{
-#'   \item{1st row:}{possible IG values.}
+#'   \item{1st row:}{possible values of criterion.}
 #'   \item{2nd row:}{probability density function.}
 #'   \item{3rd row:}{cumulative distribution function.}
 #' }
 #' @seealso \code{\link{calc_ig}}
 #' @examples
 #' target_feature <- create_feature_target(10, 375, 15, 600) 
-#' ig_distribution(target = target_feature[,1], feature = target_feature[,2], 
+#' criterion_distribution(target = target_feature[,1], feature = target_feature[,2], 
 #' graphical.output = TRUE)
-ig_distribution <- function(target, feature, graphical.output = FALSE, criterion = "ig") {
+criterion_distribution <- function(target, feature, graphical.output = FALSE, criterion = "ig") {
   n <- length(target)
   if (length(feature) != n) {
     stop("target and feature have different lengths")
@@ -56,26 +56,12 @@ ig_distribution <- function(target, feature, graphical.output = FALSE, criterion
   }
   
   valid_criterion <- check_criterion(criterion)
-  #here implement switch as external function
   
-  prob_log <- NULL
-  ig <- NULL
   non_zero_target <- sum(target)
   non_zero_feat <- sum(feature)
   p <- non_zero_target/n
   q <- non_zero_feat/n
-  for (i in 0:min(non_zero_target,non_zero_feat)){
-    prob_log[i+1] <- dmultinom(x = c(i, non_zero_feat-i, non_zero_target-i, 
-                                     n-non_zero_target-non_zero_feat+i),
-                               size = n,
-                               prob = c(p*q, (1-p)*q, p*(1-q), (1-p)*(1-q)),
-                               log = TRUE)
-    dane <- create_feature_target(i, non_zero_feat-i, non_zero_target-i,
-                                  n-non_zero_target-non_zero_feat+i)
-    ig[i+1] <- valid_criterion[["crit_function"]](dane[,1], dane[,2, drop=F])
-  }
-  browser()
-  
+
   #values of criterion for different contingency tables
   diff_conts <- sapply(0L:min(non_zero_target, non_zero_feat), function(i) {
     #to do - check if other criterions also follow this distribution
@@ -92,14 +78,16 @@ ig_distribution <- function(target, feature, graphical.output = FALSE, criterion
     c(prob_log = prob_log, vals = vals)
   })
   
-  ig_dist_temp <- exp(diff_conts["prob_log", ])/sum(exp(diff_conts["prob_log", ]))
+  dist_temp <- exp(diff_conts["prob_log", ])/sum(exp(diff_conts["prob_log", ]))
   if (graphical.output){
+    #TO DO - remember that par manipulations changes pars for all plots in future. Revert old parameters
+    #after plotting
     par(mar = c(5,4,4,5) + 0.1)
     plot(0L:min(non_zero_target, non_zero_feat), diff_conts["vals", ], col="red", 
          xlab = "Number of cases with feature=1 and target=1",
          ylab = valid_criterion[["nice_name"]])
     par(new = TRUE)
-    plot(0L:min(non_zero_target,non_zero_feat), ig_dist_temp, type = "l", 
+    plot(0L:min(non_zero_target,non_zero_feat), dist_temp, type = "l", 
          col = "green", xaxt = "n", yaxt = "n",xlab = "",ylab = "")
     axis(4)
     mtext("density",side = 4,line = 3)
@@ -112,27 +100,27 @@ ig_distribution <- function(target, feature, graphical.output = FALSE, criterion
   
   # We get the same IG values for different contingency tables
   # therefore we need to combine them for distribution
-  ig_dist_temp <- ig_dist_temp[order(diff_conts["vals", ])]
-  ig_val_temp <- diff_conts["vals", ][order(diff_conts["vals", ])]
+  dist_temp <- dist_temp[order(diff_conts["vals", ])]
+  val_temp <- diff_conts["vals", ][order(diff_conts["vals", ])]
   j <- 1
-  ig_distribution <- ig_dist_temp[1]
-  ig_values <- ig_val_temp[1]
-  for(i in 2L:length(ig_val_temp)) {
-    if (abs(ig_val_temp[i - 1] - ig_val_temp[i]) < 1e-10) {
-      ig_values[j] <- ig_values[j]
-      ig_distribution[j] <- ig_distribution[j] + ig_dist_temp[i]
+  criterion_distribution <- dist_temp[1]
+  criterion_values <- val_temp[1]
+  for(i in 2L:length(val_temp)) {
+    if (abs(val_temp[i - 1] - val_temp[i]) < 1e-10) {
+      criterion_values[j] <- criterion_values[j]
+      criterion_distribution[j] <- criterion_distribution[j] + dist_temp[i]
     }
     else {
       j <- j + 1
-      ig_values[j] <- ig_val_temp[i]
-      ig_distribution[j] <- ig_dist_temp[i]
+      criterion_values[j] <- val_temp[i]
+      criterion_distribution[j] <- dist_temp[i]
     }
   }
   
-  dist <- rbind(ig_values, 
-                ig_distribution, 
-                1 - rev(cumsum(rev(ig_distribution))))
-  rownames(dist) <- c("IG", "pdf", "cdf")
+  dist <- rbind(criterion_values, 
+                criterion_distribution, 
+                1 - rev(cumsum(rev(criterion_distribution))))
+  rownames(dist) <- c("Criterion", "pdf", "cdf")
   dist
 }
 
@@ -151,7 +139,7 @@ ig_distribution <- function(target, feature, graphical.output = FALSE, criterion
 #' @return a vector of objects of htest class that relate to each feature tested
 #' @note Both \code{target} and \code{features} must be binary, i.e. contain only 0 
 #' and 1 values.
-#' @seealso \code{\link{calc_ig}}, \code{\link{ig_distribution}}
+#' @seealso \code{\link{calc_ig}}, \code{\link{criterion_distribution}}
 #' @export
 #' @examples
 #' tar_feat1 <- create_feature_target(10, 390, 0, 600) 
@@ -180,7 +168,7 @@ test_features_fast <- function(target, features, criterion = "ig") {
   feature_size <- unique(colSums(features))
   dists <- lapply(feature_size, function(i){
     t <- create_feature_target(i, sum(target)-i, 0, length(target)-sum(target)) 
-    return(i=ig_distribution(t[,1], t[,2], graphical.output = FALSE, criterion = criterion))
+    return(i=criterion_distribution(t[,1], t[,2], graphical.output = FALSE, criterion = criterion))
   })
   names(dists) <- feature_size
   

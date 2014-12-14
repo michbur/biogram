@@ -38,6 +38,6 @@ test_features_fast(tar_feat1[,1], cbind(tar_feat1[,2], tar_feat2[,2],
 tar_feat3[,2]))
 }
 \seealso{
-\code{\link{calc_ig}}, \code{\link{ig_distribution}}
+\code{\link{calc_ig}}, \code{\link{criterion_distribution}}
 }
 
