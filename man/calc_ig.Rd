@@ -27,5 +27,7 @@ calc_ig(sample(0L:1, 100, replace = TRUE), matrix(sample(0L:1, 400, replace = TR
 }
 \seealso{
 INSERT WORKING LINK HERE for Monte Carlo information gain test.
+
+Other implemented \code{\link{criterions}}.
 }
 

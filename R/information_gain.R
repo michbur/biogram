@@ -39,51 +39,11 @@ calc_ig_single <- function(feature, target_b, len_target, pos_target, ES) {
           crosstable[4] * log_crosstable[4])/len_target
 }
 
-
-#' Very fast 2d cross-tabulation
-#'
-#' Quickly cross-tabulates two binary vectors.
-#'
-#' @inheritParams calc_ig_single
-#' @return a vector of length four: 
-#' \enumerate{
-#' \item target +, feature+
-#' \item target +, feature-
-#' \item target -, feature+
-#' \item target -, feature-
-#' }
-#' @details Input looks strange, but the function was build to be as fast 
-#' as possible subroutine of \code{\link{calc_ig}}, which works on
-#' many features but only one target.
-#' @note Binary vector means numeric vector with 0 or 1.
-#' @export
-#' @examples tar <- sample(0L:1, 100, replace = TRUE)
-#' feat <- sample(0L:1, 100, replace = TRUE)
-#' library(bit) #used to code vector as bit
-#' fast_crosstable(as.bit(tar), length(tar), sum(tar),  feat)
-
-fast_crosstable <- function(target_b, len_target, pos_target, feature) {
-  feature_b = as.bit(feature) #from bit library, faster than any other type
-  
-  #target positive and feature positive
-  n_tar_f <- sum(feature_b & target_b) #simple boolean algebra to speed it more
-  #feature positive
-  pos_f <- sum(feature_b)
-  
-  c(n_tar_f, # tar +, feature +
-    pos_target - n_tar_f, # tar +, feature -
-    pos_f - n_tar_f, # tar -, feature +
-    len_target - pos_target - pos_f + n_tar_f) # tar -, feature -
-}
-
-
 #' Calculate IG of features
 #'
 #' Computes information gain between features and target vector.
 #'
-#' @param target target vector.
-#' @param features \code{integer} matrix of features with number of rows equal 
-#' to the length of target vector.
+#' @inheritParams test_features
 #' @return a \code{integer} vector of length equal to the number of features 
 #' containing computed information gain values.
 #' @note Both \code{target} and \code{features} must be binary, i.e. contain only 0 
@@ -92,6 +52,8 @@ fast_crosstable <- function(target_b, len_target, pos_target, feature) {
 #' @export
 #' @examples 
 #' calc_ig(sample(0L:1, 100, replace = TRUE), matrix(sample(0L:1, 400, replace = TRUE), ncol = 4))
+#' @seealso
+#' Other implemented \code{\link{criterions}}.
 
 calc_ig <- function(target, features) {
   tar_bit <- as.bit(target)

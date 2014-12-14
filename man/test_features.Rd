@@ -11,7 +11,8 @@ test_features(target, features, criterion = "ig", quick = TRUE, times)
 \item{features}{\code{integer} matrix of features with number of rows equal
 to the length of target vector.}
 
-\item{criterion}{the criterion used in permutation test.}
+\item{criterion}{the criterion used in permutation test. See \code{\link{criterions}} for the
+list of possible criterions.}
 
 \item{quick}{logical, if \code{TRUE} Quick Permutation Test be used.}
 
