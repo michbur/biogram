@@ -3,7 +3,7 @@
 \alias{test_features}
 \title{Permutation test for feature selection}
 \usage{
-test_features(target, features, times, criterion = "ig")
+test_features(target, features, criterion = "ig", quick = TRUE, times)
 }
 \arguments{
 \item{target}{target vector.}
@@ -11,13 +11,15 @@ test_features(target, features, times, criterion = "ig")
 \item{features}{\code{integer} matrix of features with number of rows equal
 to the length of target vector.}
 
-\item{times}{number of times procedure should be repetead}
-
 \item{criterion}{the criterion used in permutation test.}
+
+\item{quick}{logical, if \code{TRUE} Quick Permutation Test be used.}
+
+\item{times}{number of times procedure should be repetead. Ignored if \code{quick} is
+\code{TRUE}.}
 }
 \value{
-a numeric vector of lenth equal to the number of features containing computed
-information gain values.
+a vector of objects of htest class that relate to each feature tested
 }
 \description{
 Performs a feature selection on positioned N-gram data using a Fisher's
@@ -34,10 +36,13 @@ Both \code{target} and \code{features} must be binary, i.e. contain only 0
 and 1 values.
 }
 \examples{
-calc_ig(sample(0L:1, 100, replace = TRUE),
-matrix(sample(0L:1, 400, replace = TRUE), ncol = 4))
+tar_feat1 <- create_feature_target(10, 390, 0, 600)
+tar_feat2 <- create_feature_target(9, 391, 1, 599)
+tar_feat3 <- create_feature_target(8, 392, 0, 600)
+test_features(tar_feat1[,1], cbind(tar_feat1[,2], tar_feat2[,2],
+tar_feat3[,2]))
 }
 \seealso{
-\code{\link{calc_ig}}
+\code{\link{calc_ig}}, \code{\link{criterion_distribution}}
 }
 

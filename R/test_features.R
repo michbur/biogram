@@ -61,7 +61,7 @@ criterion_distribution <- function(target, feature, graphical.output = FALSE, cr
   non_zero_feat <- sum(feature)
   p <- non_zero_target/n
   q <- non_zero_feat/n
-
+  
   #values of criterion for different contingency tables
   diff_conts <- sapply(0L:min(non_zero_target, non_zero_feat), function(i) {
     #to do - check if other criterions also follow this distribution
@@ -81,7 +81,8 @@ criterion_distribution <- function(target, feature, graphical.output = FALSE, cr
   dist_temp <- exp(diff_conts["prob_log", ])/sum(exp(diff_conts["prob_log", ]))
   if (graphical.output){
     #TO DO - remember that par manipulations changes pars for all plots in future. Revert old parameters
-    #after plotting
+    #after plotting. Very clunky solution below.
+    old_par <- par(c("mar", "fig", "oma"))
     par(mar = c(5,4,4,5) + 0.1)
     plot(0L:min(non_zero_target, non_zero_feat), diff_conts["vals", ], col="red", 
          xlab = "Number of cases with feature=1 and target=1",
@@ -96,6 +97,7 @@ criterion_distribution <- function(target, feature, graphical.output = FALSE, cr
     plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
     legend("top", legend = c(valid_criterion[["nice_name"]], "Probability"), xpd = TRUE, 
            horiz = TRUE, fill = c("red", "green"), bty = "n", cex = 1)
+    par(mar = old_par[["mar"]], fig = old_par[["fig"]], oma = old_par[["oma"]])
   }
   
   # We get the same IG values for different contingency tables
@@ -132,6 +134,9 @@ criterion_distribution <- function(target, feature, graphical.output = FALSE, cr
 #'
 #' @inheritParams calc_ig
 #' @param criterion the criterion used in permutation test.
+#' @param quick logical, if \code{TRUE} Quick Permutation Test be used.
+#' @param times number of times procedure should be repetead. Ignored if \code{quick} is 
+#' \code{TRUE}.
 #' @details Currently implemented criterions:
 #' \itemize{
 #' \item{"\code{ig}" - information gain}
@@ -145,73 +150,51 @@ criterion_distribution <- function(target, feature, graphical.output = FALSE, cr
 #' tar_feat1 <- create_feature_target(10, 390, 0, 600) 
 #' tar_feat2 <- create_feature_target(9, 391, 1, 599)
 #' tar_feat3 <- create_feature_target(8, 392, 0, 600)
-#' test_features_fast(tar_feat1[,1], cbind(tar_feat1[,2], tar_feat2[,2], 
+#' test_features(tar_feat1[,1], cbind(tar_feat1[,2], tar_feat2[,2], 
 #' tar_feat3[,2]))
-test_features_fast <- function(target, features, criterion = "ig") {
-  #TO DO - here we will go with switch
-  if (criterion != "ig") {
-    stop("Only Information Gain criterion is currently implemented")
-  }
-  
-  apply(features, 2, function(feature) {
-    if (length(feature) != length(target)) {
-      stop("target and feature have different lengths")
-    }
-    if (!all(target %in% c(0, 1))) {
-      stop("target is not {0,1}-valued vector")
-    }
-    if (!all(feature %in% c(0,1)) ) {
-      stop("feature is not {0,1}-valued vector")
-    }
-  })
-  # compute distribution once
-  feature_size <- unique(colSums(features))
-  dists <- lapply(feature_size, function(i){
-    t <- create_feature_target(i, sum(target)-i, 0, length(target)-sum(target)) 
-    return(i=criterion_distribution(t[,1], t[,2], graphical.output = FALSE, criterion = criterion))
-  })
-  names(dists) <- feature_size
-  
-  apply(features, 2, function(feature) {
-    feature <- as.matrix(feature, ncol=1)
-    n <- length(target)
-    
-    result <- NULL
-    result[["estimate"]] <- calc_ig(target = target, features = feature)
-    dist <- dists[[paste(sum(feature))]]
-    result[["p.value"]] <- 1 - dist[3, which.max(dist[1, ] >= result[["estimate"]] - 1e-15)]
-    class(result) <- "htest"
-    result[["estimate"]] <- "Target variable, feature variable"
-    result[["method"]] <- "Information gain permutation test"
-    names(result[["estimate"]]) <- "IG for feature"
-    result
-  })
-}
-
-
-#' Permutation test for feature selection
-#'
-#' Performs a feature selection on positioned N-gram data using a Fisher's 
-#' permutation test.
-#'
-#' @inheritParams calc_ig
-#' @param times number of times procedure should be repetead
-#' @param criterion the criterion used in permutation test.
-#' @details Currently implemented criterions:
-#' \itemize{
-#' \item{"\code{ig}" - information gain}
-#' }
-#' @return a numeric vector of lenth equal to the number of features containing computed
-#' information gain values.
-#' @note Both \code{target} and \code{features} must be binary, i.e. contain only 0 
-#' and 1 values.
-#' @seealso \code{\link{calc_ig}}
-#' @export
-#' @examples calc_ig(sample(0L:1, 100, replace = TRUE), 
-#' matrix(sample(0L:1, 400, replace = TRUE), ncol = 4))
-test_features <- function(target, features, times, criterion = "ig") {
+test_features <- function(target, features, criterion = "ig", quick = TRUE, times) {
   
   valid_criterion <- check_criterion(criterion)
-  rowMeans(valid_criterion[["crit_function"]](target, features) <= 
-             replicate(times, valid_criterion[["crit_function"]](sample(target), features)))
+  
+  if(quick) {
+    apply(features, 2, function(feature) {
+      if (length(feature) != length(target)) {
+        stop("target and feature have different lengths")
+      }
+      if (!all(target %in% c(0, 1))) {
+        stop("target is not {0,1}-valued vector")
+      }
+      if (!all(feature %in% c(0,1)) ) {
+        stop("feature is not {0,1}-valued vector")
+      }
+    })
+    # compute distribution once
+    feature_size <- unique(colSums(features))
+    dists <- lapply(feature_size, function(i){
+      t <- create_feature_target(i, sum(target) - i, 0, length(target) - sum(target)) 
+      criterion_distribution(t[, 1], t[, 2], graphical.output = FALSE, criterion = criterion)
+    })
+    names(dists) <- feature_size
+    
+    apply(features, 2, function(feature) {
+      feature <- as.matrix(feature, ncol = 1)
+      n <- length(target)
+      
+      result <- NULL
+      result[["estimate"]] <- valid_criterion[["crit_function"]](target = target, features = feature)
+      dist <- dists[[paste(sum(feature))]]
+      result[["p.value"]] <- 1 - dist[3, which.max(dist[1, ] >= result[["estimate"]] - 1e-15)]
+      class(result) <- "htest"
+      result[["estimate"]] <- "Target variable, feature variable"
+      result[["method"]] <- "Information gain permutation test"
+      names(result[["estimate"]]) <- "Criterion value for feature"
+      result
+    })
+  } else {
+    
+    rowMeans(valid_criterion[["crit_function"]](target, features) <= 
+               replicate(times, valid_criterion[["crit_function"]](sample(target), features)))
+  }
 }
+
+

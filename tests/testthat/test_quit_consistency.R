@@ -5,13 +5,13 @@ test_that("Exact test and permutation test are consistent",{
   tar_feat1 <- create_feature_target(10, 390, 0, 600) 
   tar_feat2 <- create_feature_target(9, 391, 1, 599)
   tar_feat3 <- create_feature_target(8, 392, 2, 598)
-  fast.results <- test_features_fast(tar_feat1[,1], 
+  fast.results <- test_features(tar_feat1[,1], 
                      cbind(tar_feat1[,2], tar_feat2[,2], tar_feat3[,2]))
   
   m <- 10000
   perm.results <- test_features(tar_feat1[, 1, drop=FALSE], 
                 cbind(tar_feat1[,2], tar_feat2[,2], tar_feat3[,2]),
-                m)
+                times = m, quick = FALSE)
   alfa <- 0.1
   conf.intervals <- sapply(perm.results, 
                            function(x) {
