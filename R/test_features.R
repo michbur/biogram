@@ -65,44 +65,60 @@ ig_distribution <- function(target, feature, graphical.output = FALSE, criterion
   p <- non_zero_target/n
   q <- non_zero_feat/n
   for (i in 0:min(non_zero_target,non_zero_feat)){
-    prob_log[i+1] <- 
-      dmultinom(x = c(i, non_zero_feat-i, non_zero_target-i, 
-                  n-non_zero_target-non_zero_feat+i),
-                size = n,
-                prob = c(p*q, (1-p)*q, p*(1-q), (1-p)*(1-q)),
-                log = TRUE)
+    prob_log[i+1] <- dmultinom(x = c(i, non_zero_feat-i, non_zero_target-i, 
+                                     n-non_zero_target-non_zero_feat+i),
+                               size = n,
+                               prob = c(p*q, (1-p)*q, p*(1-q), (1-p)*(1-q)),
+                               log = TRUE)
     dane <- create_feature_target(i, non_zero_feat-i, non_zero_target-i,
                                   n-non_zero_target-non_zero_feat+i)
     ig[i+1] <- valid_criterion[["crit_function"]](dane[,1], dane[,2, drop=F])
   }
+  browser()
   
-  ig_dist_temp <- exp(prob_log)/sum(exp(prob_log))
+  #values of criterion for different contingency tables
+  diff_conts <- sapply(0L:min(non_zero_target, non_zero_feat), function(i) {
+    #to do - check if other criterions also follow this distribution
+    prob_log <- dmultinom(x = c(i, non_zero_feat - i, non_zero_target - i, 
+                                n-non_zero_target - non_zero_feat + i),
+                          size = n,
+                          prob = c(p*q, (1-p)*q, p*(1-q), (1-p)*(1-q)),
+                          log = TRUE)
+    #feature-target data - different contingency tables
+    ft_data <- create_feature_target(i, non_zero_feat - i, non_zero_target - i,
+                                     n-non_zero_target - non_zero_feat + i)
+    #values of criterion
+    vals <- unname(valid_criterion[["crit_function"]](ft_data[,1], ft_data[, 2, drop = FALSE]))
+    c(prob_log = prob_log, vals = vals)
+  })
+  
+  ig_dist_temp <- exp(diff_conts["prob_log", ])/sum(exp(diff_conts["prob_log", ]))
   if (graphical.output){
-    par(mar=c(5,4,4,5)+0.1)
-    plot(0L:min(non_zero_target,non_zero_feat), ig, col="red", 
-         xlab="Number of cases with feature=1 and target=1",
-         ylab=valid_criterion[["nice_name"]])
-    par(new=TRUE)
-    plot(0:min(non_zero_target,non_zero_feat), ig_dist_temp, type="l", 
-         col="green", xaxt="n", yaxt="n",xlab="",ylab="")
+    par(mar = c(5,4,4,5) + 0.1)
+    plot(0L:min(non_zero_target, non_zero_feat), diff_conts["vals", ], col="red", 
+         xlab = "Number of cases with feature=1 and target=1",
+         ylab = valid_criterion[["nice_name"]])
+    par(new = TRUE)
+    plot(0L:min(non_zero_target,non_zero_feat), ig_dist_temp, type = "l", 
+         col = "green", xaxt = "n", yaxt = "n",xlab = "",ylab = "")
     axis(4)
-    mtext("density",side=4,line=3)
+    mtext("density",side = 4,line = 3)
     par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), 
         new = TRUE)
     plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-    legend("top", legend = c("Information gain", "Probability"), xpd = TRUE, 
-           horiz = TRUE, fill=c("red", "green"),  bty = "n", cex = 1)
+    legend("top", legend = c(valid_criterion[["nice_name"]], "Probability"), xpd = TRUE, 
+           horiz = TRUE, fill = c("red", "green"), bty = "n", cex = 1)
   }
   
   # We get the same IG values for different contingency tables
   # therefore we need to combine them for distribution
-  ig_dist_temp <- ig_dist_temp[order(ig)]
-  ig_val_temp <- ig[order(ig)]
+  ig_dist_temp <- ig_dist_temp[order(diff_conts["vals", ])]
+  ig_val_temp <- diff_conts["vals", ][order(diff_conts["vals", ])]
   j <- 1
   ig_distribution <- ig_dist_temp[1]
   ig_values <- ig_val_temp[1]
-  for(i in 2:length(ig_val_temp)) {
-    if (abs(ig_val_temp[i-1]-ig_val_temp[i])<1e-10) {
+  for(i in 2L:length(ig_val_temp)) {
+    if (abs(ig_val_temp[i - 1] - ig_val_temp[i]) < 1e-10) {
       ig_values[j] <- ig_values[j]
       ig_distribution[j] <- ig_distribution[j] + ig_dist_temp[i]
     }
@@ -112,12 +128,12 @@ ig_distribution <- function(target, feature, graphical.output = FALSE, criterion
       ig_distribution[j] <- ig_dist_temp[i]
     }
   }
-
+  
   dist <- rbind(ig_values, 
                 ig_distribution, 
-                1-rev(cumsum(rev(ig_distribution))))
+                1 - rev(cumsum(rev(ig_distribution))))
   rownames(dist) <- c("IG", "pdf", "cdf")
-  return(dist)
+  dist
 }
 
 
@@ -148,7 +164,7 @@ test_features_fast <- function(target, features, criterion = "ig") {
   if (criterion != "ig") {
     stop("Only Information Gain criterion is currently implemented")
   }
-
+  
   apply(features, 2, function(feature) {
     if (length(feature) != length(target)) {
       stop("target and feature have different lengths")
@@ -206,7 +222,7 @@ test_features_fast <- function(target, features, criterion = "ig") {
 #' @examples calc_ig(sample(0L:1, 100, replace = TRUE), 
 #' matrix(sample(0L:1, 400, replace = TRUE), ncol = 4))
 test_features <- function(target, features, times, criterion = "ig") {
-
+  
   valid_criterion <- check_criterion(criterion)
   rowMeans(valid_criterion[["crit_function"]](target, features) <= 
              replicate(times, valid_criterion[["crit_function"]](sample(target), features)))
