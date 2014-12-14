@@ -48,7 +48,7 @@ calc_ig_single <- function(feature, target_b, len_target, pos_target, ES) {
 #' containing computed information gain values.
 #' @note Both \code{target} and \code{features} must be binary, i.e. contain only 0 
 #' and 1 values.
-#' @seealso INSERT WORKING LINK HERE for Monte Carlo information gain test.
+#' @seealso \code{\link{test_features}}.
 #' @export
 #' @examples 
 #' calc_ig(sample(0L:1, 100, replace = TRUE), matrix(sample(0L:1, 400, replace = TRUE), ncol = 4))

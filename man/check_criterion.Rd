@@ -8,12 +8,15 @@ check_criterion(input_criterion, criterion_names = c("ig"))
 \arguments{
 \item{input_criterion}{\code{character} string, criterion from input.}
 
-\item{criterion_names}{list of implemented criterions, always in lowercase.}
+\item{criterion_names}{list of implemented \code{\link{criterions}}, always in lowercase.}
 }
 \value{
-a list of three: cireterion name, its function and nice name for outputs.
+a list of three: criterion name, its function and nice name for outputs.
 }
 \description{
 Checks if the criterion is viable or matches it to the list of implemented criterions.
+}
+\seealso{
+All implemented \code{\link{criterions}}.
 }
 
