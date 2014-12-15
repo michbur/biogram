@@ -1,10 +1,13 @@
+#' Compute criterion distribution 
+#' 
 #' Computes criterion distribution for feature, target under null hypothesis
 #' 
 #' @param target \{0,1\}-valued target vector. See Details.
 #' @param feature \{0,1\}-valued feature vector. See Details.
 #' @param graphical.output default value is \code{FALSE}, if \code{TRUE}
 #'        probability density function is plotted
-#' @param criterion the criterion used for calculations of distribution.
+#' @param criterion the criterion used for calculations of distribution. 
+#' See list of possible \code{\link{criterions}}.
 #' @export
 #' @details both \code{target} and \code{feature} vectors may contain only 0 and 1.
 #' @return A matrix of 3 rows:
@@ -13,7 +16,7 @@
 #'   \item{2nd row:}{probability density function.}
 #'   \item{3rd row:}{cumulative distribution function.}
 #' }
-#' @seealso \code{\link{calc_ig}}
+#' @seealso \code{\link{criterions}}.
 #' @examples
 #' target_feature <- create_feature_target(10, 375, 15, 600) 
 #' criterion_distribution(target = target_feature[,1], feature = target_feature[,2], 
@@ -21,13 +24,13 @@
 criterion_distribution <- function(target, feature, graphical.output = FALSE, criterion = "ig") {
   n <- length(target)
   if (length(feature) != n) {
-    stop("target and feature have different lengths")
+    stop("Target and feature have different lengths.")
   }
   if (!all(target %in% c(0, 1))) {
-    stop("target is not {0,1}-valued vector")
+    stop("Target is not {0,1}-valued vector.")
   }
   if (!all(feature %in% c(0,1)) ) {
-    stop("feature is not {0,1}-valued vector")
+    stop("Feature is not {0,1}-valued vector.")
   }
   
   valid_criterion <- check_criterion(criterion)
@@ -97,6 +100,6 @@ criterion_distribution <- function(target, feature, graphical.output = FALSE, cr
   dist <- rbind(criterion_values, 
                 criterion_distribution, 
                 1 - rev(cumsum(rev(criterion_distribution))))
-  rownames(dist) <- c("Criterion", "pdf", "cdf")
+  rownames(dist) <- c("criterion", "pdf", "cdf")
   dist
 }

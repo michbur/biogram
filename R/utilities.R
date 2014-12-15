@@ -35,7 +35,7 @@ create_feature_target <- function(n11, n01, n10, n00){
 #' \item target -, feature+
 #' \item target -, feature-
 #' }
-#' @details Input looks strange, but the function was build to be as fast 
+#' @details Input looks odd, but the function was build to be as fast 
 #' as possible subroutine of \code{\link{calc_ig}}, which works on
 #' many features but only one target.
 #' @note Binary vector means numeric vector with 0 or 1.

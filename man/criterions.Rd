@@ -10,7 +10,7 @@ important features. Each can be used by \code{\link{test_features}} by specifyin
 \details{
 Possible criterions are:
 \describe{
-  \item{ig}{Information Gain.}
+  \item{ig}{Information Gain. Calculated using \code{\link{calc_ig}}.}
 }
 }
 \section{Information gain}{

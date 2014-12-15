@@ -27,7 +27,7 @@ a vector of length four:
 Quickly cross-tabulates two binary vectors.
 }
 \details{
-Input looks strange, but the function was build to be as fast
+Input looks odd, but the function was build to be as fast
 as possible subroutine of \code{\link{calc_ig}}, which works on
 many features but only one target.
 }
