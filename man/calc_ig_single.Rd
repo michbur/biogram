@@ -20,15 +20,12 @@ calc_ig_single(feature, target_b, len_target, pos_target, ES)
 a single numeric value - information gain in nats.
 }
 \description{
-Computes information gain of feature and target vectors.
+Computes information gain of feature and target vector.
 }
 \details{
-Input looks strange, but the function was build to be as fast
-as possible subroutine of \code{\link{calc_ig}}, which works on
-many features but only one target.
-}
-\note{
-During calculations \eqn{0 \log 0  = 0}. For justification see References.
+Input looks strange, but the function was designed to be as fast
+as possible subroutine of \code{\link{calc_ig}} and generally should not be directly
+called by user.
 }
 \examples{
 tar <- sample(0L:1, 100, replace = TRUE)
@@ -37,9 +34,5 @@ prop <- c(100 - sum(tar), sum(tar))/100
 entr <- - sum(prop*log(prop))
 library(bit) #used to code vector as bit
 calc_ig_single(feat, as.bit(tar), 100, sum(tar), entr)
-}
-\references{
-Cover TM, Thomas JA \emph{Elements of Information Theory, 2nd Edition}
-Wiley, 2006.
 }
 

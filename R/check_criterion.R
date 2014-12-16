@@ -5,7 +5,12 @@
 #' @param input_criterion \code{character} string, criterion from input.
 #' @param criterion_names list of implemented \code{\link{criterions}}, always in lowercase.
 #' @export
-#' @return a list of three: criterion name, its function and nice name for outputs.
+#' @return a list of three: 
+#' #' \itemize{
+#' \item{criterion name,}
+#' \item{its function,}
+#' \item{nice name for outputs.}
+#' }
 #' @seealso
 #' All implemented \code{\link{criterions}}.
 

@@ -1,6 +1,6 @@
 #' Calculate IG for single feature
 #'
-#' Computes information gain of feature and target vectors.
+#' Computes information gain of feature and target vector.
 #'
 #' @param feature feature vector.
 #' @param target_b target in bits (as per \code{\link[bit]{as.bit}}).
@@ -8,12 +8,9 @@
 #' @param pos_target number of positive cases in target vector.
 #' @param ES numeric value of target entropy.
 #' @return a single numeric value - information gain in nats.
-#' @details Input looks strange, but the function was build to be as fast 
-#' as possible subroutine of \code{\link{calc_ig}}, which works on
-#' many features but only one target.
-#' @note During calculations \eqn{0 \log 0  = 0}. For justification see References.
-#' @references Cover TM, Thomas JA \emph{Elements of Information Theory, 2nd Edition}
-#' Wiley, 2006.
+#' @details Input looks strange, but the function was designed to be as fast 
+#' as possible subroutine of \code{\link{calc_ig}} and generally should not be directly
+#' called by user.
 #' @export
 #' @examples tar <- sample(0L:1, 100, replace = TRUE)
 #' feat <- sample(0L:1, 100, replace = TRUE)
@@ -50,10 +47,15 @@ calc_ig_single <- function(feature, target_b, len_target, pos_target, ES) {
 #' and 1 values.
 #' @seealso \code{\link{test_features}}.
 #' @export
+#' @note During calculations \eqn{0 \log 0  = 0}. For justification see References.
+#' @references Cover TM, Thomas JA \emph{Elements of Information Theory, 2nd Edition}
+#' Wiley, 2006.
 #' @examples 
 #' calc_ig(sample(0L:1, 100, replace = TRUE), matrix(sample(0L:1, 400, replace = TRUE), ncol = 4))
 #' @seealso
 #' Other implemented \code{\link{criterions}}.
+#' Subroutine used in \code{\link[base]{apply}} statement in \code{calc_ig}: 
+#' \code{\link{calc_ig_single}}
 
 calc_ig <- function(target, features) {
   tar_bit <- as.bit(target)

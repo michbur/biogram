@@ -21,13 +21,21 @@ Computes information gain between features and target vector.
 \note{
 Both \code{target} and \code{features} must be binary, i.e. contain only 0
 and 1 values.
+
+During calculations \eqn{0 \log 0  = 0}. For justification see References.
 }
 \examples{
 calc_ig(sample(0L:1, 100, replace = TRUE), matrix(sample(0L:1, 400, replace = TRUE), ncol = 4))
+}
+\references{
+Cover TM, Thomas JA \emph{Elements of Information Theory, 2nd Edition}
+Wiley, 2006.
 }
 \seealso{
 \code{\link{test_features}}.
 
 Other implemented \code{\link{criterions}}.
+Subroutine used in \code{\link[base]{apply}} statement in \code{calc_ig}:
+\code{\link{calc_ig_single}}
 }
 
