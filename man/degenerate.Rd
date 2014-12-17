@@ -11,10 +11,11 @@ degenerate(seq, aa_group)
 \item{aa_group}{list of groups to which elements of sequence should be aggregated.}
 }
 \value{
-a \code{character} vector.
+a \code{character} vector containing aggregated elements.
 }
 \description{
-'Degenerates' protein or nucleic sequence by aggregating aminoacids/nucleotides to bigger groups.
+'Degenerates' amino acid or nucleic sequence by aggregating
+elements to bigger groups.
 }
 \examples{
 sample_seq <- c(1, 3, 1, 3, 4, 4, 3, 1, 2)

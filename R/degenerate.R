@@ -1,11 +1,12 @@
 #' Degenerate protein sequence
 #'
-#' 'Degenerates' protein or nucleic sequence by aggregating aminoacids/nucleotides to bigger groups.
+#' 'Degenerates' amino acid or nucleic sequence by aggregating 
+#' elements to bigger groups.
 #' 
 #' @param seq \code{character} vector representing single sequence.
 #' @param aa_group list of groups to which elements of sequence should be aggregated.
 #' @keywords manip
-#' @return a \code{character} vector.
+#' @return a \code{character} vector containing aggregated elements.
 #' @export
 #' @keywords manip
 #' @examples
