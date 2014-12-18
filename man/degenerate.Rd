@@ -17,6 +17,10 @@ a \code{character} vector containing aggregated elements.
 'Degenerates' amino acid or nucleic sequence by aggregating
 elements to bigger groups.
 }
+\note{
+Both sequence and \code{aa_group} should contain lower-case letters.
+Upper-case will be automatically converted with a message.
+}
 \examples{
 sample_seq <- c(1, 3, 1, 3, 4, 4, 3, 1, 2)
 table(sample_seq)
