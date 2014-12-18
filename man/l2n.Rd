@@ -18,7 +18,7 @@ Converts biological sequence of letters to number notation.
 }
 \examples{
 sample_seq <- c("a", "d", "d", "g", "a", "g", "n", "a", "l")
-letters2numbers(sample_seq, "prot")
+l2n(sample_seq, "prot")
 }
 \seealso{
 \code{l2n} is based on \code{\link{degenerate}}.

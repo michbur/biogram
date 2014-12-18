@@ -49,7 +49,7 @@ degenerate <- function(seq, aa_group) {
 #' @seealso \code{l2n} is based on \code{\link{degenerate}}.
 #' @examples
 #' sample_seq <- c("a", "d", "d", "g", "a", "g", "n", "a", "l")
-#' letters2numbers(sample_seq, "prot")
+#' l2n(sample_seq, "prot")
 
 l2n <- function(seq, seq_type) {
   if (!(seq_type %in% c("prot", "dna", "rna")))
