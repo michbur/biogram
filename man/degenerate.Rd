@@ -6,12 +6,13 @@
 degenerate(seq, aa_group)
 }
 \arguments{
-\item{seq}{\code{character} vector representing single sequence.}
+\item{seq}{\code{character} vector or matrix representing single sequence.}
 
 \item{aa_group}{list of groups to which elements of sequence should be aggregated.}
 }
 \value{
-a \code{character} vector containing aggregated elements.
+a \code{character} vector or matrix (if input is a matrix)
+containing aggregated elements.
 }
 \description{
 'Degenerates' amino acid or nucleic sequence by aggregating
@@ -19,7 +20,7 @@ elements to bigger groups.
 }
 \note{
 Both sequence and \code{aa_group} should contain lower-case letters.
-Upper-case will be automatically converted with a message.
+Upper-case will be automatically converted without a message.
 }
 \examples{
 sample_seq <- c(1, 3, 1, 3, 4, 4, 3, 1, 2)
@@ -28,6 +29,10 @@ table(sample_seq)
 #aggregate sequence to purins and pyrimidines
 deg_seq <- degenerate(sample_seq, list(W = c(1, 4), S = c(2, 3)))
 table(deg_seq)
+}
+\seealso{
+\code{\link{l2n}} to easily convert information stored in biological sequences from
+letters to numbers.
 }
 \keyword{manip}
 
