@@ -3,15 +3,23 @@
 \name{human_cleave}
 \alias{human_cleave}
 \title{Human signal peptides cleavage sites}
-\format{A data frame with 1296 observations on the following 10 variables.
-\describe{
-\item{P1}{amino acid in first position.}
-\item{P9}{amino acid in nineth position.}
-\item{tar}{target vector (1 if cleavage site, 0 if post-cleavage site).}}}
+\format{A data frame with 1296 observations on the following 10 variables. Columns from
+\code{P1} to \code{P9} describes positions in an extracted peptide. \code{tar} is a target vector. It
+has value 1 if a peptide is a cleavage site and 0 if not.}
+\source{
+\href{http://www.uniprot.org/}{UniProt}
+}
 \description{
-uniprot query \code{keyword:signal AND taxonomy:"Homo sapiens (Human) [9606]"
-AND annotation:(type:signal AND evidence:ECO_0000269) AND reviewed:yes}
-cleaves[i] + 5):(cleaves[i] + 13)]
+A set of 648 cleavage sites and 648 parts of mature proteins shortly after cleavage sites
+derived from human proteome.
+}
+\details{
+Each peptide in the data set is nine amino acid residues long. In case of cleavage sites,
+the clevage is located between fifth and sixth peptide.
+The non-cleavage sites are parts of mature proteins starting five positions after cleavage site.
+}
+\note{
+Amino acid residues were recoded as integers.
 }
 \examples{
 data(human_cleave)
