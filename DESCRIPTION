@@ -14,7 +14,7 @@ Authors@R: c(
     role = "aut"))
 Description: Tools for extraction and analysis of various
     n-grams (sequences of n items) derived from biological sequences (proteins
-    or nucleic acids). To deal with the curse of dimensionality of the n-grams,
+    or nucleic acids). To deal with the dimensionality of the n-gram data,
     biogram uses QuiPT (quick permutation test) for fast feature-filtering.
 License: GPL-3
 URL: https://github.com/michbur/biogram
