@@ -12,10 +12,10 @@ Authors@R: c(
     role = "aut"),
     person("Chris", "Lauber",
     role = "aut"))
-Description: This package contains tools for extraction and analysis of various
+Description: Tools for extraction and analysis of various
     n-grams (sequences of n items) derived from biological sequences (proteins
     or nucleic acids). To deal with the curse of dimensionality of the n-grams,
-    biogram uses Quick Permutation Test (QuiPT) for fast feature filtering.
+    biogram uses QuiPT (quick permutation test) for fast feature-filtering.
 License: GPL-3
 URL: https://github.com/michbur/biogram
 Depends:
