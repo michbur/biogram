@@ -14,14 +14,15 @@ l2n(seq, seq_type)
 a \code{numeric} vector containing converted elements.
 }
 \description{
-Converts biological sequence of letters to number notation.
+Converts biological sequence from letter to number notation.
 }
 \examples{
 sample_seq <- c("a", "d", "d", "g", "a", "g", "n", "a", "l")
 l2n(sample_seq, "prot")
 }
 \seealso{
-\code{l2n} is based on \code{\link{degenerate}}.
+\code{l2n} is based on \code{\link{degenerate}} the opposite of
+\code{\link{n2l}}.
 }
 \keyword{manip}
 

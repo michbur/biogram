@@ -27,7 +27,7 @@ sample_seq <- c(1, 3, 1, 3, 4, 4, 3, 1, 2)
 table(sample_seq)
 
 #aggregate sequence to purins and pyrimidines
-deg_seq <- degenerate(sample_seq, list(W = c(1, 4), S = c(2, 3)))
+deg_seq <- degenerate(sample_seq, list(w = c(1, 4), s = c(2, 3)))
 table(deg_seq)
 }
 \seealso{

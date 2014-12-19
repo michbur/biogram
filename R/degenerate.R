@@ -19,7 +19,7 @@
 #' table(sample_seq)
 #' 
 #' #aggregate sequence to purins and pyrimidines
-#' deg_seq <- degenerate(sample_seq, list(W = c(1, 4), S = c(2, 3)))
+#' deg_seq <- degenerate(sample_seq, list(w = c(1, 4), s = c(2, 3)))
 #' table(deg_seq)
 
 degenerate <- function(seq, aa_group) {
@@ -28,7 +28,7 @@ degenerate <- function(seq, aa_group) {
     stop("The sequence contains elements not present in any of groups.")
   
   for (i in 1L:length(aa_group)) {
-    tmp_seq[tmp_seq %in% aa_group[[i]]] <- i
+    tmp_seq[tmp_seq %in% aa_group[[i]]] <- names(aa_group)[i]
   }
   
   if(class(seq) == "matrix")
@@ -39,14 +39,15 @@ degenerate <- function(seq, aa_group) {
 
 #' Convert letters to numbers
 #'
-#' Converts biological sequence of letters to number notation.
+#' Converts biological sequence from letter to number notation.
 #' @param seq \code{character} vector representing single sequence.
 #' @param seq_type the type of sequence. Can be \code{rna}, \code{dna} or \code{prot}.
 #' @keywords manip
 #' @return a \code{numeric} vector containing converted elements.
 #' @export
 #' @keywords manip
-#' @seealso \code{l2n} is based on \code{\link{degenerate}}.
+#' @seealso \code{l2n} is based on \code{\link{degenerate}} the opposite of
+#' \code{\link{n2l}}.
 #' @examples
 #' sample_seq <- c("a", "d", "d", "g", "a", "g", "n", "a", "l")
 #' l2n(sample_seq, "prot")
@@ -63,4 +64,35 @@ l2n <- function(seq, seq_type) {
                                    "s", "t", "v", "w", "y"))
   names(elements_list) <- 1L:length(elements_list)
   as.numeric(degenerate(seq, elements_list))
+}
+
+
+#' Convert numbers to letters
+#'
+#' Converts biological sequence from number to letter notation.
+#' @param seq \code{numeric} vector representing single sequence.
+#' @param seq_type the type of sequence. Can be \code{rna}, \code{dna} or \code{prot}.
+#' @keywords manip
+#' @return a \code{numeric} vector containing converted elements.
+#' @export
+#' @keywords manip
+#' @seealso \code{n2l} is based on \code{\link{degenerate}} the opposite of
+#' \code{\link{l2n}}.
+#' @examples
+#' sample_seq <- c(1, 3, 3, 6, 1, 6, 12, 1, 10)
+#' n2l(sample_seq, "prot")
+
+n2l <- function(seq, seq_type) {
+  if (!(seq_type %in% c("prot", "dna", "rna")))
+    stop("The value of 'what' must be: 'dna', 'rna' or 'prot'.")
+  names_list <- switch(seq_type,
+                          rna = c("a", "c", "g", "u"),
+                          dna = c("a", "c", "g", "t"),
+                          prot = c("a", "c", "d", "e", "f", 
+                                   "g", "h",  "i", "k", "l", 
+                                   "m", "n", "p", "q", "r", 
+                                   "s", "t", "v", "w", "y"))
+  elements_list <- 1L:length(names_list)
+  names(elements_list) <- names_list
+  degenerate(seq, elements_list)
 }
