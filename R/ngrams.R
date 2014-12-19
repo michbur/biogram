@@ -7,8 +7,8 @@
 #' contain information about position
 #' @return a character vector. Elements of n-gram are separated by dot.
 #' @note Input data must be a matrix or data frame of numeric elements.
-#' @details N-gram coding: \code{p_1.2.1} means position \code{p}, \code{1.2.1} means 
-#' unigrams constituing n-gram.  
+#' @details See Details section of \code{\link{count_ngrams}} for more 
+#' information about n-grams naming convention.  
 #' @export
 #' @examples 
 #' #bigrams for standard aminoacids
@@ -77,7 +77,7 @@ get_ngrams_ind <- function(len_seq, n, d) {
 }
 
 
-#' Extract n-grams From Sequence
+#' Extract N-Grams From Sequence
 #'
 #' Extracts vector of n-grams present in sequence(s).
 #'

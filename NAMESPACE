@@ -2,7 +2,6 @@
 
 export(calc_ig)
 export(calc_ig_single)
-export(check_criterion)
 export(count_multigrams)
 export(count_ngrams)
 export(create_feature_target)

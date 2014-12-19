@@ -3,7 +3,8 @@
 \alias{test_features}
 \title{Permutation test for feature selection}
 \usage{
-test_features(target, features, criterion = "ig", quick = TRUE, times)
+test_features(target, features, criterion = "ig", quick = TRUE,
+  times = 1e+05)
 }
 \arguments{
 \item{target}{target vector.}
@@ -14,7 +15,7 @@ to the length of target vector.}
 \item{criterion}{the criterion used in permutation test. See \code{\link{criterions}} for the
 list of possible criterions.}
 
-\item{quick}{logical, if \code{TRUE} Quick Permutation Test be used.}
+\item{quick}{logical, if \code{TRUE} Quick Permutation Test (QuiPT) is used.}
 
 \item{times}{number of times procedure should be repetead. Ignored if \code{quick} is
 \code{TRUE}.}
@@ -43,8 +44,14 @@ tar_feat3 <- create_feature_target(8, 392, 0, 600)
 test_features(tar_feat1[,1], cbind(tar_feat1[,2], tar_feat2[,2],
 tar_feat3[,2]))
 }
+\references{
+Radivojac P, Obradovic Z, Dunker AK, Vucetic S,
+\emph{Feature selection filters based on the permutation test} in
+Machine Learning: ECML 2004, 15th European
+Conference on Machine Learning, Springer, 2004.
+}
 \seealso{
-\code{\link{calc_ig}}, \code{\link{criterion_distribution}}
+See \code{\link{criterion_distribution}} for insight on QuiPT.
 }
 \keyword{nonparametric}
 

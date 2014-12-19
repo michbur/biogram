@@ -20,8 +20,8 @@ a character vector. Elements of n-gram are separated by dot.
 Creates vector of all posible n_grams (for given \code{n}).
 }
 \details{
-N-gram coding: \code{p_1.2.1} means position \code{p}, \code{1.2.1} means
-unigrams constituing n-gram.
+See Details section of \code{\link{count_ngrams}} for more
+information about n-grams naming convention.
 }
 \note{
 Input data must be a matrix or data frame of numeric elements.

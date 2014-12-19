@@ -2,7 +2,8 @@ Package: biogram
 Type: Package
 Title: N-Gram Analysis of Biological Sequences
 Version: 1.0
-Date: 2014-08-05
+LazyData: true
+Date: 2014-12-19
 Authors@R: c(
     person("Michal", "Burdukiewicz",
     email = "michalburdukiewicz@gmail.com",
@@ -16,6 +17,7 @@ Description: This package contains tools for extraction and analysis of various
     or nucleic acids). To deal with the curse of dimensionality of the n-grams,
     biogram uses Quick Permutation Test (QuiPT) for fast feature filtering.
 License: GPL-3
+URL: https://github.com/michbur/biogram
 Depends:
     R (>= 3.0.0),
     slam

@@ -1,7 +1,10 @@
 biogram package
 ------------
 
-biogram is a set of tools dedicated to analysis of n-grams coming from the biological sequences. It provides support for n-gram extraction and selection.
+This package contains tools for extraction and analysis of various
+n-grams (sequences of n items) derived from biological sequences (proteins
+or nucleic acids). To deal with the curse of dimensionality of the n-grams,
+biogram uses Quick Permutation Test (QuiPT) for fast feature filtering.
 
 Installation
 ------------

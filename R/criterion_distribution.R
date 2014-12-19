@@ -83,10 +83,14 @@ criterion_distribution <- function(target, feature, graphical.output = FALSE, cr
   # therefore we need to combine them for distribution
   dist_temp <- dist_temp[order(diff_conts["vals", ])]
   val_temp <- diff_conts["vals", ][order(diff_conts["vals", ])]
+  
   j <- 1
   criterion_distribution <- dist_temp[1]
   criterion_values <- val_temp[1]
+  
   for(i in 2L:length(val_temp)) {
+    #     if(is.na(abs(val_temp[i - 1] - val_temp[i]) < 1e-10))
+    #       browser()
     if (abs(val_temp[i - 1] - val_temp[i]) < 1e-10) {
       criterion_values[j] <- criterion_values[j]
       criterion_distribution[j] <- criterion_distribution[j] + dist_temp[i]

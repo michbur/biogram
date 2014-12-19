@@ -13,9 +13,9 @@
 #' 
 #' The information gain term is used here (improperly) as a synonym of mutual information. 
 #' It is defined as:
-#' \deqn{IG(X; Y) = \sum_{y \in Y} \sum_{x \in X} p(x, y) \log \left(\frac{p(x, y)}{p(x) p(y)}  \right)}.
+#' \deqn{IG(X; Y) = \sum_{y \in Y} \sum_{x \in X} p(x, y) \log \left(\frac{p(x, y)}{p(x) p(y)}  \right)}
 #' 
-#' In biogram information gain package it is calculated using following relationship: 
+#' In biogram package information gain is calculated using following relationship: 
 #' \eqn{IG = E(S) - E(S|F)}
 #' @references 
 #' Cover TM, Thomas JA \emph{Elements of Information Theory, 2nd Edition}

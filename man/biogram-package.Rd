@@ -31,7 +31,7 @@ extracted using \code{\link{count_ngrams}} function with \code{pos}
 parameter.
 }
 
-\section{Filtering n-grams}{
+\section{n-gram data dimensionality}{
 
 n-grams obviously suffer from the curse of dimensionality. For example, the
 peptide of length 6 has \eqn{20^{n}} n-grams and \eqn{6 \times 20^{n}}
@@ -44,6 +44,11 @@ them using functionalities provided by the \code{slam} package. To ease
 the choice of significant features, \code{biogram} provides user with the
 QuiPT, very fast permutation test for binary data (see
 \code{\link{test_features}}).
+
+Another way of reducing dimensionality of the problem is the aggregation
+elements into bigger groups. For example, all positively-charged amino
+acids may be aggregated into one group. This action can be performed
+using the \code{\link{degenerate}} function.
 }
 \examples{
 #use data set from package
