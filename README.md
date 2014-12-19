@@ -6,7 +6,7 @@ biogram is a set of tools dedicated to analysis of n-grams coming from the biolo
 Installation
 ------------
 
-biogram is NOT yet available [on CRAN](http://cran.r-project.org/web/packages/biogram/), so installation is as simple as:
+biogram is available [on CRAN](http://cran.r-project.org/web/packages/biogram/), so installation is as simple as:
 
 ```
 install.packages("biogram")

@@ -4,11 +4,11 @@
 #' elements to bigger groups.
 #' 
 #' @param seq \code{character} vector or matrix representing single sequence.
-#' @param aa_group list of groups to which elements of sequence should be aggregated.
+#' @param element_groups list of groups to which elements of sequence should be aggregated.
 #' @keywords manip
 #' @return a \code{character} vector or matrix (if input is a matrix) 
 #' containing aggregated elements.
-#' @note Both sequence and \code{aa_group} should contain lower-case letters.
+#' @note Both sequence and \code{element_groups} should contain lower-case letters.
 #' Upper-case will be automatically converted without a message.
 #' @export
 #' @seealso \code{\link{l2n}} to easily convert information stored in biological sequences from 
@@ -22,13 +22,13 @@
 #' deg_seq <- degenerate(sample_seq, list(w = c(1, 4), s = c(2, 3)))
 #' table(deg_seq)
 
-degenerate <- function(seq, aa_group) {
+degenerate <- function(seq, element_groups) {
   tmp_seq <- tolower(seq)
-  if (!all(unique(tmp_seq) %in% unlist(aa_group)))
+  if (!all(unique(tmp_seq) %in% unlist(element_groups)))
     stop("The sequence contains elements not present in any of groups.")
   
-  for (i in 1L:length(aa_group)) {
-    tmp_seq[tmp_seq %in% aa_group[[i]]] <- names(aa_group)[i]
+  for (i in 1L:length(element_groups)) {
+    tmp_seq[tmp_seq %in% element_groups[[i]]] <- names(element_groups)[i]
   }
   
   if(class(seq) == "matrix")

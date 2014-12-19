@@ -20,6 +20,7 @@
 #' and 1 values.
 #' @seealso \code{\link{calc_ig}}, \code{\link{criterion_distribution}}
 #' @export
+#' @keywords nonparametric
 #' @examples
 #' tar_feat1 <- create_feature_target(10, 390, 0, 600) 
 #' tar_feat2 <- create_feature_target(9, 391, 1, 599)

@@ -3,12 +3,12 @@
 \alias{degenerate}
 \title{Degenerate protein sequence}
 \usage{
-degenerate(seq, aa_group)
+degenerate(seq, element_groups)
 }
 \arguments{
 \item{seq}{\code{character} vector or matrix representing single sequence.}
 
-\item{aa_group}{list of groups to which elements of sequence should be aggregated.}
+\item{element_groups}{list of groups to which elements of sequence should be aggregated.}
 }
 \value{
 a \code{character} vector or matrix (if input is a matrix)
@@ -19,7 +19,7 @@ containing aggregated elements.
 elements to bigger groups.
 }
 \note{
-Both sequence and \code{aa_group} should contain lower-case letters.
+Both sequence and \code{element_groups} should contain lower-case letters.
 Upper-case will be automatically converted without a message.
 }
 \examples{

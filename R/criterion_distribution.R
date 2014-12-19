@@ -17,6 +17,7 @@
 #'   \item{3rd row:}{cumulative distribution function.}
 #' }
 #' @seealso \code{\link{criterions}}.
+#' @keywords distribution
 #' @examples
 #' target_feature <- create_feature_target(10, 375, 15, 600) 
 #' criterion_distribution(target = target_feature[,1], feature = target_feature[,2], 

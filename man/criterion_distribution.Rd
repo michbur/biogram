@@ -39,4 +39,5 @@ graphical.output = TRUE)
 \seealso{
 \code{\link{criterions}}.
 }
+\keyword{distribution}
 

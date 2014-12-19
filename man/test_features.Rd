@@ -46,4 +46,5 @@ tar_feat3[,2]))
 \seealso{
 \code{\link{calc_ig}}, \code{\link{criterion_distribution}}
 }
+\keyword{nonparametric}
 
