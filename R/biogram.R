@@ -61,4 +61,6 @@
 #'                            '5' = c(3, 4)))
 #' #extract bigrams
 #' bigrams <- count_ngrams(deg_seqs, 3, 1L:4, pos = TRUE)
+#' #test features
+#' test_features(human_cleave[, "tar"], bigrams)
 NULL

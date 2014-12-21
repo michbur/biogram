@@ -63,6 +63,7 @@ test_features <- function(target, features, criterion = "ig", quick = TRUE, time
       t <- create_feature_target(i, sum(target) - i, 0, length(target) - sum(target)) 
       criterion_distribution(t[, 1], t[, 2], graphical.output = FALSE, criterion = criterion)
     })
+    
     names(dists) <- feature_size
     
     apply(features, 2, function(feature) {

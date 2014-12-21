@@ -88,19 +88,19 @@ criterion_distribution <- function(target, feature, graphical.output = FALSE, cr
   criterion_distribution <- dist_temp[1]
   criterion_values <- val_temp[1]
   
-  for(i in 2L:length(val_temp)) {
-    #     if(is.na(abs(val_temp[i - 1] - val_temp[i]) < 1e-10))
-    #       browser()
-    if (abs(val_temp[i - 1] - val_temp[i]) < 1e-10) {
-      criterion_values[j] <- criterion_values[j]
-      criterion_distribution[j] <- criterion_distribution[j] + dist_temp[i]
+  if(length(val_temp) > 1)
+    for(i in 2L:length(val_temp)) {
+      if (abs(val_temp[i - 1] - val_temp[i]) < 1e-10) {
+        criterion_values[j] <- criterion_values[j]
+        criterion_distribution[j] <- criterion_distribution[j] + dist_temp[i]
+      }
+      else {
+        j <- j + 1
+        criterion_values[j] <- val_temp[i]
+        criterion_distribution[j] <- dist_temp[i]
+      }
     }
-    else {
-      j <- j + 1
-      criterion_values[j] <- val_temp[i]
-      criterion_distribution[j] <- dist_temp[i]
-    }
-  }
+  
   
   dist <- rbind(criterion_values, 
                 criterion_distribution, 
