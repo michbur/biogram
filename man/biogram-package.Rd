@@ -45,7 +45,7 @@ the choice of significant features, \code{biogram} provides user with the
 QuiPT, very fast permutation test for binary data (see
 \code{\link{test_features}}).
 
-Another way of reducing dimensionality of the problem is the aggregation
+Another way of reducing dimensionality is aggregation of
 elements into bigger groups. For example, all positively-charged amino
 acids may be aggregated into one group. This action can be performed
 using the \code{\link{degenerate}} function.
@@ -63,6 +63,8 @@ deg_seqs <- degenerate(human_cleave[, 1L:9],
                            '5' = c(3, 4)))
 #extract bigrams
 bigrams <- count_ngrams(deg_seqs, 3, 1L:4, pos = TRUE)
+#test features
+test_features(human_cleave[, "tar"], bigrams)
 }
 \author{
 Michal Burdukiewicz, Piotr Sobczyk, Chris Lauber

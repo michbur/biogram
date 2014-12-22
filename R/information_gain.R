@@ -70,6 +70,6 @@ calc_ig <- function(target, features) {
 #a logarithm safe for entropy calculation
 entlog <- function(x, ...) {
   log_values <- log(x, ...)
-  log_values[log_values %in% c(-Inf, NaN)] <- 0
+  log_values[log_values == c(-Inf, NaN)] <- 0
   log_values
 }

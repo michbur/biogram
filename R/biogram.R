@@ -37,7 +37,7 @@
 #' QuiPT, very fast permutation test for binary data (see 
 #' \code{\link{test_features}}).
 #' 
-#' Another way of reducing dimensionality of the problem is the aggregation 
+#' Another way of reducing dimensionality is aggregation of
 #' elements into bigger groups. For example, all positively-charged amino 
 #' acids may be aggregated into one group. This action can be performed 
 #' using the \code{\link{degenerate}} function.
