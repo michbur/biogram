@@ -3,8 +3,8 @@
 \alias{test_features}
 \title{Permutation test for feature selection}
 \usage{
-test_features(target, features, criterion = "ig", quick = TRUE,
-  times = 1e+05)
+test_features(target, features, criterion = "ig", adjust = "BH",
+  quick = TRUE, times = 1e+05)
 }
 \arguments{
 \item{target}{target vector.}
@@ -14,6 +14,9 @@ to the length of target vector.}
 
 \item{criterion}{the criterion used in permutation test. See \code{\link{criterions}} for the
 list of possible criterions.}
+
+\item{adjust}{the name of p-value adjusting method. See \code{\link[stats]{p.adjust}}
+for the list of possible values. If \code{NULL}, no adjustment is done.}
 
 \item{quick}{logical, if \code{TRUE} Quick Permutation Test (QuiPT) is used.}
 

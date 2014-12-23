@@ -8,6 +8,8 @@
 #' to the length of target vector.
 #' @param criterion the criterion used in permutation test. See \code{\link{criterions}} for the
 #' list of possible criterions.
+#' @param adjust the name of p-value adjusting method. See \code{\link[stats]{p.adjust}}
+#' for the list of possible values. If \code{NULL}, no adjustment is done.
 #' @param quick logical, if \code{TRUE} Quick Permutation Test (QuiPT) is used.
 #' @param times number of times procedure should be repetead. Ignored if \code{quick} is 
 #' \code{TRUE}.
@@ -32,7 +34,7 @@
 #' tar_feat3 <- create_feature_target(8, 392, 0, 600)
 #' test_features(tar_feat1[,1], cbind(tar_feat1[,2], tar_feat2[,2], 
 #' tar_feat3[,2]))
-test_features <- function(target, features, criterion = "ig", quick = TRUE, times = 1e5) {
+test_features <- function(target, features, criterion = "ig", adjust = "BH", quick = TRUE, times = 1e5) {
   
   valid_criterion <- check_criterion(criterion)
   
@@ -81,7 +83,12 @@ test_features <- function(target, features, criterion = "ig", quick = TRUE, time
                replicate(times, valid_criterion[["crit_function"]](sample(target), features)))
   }
   
-  result <- list(p.value = p_vals)
+  if(!is.null(adjust))
+    p_vals <- p.adjust(p_vals, method = adjust)
+  
+  result <- list(p_value = p_vals,
+                 criterion = valid_criterion[["nice_name"]],
+                 times = ifelse(quick, NA, times))
   result
 }
 
