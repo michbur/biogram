@@ -86,10 +86,10 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH", qui
   if(!is.null(adjust))
     p_vals <- p.adjust(p_vals, method = adjust)
   
-  result <- list(p_value = p_vals,
-                 criterion = valid_criterion[["nice_name"]],
-                 times = ifelse(quick, NA, times))
-  result
+  create_feature_test(p_value = p_vals, 
+                      criterion = valid_criterion[["nice_name"]],
+                      adjust = adjust,
+                      times = ifelse(quick, NA, times))
 }
 
 
