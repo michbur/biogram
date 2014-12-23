@@ -50,7 +50,7 @@ test_features <- function(target, features, criterion = "ig", quick = TRUE, time
     }
   })
   
-  if(quick) {
+  p_vals <- if(quick) {
     
     # compute distribution once
     feature_size <- unique(if (class(features) == "simple_triplet_matrix") {
@@ -71,20 +71,23 @@ test_features <- function(target, features, criterion = "ig", quick = TRUE, time
       n <- length(target)
       
       result <- NULL
-      result[["estimate"]] <- valid_criterion[["crit_function"]](target = target, features = feature)
+      estm <- valid_criterion[["crit_function"]](target = target, features = feature)
       dist <- dists[[paste(sum(feature))]]
-      result[["p.value"]] <- 1 - dist[3, which.max(dist[1, ] >= result[["estimate"]] - 1e-15)]
-      class(result) <- "htest"
-      result[["estimate"]] <- "Target variable, feature variable"
-      result[["method"]] <- "Information gain permutation test"
-      names(result[["estimate"]]) <- "Criterion value for feature"
-      result
+      1 - dist[3, which.max(dist[1, ] >= estm - 1e-15)]
     })
   } else {
     #slow version
     rowMeans(valid_criterion[["crit_function"]](target, features) <= 
                replicate(times, valid_criterion[["crit_function"]](sample(target), features)))
   }
+  
+  result <- NULL
+  result[["p.value"]] <- p_vals
+  class(result) <- "htest"
+  result[["estimate"]] <- "Target variable, feature variable"
+  result[["method"]] <- "Information gain permutation test"
+  result
+  
 }
 
 
