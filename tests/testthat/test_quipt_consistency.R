@@ -19,7 +19,7 @@ test_that("Exact test and permutation test are consistent",{
                              x+qnorm(c(alfa/2,1-alfa/2))*sqrt(x*(1-x)/(m+qnorm(alfa)^2))})
   
   for (i in 1:3) {
-    expect_true(as.numeric(fast.results[,i][["p.value"]]) < conf.intervals[2,i])
-    expect_true(as.numeric(fast.results[,i][["p.value"]]) > conf.intervals[1,i])
+    expect_true(fast.results[["p.value"]][i] < conf.intervals[2, i])
+    expect_true(fast.results[["p.value"]][i] > conf.intervals[1, i])
   } 
 })

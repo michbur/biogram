@@ -81,13 +81,8 @@ test_features <- function(target, features, criterion = "ig", quick = TRUE, time
                replicate(times, valid_criterion[["crit_function"]](sample(target), features)))
   }
   
-  result <- NULL
-  result[["p.value"]] <- p_vals
-  class(result) <- "htest"
-  result[["estimate"]] <- "Target variable, feature variable"
-  result[["method"]] <- "Information gain permutation test"
+  result <- list(p.value = p_vals)
   result
-  
 }
 
 
