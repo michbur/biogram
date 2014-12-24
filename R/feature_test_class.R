@@ -4,6 +4,7 @@
 #'
 #' @details sth
 #' @name feature_test
+#' @docType class
 NULL
 
 #constructor
@@ -11,32 +12,61 @@ create_feature_test <- function(p_value, criterion, adjust, times) {
   if (!is.numeric(p_value)) 
     stop("p_values must be numeric")
   #other tests should be here
-  structure(list(p_value = p_value, 
-                 criterion = criterion,
-                 adjust = adjust,
-                 times = times), class = "feature_test")
+  res <- p_value
+  attributes(res) <- list(names = names(p_value),
+                          criterion = criterion,
+                          adjust = adjust,
+                          times = times,
+                          class = "feature_test")
+  res
 }
-
 
 #' Summarize tested features
 #'
 #' Summarizes results of \code{\link{test_features}} function.
 #'
 #' @param object of class \code{\link{feature_test}}.
-#' @param significance a threshold level. A feature with p-value equal or below it is considered 
+#' @param conf_level confidence level. A feature with p-value equal or below it is considered 
 #' significant.
 #' @param ... ignored
 #' @return nothing.
 #' @export
 #' @keywords print methods manip
+summary.feature_test <- function(object, conf_level = 0.95, ...) {
+  cat("Total number of features:", 
+             length(object), "\n")
+  cat("Number of significant features:", 
+             sum(object <= 1 - conf_level), "\n")
+  cat("Criterion used:", 
+             attr(object, "criterion"), "\n")
+  cat("Feature test:", 
+             ifelse(is.na(attr(object, "times")), "QuiPT",
+                    paste0("Fisher's permutation test (",  attr(object, "times"),
+                           " permutations)")), "\n")
+  cat("p-values adjustment method:", 
+             attr(object, "adjust"), "\n")
+  
+}
 
-summary.feature_test <- function(object, significance = 0.05, ...) {
-  cat(paste0("Total number of features: ", 
-             length(object[["p_value"]]), "\n"))
-  cat(paste0("Number of significant features: ", 
-             sum(object[["p_value"]] <= significance), "\n"))
-  cat(paste0("Criterion used: ", 
-             object[["criterion"]], "\n"))
-  cat(paste0("p-values adjustment method: ", 
-             object[["adjust"]], "\n"))
+#' Aggregate tested features
+#'
+#' Aggregates results of \code{\link{test_features}} function into groups based on their 
+#' significance.
+#'
+#' @param x an object of class \code{\link{feature_test}}.
+#' @param significances a vector of significances along which p-values are classified. See description of
+#' \code{\link[base]{cut}} function. 
+#' @param ... ignored
+#' @return a named list of length equal to the length of \code{significances} minus one. Each elements of 
+#' the list contains names of the n-grams belonging to the given significance group.
+#' @export
+#' @keywords print methods manip
+aggregate.feature_test <- function(x, significances = c(0, 0.0001, 0.01, 0.05, 1), ...) {
+  cutted_pvals <- cut(x, breaks = c(0, 0.0001, 0.01, 0.05, 1), include.lowest = TRUE)
+  dat <- aggregate(ngrams ~ cutted_pvals, data = data.frame(ngrams = names(x), cutted_pvals), 
+            function(i)
+              as.character(i))
+  res <- dat[[2]]
+  names(res) <- dat[[1]]
+  res
 }

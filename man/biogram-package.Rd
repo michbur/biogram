@@ -64,7 +64,7 @@ deg_seqs <- degenerate(human_cleave[, 1L:9],
 #extract bigrams
 bigrams <- count_ngrams(deg_seqs, 3, 1L:4, pos = TRUE)
 #test features
-test_features(human_cleave[, "tar"], bigrams)
+test1 <- test_features(human_cleave[, "tar"], bigrams)
 }
 \author{
 Michal Burdukiewicz, Piotr Sobczyk, Chris Lauber

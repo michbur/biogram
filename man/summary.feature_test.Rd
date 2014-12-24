@@ -3,12 +3,12 @@
 \alias{summary.feature_test}
 \title{Summarize tested features}
 \usage{
-\method{summary}{feature_test}(object, significance = 0.05, ...)
+\method{summary}{feature_test}(object, conf_level = 0.95, ...)
 }
 \arguments{
 \item{object}{of class \code{\link{feature_test}}.}
 
-\item{significance}{a threshold level. A feature with p-value equal or below it is considered
+\item{conf_level}{confidence level. A feature with p-value equal or below it is considered
 significant.}
 
 \item{...}{ignored}
