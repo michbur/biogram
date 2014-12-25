@@ -17,7 +17,10 @@
 #' \itemize{
 #' \item{"\code{ig}" - information gain}
 #' }
-#' @return a vector of objects of htest class that relate to each feature tested
+#' 
+#' Since the procedure involes multiple testing, it is advisable to use one of avaible p-value
+#' adjustment method. Such methods can be used directly by specifying \code{adjust} parameter.
+#' @return an object of class \code{\link{feature_test}}.
 #' @note Both \code{target} and \code{features} must be binary, i.e. contain only 0 
 #' and 1 values.
 #' @seealso See \code{\link{criterion_distribution}} for insight on QuiPT.
@@ -28,6 +31,11 @@
 #' \emph{Feature selection filters based on the permutation test} in 
 #' Machine Learning: ECML 2004, 15th European 
 #' Conference on Machine Learning, Springer, 2004.
+#' @seealso 
+#' \code{\link{summary.feature_test}} - summary of results.
+#' 
+#' \code{\link{aggregate.feature_test}} - aggregates test results in groups based on feature's
+#' p-value.
 #' @examples
 #' tar_feat1 <- create_feature_target(10, 390, 0, 600) 
 #' tar_feat2 <- create_feature_target(9, 391, 1, 599)

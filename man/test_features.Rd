@@ -24,7 +24,7 @@ for the list of possible values. If \code{NULL}, no adjustment is done.}
 \code{TRUE}.}
 }
 \value{
-a vector of objects of htest class that relate to each feature tested
+an object of class \code{\link{feature_test}}.
 }
 \description{
 Performs a feature selection on positioned N-gram data using a Fisher's
@@ -35,6 +35,9 @@ Currently implemented criterions:
 \itemize{
 \item{"\code{ig}" - information gain}
 }
+
+Since the procedure involes multiple testing, it is advisable to use one of avaible p-value
+adjustment method. Such methods can be used directly by specifying \code{adjust} parameter.
 }
 \note{
 Both \code{target} and \code{features} must be binary, i.e. contain only 0
@@ -56,6 +59,11 @@ Conference on Machine Learning, Springer, 2004.
 }
 \seealso{
 See \code{\link{criterion_distribution}} for insight on QuiPT.
+
+\code{\link{summary.feature_test}} - summary of results.
+
+\code{\link{aggregate.feature_test}} - aggregates test results in groups based on feature's
+p-value.
 }
 \keyword{nonparametric}
 

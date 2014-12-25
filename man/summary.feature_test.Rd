@@ -20,6 +20,4 @@ nothing.
 Summarizes results of \code{\link{test_features}} function.
 }
 \keyword{manip}
-\keyword{methods}
-\keyword{print}
 

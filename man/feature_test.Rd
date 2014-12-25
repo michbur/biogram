@@ -7,6 +7,15 @@
 A result of \code{\link{test_features}} function.
 }
 \details{
-sth
+An object of class \code{test_features} is a numeric vector of p-values. Additional
+attributes characterizes futher the details of test which returned these p-values.
+}
+\section{Attributes}{
+
+\describe{
+  \item{criterion}{the criterion used in permutation test.}
+  \item{adjust}{the name of p-value adjusting method}
+  \item{times}{number of permutations or \code{NA} if QuiPT was chosen.}
+}
 }
 

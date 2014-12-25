@@ -2,14 +2,20 @@
 #'
 #' A result of \code{\link{test_features}} function.
 #'
-#' @details sth
+#' @details An object of class \code{test_features} is a numeric vector of p-values. Additional 
+#' attributes characterizes futher the details of test which returned these p-values.
+#' @section Attributes:
+#' \describe{
+#'   \item{criterion}{the criterion used in permutation test.}
+#'   \item{adjust}{the name of p-value adjusting method}
+#'   \item{times}{number of permutations or \code{NA} if QuiPT was chosen.}
+#' }
 #' @name feature_test
 #' @docType class
 NULL
 
-#constructor
 create_feature_test <- function(p_value, criterion, adjust, times) {
-  if (!is.numeric(p_value)) 
+  if (!(is.numeric(p_value) && is.vector(p_value)))
     stop("p_values must be numeric")
   
   #add names if they are missing
@@ -35,7 +41,7 @@ create_feature_test <- function(p_value, criterion, adjust, times) {
 #' @param ... ignored
 #' @return nothing.
 #' @export
-#' @keywords print methods manip
+#' @keywords manip
 summary.feature_test <- function(object, conf_level = 0.95, ...) {
   cat("Total number of features:", 
              length(object), "\n")
@@ -64,7 +70,7 @@ summary.feature_test <- function(object, conf_level = 0.95, ...) {
 #' @return a named list of length equal to the length of \code{significances} minus one. Each elements of 
 #' the list contains names of the n-grams belonging to the given significance group.
 #' @export
-#' @keywords print methods manip
+#' @keywords manip
 aggregate.feature_test <- function(x, significances = c(0, 0.0001, 0.01, 0.05, 1), ...) {
   cutted_pvals <- cut(x, breaks = c(0, 0.0001, 0.01, 0.05, 1), include.lowest = TRUE)
   #aggregate does not cut here, because it does not return standard list output
