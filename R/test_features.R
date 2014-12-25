@@ -32,8 +32,9 @@
 #' tar_feat1 <- create_feature_target(10, 390, 0, 600) 
 #' tar_feat2 <- create_feature_target(9, 391, 1, 599)
 #' tar_feat3 <- create_feature_target(8, 392, 0, 600)
-#' test_features(tar_feat1[,1], cbind(tar_feat1[,2], tar_feat2[,2], 
-#' tar_feat3[,2]))
+#' test_res <- test_features(tar_feat1[, 1], cbind(tar_feat1[, 2], tar_feat2[, 2], tar_feat3[, 2]))
+#' summary(test_res)
+#' aggregate(test_res)
 test_features <- function(target, features, criterion = "ig", adjust = "BH", quick = TRUE, times = 1e5) {
   
   valid_criterion <- check_criterion(criterion)

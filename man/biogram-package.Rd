@@ -65,6 +65,10 @@ deg_seqs <- degenerate(human_cleave[, 1L:9],
 bigrams <- count_ngrams(deg_seqs, 3, 1L:4, pos = TRUE)
 #test features
 test1 <- test_features(human_cleave[, "tar"], bigrams)
+#see a summary
+summary(test1)
+#aggregate features in groups based on their p-value
+aggregate(test1)
 }
 \author{
 Michal Burdukiewicz, Piotr Sobczyk, Chris Lauber

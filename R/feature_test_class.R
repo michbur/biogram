@@ -11,7 +11,11 @@ NULL
 create_feature_test <- function(p_value, criterion, adjust, times) {
   if (!is.numeric(p_value)) 
     stop("p_values must be numeric")
-  #other tests should be here
+  
+  #add names if they are missing
+  if(is.null(names(p_value)))
+    names(p_value) <- paste0("feature", 1L:length(p_value))
+  
   res <- p_value
   attributes(res) <- list(names = names(p_value),
                           criterion = criterion,
@@ -26,7 +30,7 @@ create_feature_test <- function(p_value, criterion, adjust, times) {
 #' Summarizes results of \code{\link{test_features}} function.
 #'
 #' @param object of class \code{\link{feature_test}}.
-#' @param conf_level confidence level. A feature with p-value equal or below it is considered 
+#' @param conf_level confidence level. A feature with p-value equal or smaller is considered 
 #' significant.
 #' @param ... ignored
 #' @return nothing.
@@ -63,10 +67,14 @@ summary.feature_test <- function(object, conf_level = 0.95, ...) {
 #' @keywords print methods manip
 aggregate.feature_test <- function(x, significances = c(0, 0.0001, 0.01, 0.05, 1), ...) {
   cutted_pvals <- cut(x, breaks = c(0, 0.0001, 0.01, 0.05, 1), include.lowest = TRUE)
-  dat <- aggregate(ngrams ~ cutted_pvals, data = data.frame(ngrams = names(x), cutted_pvals), 
-            function(i)
-              as.character(i))
-  res <- dat[[2]]
-  names(res) <- dat[[1]]
+  #aggregate does not cut here, because it does not return standard list output
+  #dat <- aggregate(ngrams ~ cutted_pvals, data = data.frame(ngrams = names(x), cutted_pvals), 
+  #                    function(i)
+  #                      as.character(i))
+  dat <- data.frame(ngrams = names(x), cutted_pvals)
+  res <- lapply(levels(cutted_pvals), function(i)
+    as.character(dat[dat[["cutted_pvals"]] == i, "ngrams"]))
+
+  names(res) <- levels(cutted_pvals)
   res
 }
