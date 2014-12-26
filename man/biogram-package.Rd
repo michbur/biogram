@@ -61,10 +61,10 @@ deg_seqs <- degenerate(human_cleave[, 1L:9],
                            `3` = c(5, 19, 20),
                            `4` = c(7, 9, 12, 15),
                            '5' = c(3, 4)))
-#extract bigrams
-bigrams <- count_ngrams(deg_seqs, 3, 1L:4, pos = TRUE)
+#extract trigrams
+trigrams <- count_ngrams(deg_seqs, 3, 1L:4, pos = TRUE)
 #test features
-test1 <- test_features(human_cleave[, "tar"], bigrams)
+test1 <- test_features(human_cleave[, "tar"], trigrams)
 #see a summary
 summary(test1)
 #aggregate features in groups based on their p-value

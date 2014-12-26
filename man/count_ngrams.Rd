@@ -36,16 +36,26 @@ when \code{n} = 3, \code{d} = c(1, 2) means A_A__A. For \code{n} = 4,
 \code{d} = c(2, 0, 1) means A__AA_A. If vector \code{d} has length 1, it is recycled to
 length \code{n} - 1.
 
-Column names follow a specific convention. Elements of n-gram are separated by
-dot. If \code{pos} = \code{TRUE}, the left side of name means actual position of the
-n-gram (separated by \code{_}). the Right side of name is vector of distance(s)
-used separated by \code{_}.
+n-gram names follow a specific convention and have three-part structure (only two parts if
+the position information is not preserved). The parts are separated by \code{_}. Within
+a part, elements are separated by \code{.}. The general scheme is
+\code{POSITION_NGRAM_DISTANCE}.
+
+The optional left side of the name means actual position of the n-gram and will be present
+only if \code{pos} is \code{TRUE}. This part is always a single integer.
+
+The middle part is a sequence of elements in n-gram. For example, \code{4.2.2} means n-gram
+422.
+
+The right side of name is vector of distance(s). For example, \code{0.0} means no distances
+(continous n-gram). \code{1.2} means A_A__A.
 
 Examples of naming convention:
 \itemize{
-\item{46_4.4.4_0_1 means trigram 44_4 on position 46.}
+\item{46_4.4.4_0.1 means trigram 44_4 on position 46.}
 \item{12_2.1_2 means bigram 2__1 on position 12.}
-\item{8_1.1.1_0_0 means continous trigram 111 on position 8.}
+\item{8_1.1.1_0.0 means continous trigram 111 on position 8.}
+\item{1.1.1_0.0 means continous trigram 111 without position information.}
 }
 }
 \examples{
