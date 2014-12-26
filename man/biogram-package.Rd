@@ -68,7 +68,9 @@ test1 <- test_features(human_cleave[, "tar"], trigrams)
 #see a summary
 summary(test1)
 #aggregate features in groups based on their p-value
-aggregate(test1)
+gr <- aggregate(test1)
+#analyze deeper the most important n-grams
+decode_ngrams(gr[[1]])
 }
 \author{
 Michal Burdukiewicz, Piotr Sobczyk, Chris Lauber
