@@ -21,7 +21,8 @@ Creates vector of all posible n_grams (for given \code{n}).
 }
 \details{
 See Details section of \code{\link{count_ngrams}} for more
-information about n-grams naming convention.
+information about n-grams naming convention. The possible information about distance
+must be added by hand (see examples).
 }
 \note{
 Input data must be a matrix or data frame of numeric elements.
@@ -29,7 +30,12 @@ Input data must be a matrix or data frame of numeric elements.
 \examples{
 #bigrams for standard aminoacids
 create_ngrams(2, 1L:20)
-#bigrams for standard aminoacids with positions, 10 nucleotide long sequence
+#bigrams for standard aminoacids with positions, 10 amino acid long sequence, so
+#only 9 bigrams can be located in sequence
 create_ngrams(2, 1L:20, 9)
+#bigrams for DNA with positions, 10 nucleotide long sequence, distance 1, so only 8 bigrams
+#in sequence
+#paste0 adds information about distance at the end of n-gram
+paste0(create_ngrams(2, 1L:4, 8), "_0")
 }
 

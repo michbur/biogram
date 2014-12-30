@@ -7,6 +7,8 @@
 #' @return a list of length equal to the number of positions present in n-grams. Each element of 
 #' the list contains unigrams that are present on this position.
 #' @export
+#' @examples
+#' decode_ngrams(c("2_1.1.2_0.0", "3_1.1.2_0.0", "3_2.2.2_0.0"))
 
 decode_ngrams <- function(ngrams) {
   

@@ -80,8 +80,6 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH", qui
     apply(features, 2, function(feature) {
       feature <- as.matrix(feature, ncol = 1)
       n <- length(target)
-      
-      result <- NULL
       estm <- valid_criterion[["crit_function"]](target = target, features = feature)
       dist <- dists[[paste(sum(feature))]]
       1 - dist[3, which.max(dist[1, ] >= estm - 1e-15)]

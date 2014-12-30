@@ -68,6 +68,6 @@
 #' summary(test1)
 #' #aggregate features in groups based on their p-value
 #' gr <- aggregate(test1)
-#' #analyze deeper the most important n-grams
+#' #analyze deeper the most significant n-grams
 #' decode_ngrams(gr[[1]])
 NULL

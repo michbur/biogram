@@ -16,4 +16,7 @@ the list contains unigrams that are present on this position.
 Tranforms a vector of positioned n-grams into a list of positions filled with unigrams
 appearing on them.
 }
+\examples{
+decode_ngrams(c("2_1.1.2_0.0", "3_1.1.2_0.0", "3_2.2.2_0.0"))
+}
 
