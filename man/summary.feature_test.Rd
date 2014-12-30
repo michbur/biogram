@@ -8,8 +8,8 @@
 \arguments{
 \item{object}{of class \code{\link{feature_test}}.}
 
-\item{conf_level}{confidence level. A feature with p-value equal or smaller is considered
-significant.}
+\item{conf_level}{confidence level. A feature with p-value equal to or smaller than the
+confidence is considered significant.}
 
 \item{...}{ignored}
 }

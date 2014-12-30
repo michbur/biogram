@@ -12,7 +12,9 @@
 #' used only for n-grams without position information. See \code{Details}.
 #' @param threshold \code{integer}, if not equal to 0, data is binarized into
 #' two groups (larger or equal to threshold, smaller than threshold).
-#' @return a \code{\link[slam]{simple_triplet_matrix}}. See \code{Details} for specifics of the column naming.
+#' @return a \code{\link[slam]{simple_triplet_matrix}} where columns represent
+#' n-grams and rows sequences. See \code{Details} for specifics of the naming convence.
+#' 
 #' @details A \code{distance} vector should be always \code{n} - 1 long. For example 
 #' when \code{n} = 3, \code{d} = c(1, 2) means A_A__A. For \code{n} = 4, 
 #' \code{d} = c(2, 0, 1) means A__AA_A. If vector \code{d} has length 1, it is recycled to
@@ -39,6 +41,9 @@
 #' \item{8_1.1.1_0.0 means continous trigram 111 on position 8.}
 #' \item{1.1.1_0.0 means continous trigram 111 without position information.}
 #' }
+#' @note Normally n-gram data is saved in memory-saving format. To convert an object to 
+#' classical R matrix use \code{\link[base]{as.matrix}} function. See examples for further 
+#' information.
 #' @export
 #' @seealso 
 #' Create vector of possible n-grams: \code{\link{create_ngrams}}.
@@ -53,7 +58,9 @@
 #' count_ngrams(sample(1L:4, 50, replace = TRUE), 3, 1L:4, pos = FALSE)
 #' #trigrams with position from multiple nucleotide sequences
 #' seqs <- matrix(sample(1L:4, 600, replace = TRUE), ncol = 50)
-#' count_ngrams(seqs, 3, 1L:4, pos = TRUE)
+#' ngrams <- count_ngrams(seqs, 3, 1L:4, pos = TRUE)
+#' #view n-grams
+#' as.matrix(ngrams)
 
 count_ngrams <- function(seq, n, u, d = 0, pos = FALSE, scale = FALSE, threshold = 0) {
   

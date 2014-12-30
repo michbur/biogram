@@ -25,7 +25,8 @@ used only for n-grams without position information. See \code{Details}.}
 two groups (larger or equal to threshold, smaller than threshold).}
 }
 \value{
-a \code{\link[slam]{simple_triplet_matrix}}. See \code{Details} for specifics of the column naming.
+a \code{\link[slam]{simple_triplet_matrix}} where columns represent
+n-grams and rows sequences. See \code{Details} for specifics of the naming convence.
 }
 \description{
 Counts all n-grams present in sequences.
@@ -58,12 +59,19 @@ Examples of naming convention:
 \item{1.1.1_0.0 means continous trigram 111 without position information.}
 }
 }
+\note{
+Normally n-gram data is saved in memory-saving format. To convert an object to
+classical R matrix use \code{\link[base]{as.matrix}} function. See examples for further
+information.
+}
 \examples{
 #trigrams without position for nucleotides
 count_ngrams(sample(1L:4, 50, replace = TRUE), 3, 1L:4, pos = FALSE)
 #trigrams with position from multiple nucleotide sequences
 seqs <- matrix(sample(1L:4, 600, replace = TRUE), ncol = 50)
-count_ngrams(seqs, 3, 1L:4, pos = TRUE)
+ngrams <- count_ngrams(seqs, 3, 1L:4, pos = TRUE)
+#view n-grams
+as.matrix(ngrams)
 }
 \seealso{
 Create vector of possible n-grams: \code{\link{create_ngrams}}.

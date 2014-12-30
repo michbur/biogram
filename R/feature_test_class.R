@@ -8,7 +8,7 @@
 #' \describe{
 #'   \item{criterion}{the criterion used in permutation test.}
 #'   \item{adjust}{the name of p-value adjusting method}
-#'   \item{times}{number of permutations or \code{NA} if QuiPT was chosen.}
+#'   \item{times}{the number of permutations or \code{NA} if QuiPT was chosen.}
 #' }
 #' @name feature_test
 #' @docType class
@@ -36,8 +36,8 @@ create_feature_test <- function(p_value, criterion, adjust, times) {
 #' Summarizes results of \code{\link{test_features}} function.
 #'
 #' @param object of class \code{\link{feature_test}}.
-#' @param conf_level confidence level. A feature with p-value equal or smaller is considered 
-#' significant.
+#' @param conf_level confidence level. A feature with p-value equal to or smaller than the 
+#' confidence is considered significant.
 #' @param ... ignored
 #' @return nothing.
 #' @export

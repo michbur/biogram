@@ -15,7 +15,7 @@ attributes characterizes futher the details of test which returned these p-value
 \describe{
   \item{criterion}{the criterion used in permutation test.}
   \item{adjust}{the name of p-value adjusting method}
-  \item{times}{number of permutations or \code{NA} if QuiPT was chosen.}
+  \item{times}{the number of permutations or \code{NA} if QuiPT was chosen.}
 }
 }
 
