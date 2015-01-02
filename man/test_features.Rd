@@ -4,7 +4,7 @@
 \title{Permutation test for feature selection}
 \usage{
 test_features(target, features, criterion = "ig", adjust = "BH",
-  quick = TRUE, times = 1e+05)
+  threshold = 1, quick = TRUE, times = 1e+05)
 }
 \arguments{
 \item{target}{target vector.}
@@ -17,6 +17,9 @@ list of possible criterions.}
 
 \item{adjust}{the name of p-value adjusting method. See \code{\link[stats]{p.adjust}}
 for the list of possible values. If \code{NULL}, no adjustment is done.}
+
+\item{threshold}{an \code{integer}. Features that occur less than \code{threshold}
+and more often than \code{nrow(features) - threshold} are not analyzed in permutation test.}
 
 \item{quick}{logical, if \code{TRUE} Quick Permutation Test (QuiPT) is used.}
 
@@ -42,6 +45,9 @@ adjustment method. Such methods can be used directly by specifying \code{adjust}
 \note{
 Both \code{target} and \code{features} must be binary, i.e. contain only 0
 and 1 values.
+
+Features occuring too often and too rarely are considered not informative and may be removed
+using the threshold parameter.
 }
 \examples{
 tar_feat1 <- create_feature_target(10, 390, 0, 600)

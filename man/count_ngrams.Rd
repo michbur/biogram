@@ -39,7 +39,7 @@ length \code{n} - 1.
 
 n-gram names follow a specific convention and have three-part structure (only two parts if
 the position information is not preserved). The parts are separated by \code{_}. Within
-a part, elements are separated by \code{.}. The general scheme is
+a part elements are separated by \code{.}. The general scheme is
 \code{POSITION_NGRAM_DISTANCE}.
 
 The optional left side of the name means actual position of the n-gram and will be present
@@ -61,7 +61,7 @@ Examples of naming convention:
 }
 \note{
 Normally n-gram data is saved in memory-saving format. To convert an object to
-classical R matrix use \code{\link[base]{as.matrix}} function. See examples for further
+'classical' matrix use \code{\link[base]{as.matrix}} function. See examples for further
 information.
 }
 \examples{

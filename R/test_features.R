@@ -10,6 +10,8 @@
 #' list of possible criterions.
 #' @param adjust the name of p-value adjusting method. See \code{\link[stats]{p.adjust}}
 #' for the list of possible values. If \code{NULL}, no adjustment is done.
+#' @param threshold an \code{integer}. Features that occur less than \code{threshold}
+#' and more often than \code{nrow(features) - threshold} are not analyzed in permutation test.
 #' @param quick logical, if \code{TRUE} Quick Permutation Test (QuiPT) is used.
 #' @param times number of times procedure should be repetead. Ignored if \code{quick} is 
 #' \code{TRUE}.
@@ -23,6 +25,9 @@
 #' @return an object of class \code{\link{feature_test}}.
 #' @note Both \code{target} and \code{features} must be binary, i.e. contain only 0 
 #' and 1 values.
+#' 
+#' Features occuring too often and too rarely are considered not informative and may be removed 
+#' using the threshold parameter.
 #' @seealso See \code{\link{criterion_distribution}} for insight on QuiPT.
 #' @export
 #' @keywords nonparametric
@@ -43,7 +48,8 @@
 #' test_res <- test_features(tar_feat1[, 1], cbind(tar_feat1[, 2], tar_feat2[, 2], tar_feat3[, 2]))
 #' summary(test_res)
 #' aggregate(test_res)
-test_features <- function(target, features, criterion = "ig", adjust = "BH", quick = TRUE, times = 1e5) {
+test_features <- function(target, features, criterion = "ig", adjust = "BH", 
+                          threshold = 1, quick = TRUE, times = 1e5) {
   
   valid_criterion <- check_criterion(criterion)
   
@@ -61,14 +67,19 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH", qui
     }
   })
   
+  feature_size <- if (class(features) == "simple_triplet_matrix") {
+    col_sums(features)
+  } else {
+    colSums(features)
+  }
+  
+  #eliminate non-infomative features
+  features <- features[, feature_size > threshold & feature_size < (nrow(features) - threshold)]
+  
   p_vals <- if(quick) {
     
     # compute distribution once
-    feature_size <- unique(if (class(features) == "simple_triplet_matrix") {
-      col_sums(features)
-    } else {
-      colSums(features)
-    })
+    feature_size <- unique(feature_size)
     
     dists <- lapply(feature_size, function(i){
       t <- create_feature_target(i, sum(target) - i, 0, length(target) - sum(target)) 
