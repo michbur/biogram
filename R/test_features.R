@@ -6,13 +6,13 @@
 #' @param target target vector.
 #' @param features \code{integer} matrix of features with number of rows equal 
 #' to the length of target vector.
-#' @param criterion the criterion used in permutation test. See \code{\link{criterions}} for the
+#' @param criterion criterion used in permutation test. See \code{\link{criterions}} for the
 #' list of possible criterions.
-#' @param adjust the name of p-value adjusting method. See \code{\link[stats]{p.adjust}}
+#' @param adjust name of p-value adjusting method. See \code{\link[stats]{p.adjust}}
 #' for the list of possible values. If \code{NULL}, no adjustment is done.
-#' @param threshold an \code{integer}. Features that occur less than \code{threshold}
+#' @param threshold \code{integer}. Features that occur less than \code{threshold}
 #' and more often than \code{nrow(features) - threshold} are not analyzed in permutation test.
-#' @param quick logical, if \code{TRUE} Quick Permutation Test (QuiPT) is used.
+#' @param quick \code{logical}, if \code{TRUE} Quick Permutation Test (QuiPT) is used.
 #' @param times number of times procedure should be repetead. Ignored if \code{quick} is 
 #' \code{TRUE}.
 #' @details Currently implemented criterions:

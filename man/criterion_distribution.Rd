@@ -3,7 +3,7 @@
 \alias{criterion_distribution}
 \title{Compute criterion distribution}
 \usage{
-criterion_distribution(target, feature, graphical.output = FALSE,
+criterion_distribution(target, feature, graphical_output = FALSE,
   criterion = "ig")
 }
 \arguments{
@@ -11,7 +11,7 @@ criterion_distribution(target, feature, graphical.output = FALSE,
 
 \item{feature}{\{0,1\}-valued feature vector. See Details.}
 
-\item{graphical.output}{default value is \code{FALSE}, if \code{TRUE}
+\item{graphical_output}{default value is \code{FALSE}, if \code{TRUE}
 probability density function is plotted}
 
 \item{criterion}{the criterion used for calculations of distribution.
@@ -34,7 +34,7 @@ both \code{target} and \code{feature} vectors may contain only 0 and 1.
 \examples{
 target_feature <- create_feature_target(10, 375, 15, 600)
 criterion_distribution(target = target_feature[,1], feature = target_feature[,2],
-graphical.output = TRUE)
+graphical_output = TRUE)
 }
 \seealso{
 \code{\link{criterions}}.

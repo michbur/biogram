@@ -12,16 +12,16 @@ test_features(target, features, criterion = "ig", adjust = "BH",
 \item{features}{\code{integer} matrix of features with number of rows equal
 to the length of target vector.}
 
-\item{criterion}{the criterion used in permutation test. See \code{\link{criterions}} for the
+\item{criterion}{criterion used in permutation test. See \code{\link{criterions}} for the
 list of possible criterions.}
 
-\item{adjust}{the name of p-value adjusting method. See \code{\link[stats]{p.adjust}}
+\item{adjust}{name of p-value adjusting method. See \code{\link[stats]{p.adjust}}
 for the list of possible values. If \code{NULL}, no adjustment is done.}
 
-\item{threshold}{an \code{integer}. Features that occur less than \code{threshold}
+\item{threshold}{\code{integer}. Features that occur less than \code{threshold}
 and more often than \code{nrow(features) - threshold} are not analyzed in permutation test.}
 
-\item{quick}{logical, if \code{TRUE} Quick Permutation Test (QuiPT) is used.}
+\item{quick}{\code{logical}, if \code{TRUE} Quick Permutation Test (QuiPT) is used.}
 
 \item{times}{number of times procedure should be repetead. Ignored if \code{quick} is
 \code{TRUE}.}
