@@ -83,7 +83,7 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
     
     dists <- lapply(feature_size, function(i){
       t <- create_feature_target(i, sum(target) - i, 0, length(target) - sum(target)) 
-      criterion_distribution(t[, 1], t[, 2], graphical.output = FALSE, criterion = criterion)
+      criterion_distribution(t[, 1], t[, 2], graphical_output = FALSE, criterion = criterion)
     })
     
     names(dists) <- feature_size
