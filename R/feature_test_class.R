@@ -72,7 +72,7 @@ summary.feature_test <- function(object, conf_level = 0.95, ...) {
 #' @export
 #' @keywords manip
 aggregate.feature_test <- function(x, significances = c(0, 0.0001, 0.01, 0.05, 1), ...) {
-  cutted_pvals <- cut(x, breaks = c(0, 0.0001, 0.01, 0.05, 1), include.lowest = TRUE)
+  cutted_pvals <- cut(x, breaks = significances, include.lowest = TRUE)
   #aggregate does not cut here, because it does not return standard list output
   #dat <- aggregate(ngrams ~ cutted_pvals, data = data.frame(ngrams = names(x), cutted_pvals), 
   #                    function(i)
