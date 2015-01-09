@@ -67,21 +67,54 @@ summary.feature_test <- function(object, conf_level = 0.95, ...) {
 #' @param x an object of class \code{\link{feature_test}}.
 #' @param significances a vector of significances along which p-values are classified. See description of
 #' \code{\link[base]{cut}} function. 
+#' @param frequencies a vector of frequencies along which occurences of n-grams belonging
+#' to positive or negative group are classified.
+#' @param split if not \code{NULL}, splits the output of the function. Must have value:
+#' \code{NULL}, \code{"significances"}, \code{"positives"} and \code{"negatives"}. For
+#' further information see Value
 #' @param ... ignored
-#' @return a named list of length equal to the length of \code{significances} minus one. Each elements of 
-#' the list contains names of the n-grams belonging to the given significance group.
+#' @return the value of function depends on the \code{split} parameter. 
+#' If it is not \code{NULL}, the function returns a named list of length equal to the length 
+#' of \code{significances} (when \code{split} equals \code{"significances"}) or 
+#' \code{frequencies} (when \code{split} equals \code{"positives"} or \code{"negatives"})
+#' minus one. Each elements of the list contains names of the n-grams belonging to the given 
+#' significance or frequency group.
+#' 
+#' If the \code{split} parameter is \code{NULL}, the function returns data frame with four
+#' columns containing respectively: names of n-grams, p-values, frequencies in positive
+#' and negative group aggregated to groups along values of \code{significances} and 
+#' \code{frequencies} vectors.
+#' 
 #' @export
 #' @keywords manip
-aggregate.feature_test <- function(x, significances = c(0, 0.0001, 0.01, 0.05, 1), ...) {
+aggregate.feature_test <- function(x, significances = c(0, 0.0001, 0.01, 0.05, 1), 
+                                   frequencies = c(0, 0.05, 0.1, 0.2, 1), 
+                                   split = "significances", ...) {
   cutted_pvals <- cut(x, breaks = significances, include.lowest = TRUE)
   #aggregate does not cut here, because it does not return standard list output
   #dat <- aggregate(ngrams ~ cutted_pvals, data = data.frame(ngrams = names(x), cutted_pvals), 
   #                    function(i)
   #                      as.character(i))
-  dat <- data.frame(ngrams = names(x), cutted_pvals)
-  res <- lapply(levels(cutted_pvals), function(i)
-    as.character(dat[dat[["cutted_pvals"]] == i, "ngrams"]))
-
-  names(res) <- levels(cutted_pvals)
-  res
+  occ_pos <- cut(attr(x, "occ")["pos", ], 
+                 breaks = frequencies, include.lowest = TRUE)
+  occ_neg <- cut(attr(x, "occ")["neg", ], 
+                 breaks = frequencies, include.lowest = TRUE)
+  dat <- data.frame(ngram = names(x), 
+                    p_value = cutted_pvals,
+                    occ_pos = occ_pos,
+                    occ_neg = occ_neg)
+  
+  if(!is.null(split)) {
+    split_factor <- switch(split,
+                           significances = levels(cutted_pvals),
+                           positives = levels(occ_pos),
+                           negatives = levels(occ_neg))
+    
+    dat <- lapply(split_factor, function(i)
+      as.character(dat[dat[["p_value"]] == i, "ngram"]))
+    
+    names(dat) <- levels(split_factor)
+  }
+  
+  dat
 }

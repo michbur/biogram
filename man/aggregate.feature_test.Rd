@@ -4,7 +4,7 @@
 \title{Aggregate tested features}
 \usage{
 \method{aggregate}{feature_test}(x, significances = c(0, 1e-04, 0.01, 0.05,
-  1), ...)
+  1), frequencies = c(0, 0.05, 0.1, 0.2, 1), split = "significances", ...)
 }
 \arguments{
 \item{x}{an object of class \code{\link{feature_test}}.}
@@ -12,11 +12,27 @@
 \item{significances}{a vector of significances along which p-values are classified. See description of
 \code{\link[base]{cut}} function.}
 
+\item{frequencies}{a vector of frequencies along which occurences of n-grams belonging
+to positive or negative group are classified.}
+
+\item{split}{if not \code{NULL}, splits the output of the function. Must have value:
+\code{NULL}, \code{"significances"}, \code{"positives"} and \code{"negatives"}. For
+further information see Value}
+
 \item{...}{ignored}
 }
 \value{
-a named list of length equal to the length of \code{significances} minus one. Each elements of
-the list contains names of the n-grams belonging to the given significance group.
+the value of function depends on the \code{split} parameter.
+If it is not \code{NULL}, the function returns a named list of length equal to the length
+of \code{significances} (when \code{split} equals \code{"significances"}) or
+\code{frequencies} (when \code{split} equals \code{"positives"} or \code{"negatives"})
+minus one. Each elements of the list contains names of the n-grams belonging to the given
+significance or frequency group.
+
+If the \code{split} parameter is \code{NULL}, the function returns data frame with four
+columns containing respectively: names of n-grams, p-values, frequencies in positive
+and negative group aggregated to groups along values of \code{significances} and
+\code{frequencies} vectors.
 }
 \description{
 Aggregates results of \code{\link{test_features}} function into groups based on their
