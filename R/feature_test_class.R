@@ -90,6 +90,7 @@ summary.feature_test <- function(object, conf_level = 0.95, ...) {
 aggregate.feature_test <- function(x, significances = c(0, 0.0001, 0.01, 0.05, 1), 
                                    frequencies = c(0, 0.05, 0.1, 0.2, 1), 
                                    split = "significances", ...) {
+
   cutted_pvals <- cut(x, breaks = significances, include.lowest = TRUE)
   #aggregate does not cut here, because it does not return standard list output
   #dat <- aggregate(ngrams ~ cutted_pvals, data = data.frame(ngrams = names(x), cutted_pvals), 
@@ -105,15 +106,22 @@ aggregate.feature_test <- function(x, significances = c(0, 0.0001, 0.01, 0.05, 1
                     occ_neg = occ_neg)
   
   if(!is.null(split)) {
+    if(!(split %in% c("significances", "positives", "negatives")))
+      stop("'split' must have one of following values: 'significances', 'positives', 
+           'negatives' or NULL")
+    
     split_factor <- switch(split,
-                           significances = levels(cutted_pvals),
-                           positives = levels(occ_pos),
-                           negatives = levels(occ_neg))
+                           significances = list(levels(cutted_pvals),
+                                                "p_value"),
+                           positives = list(levels(occ_pos),
+                                            "occ_pos"),
+                           negatives = list(levels(occ_neg),
+                                            "occ_neg"))
     
-    dat <- lapply(split_factor, function(i)
-      as.character(dat[dat[["p_value"]] == i, "ngram"]))
+    dat <- lapply(split_factor[[1]], function(i)
+      as.character(dat[dat[[split_factor[[2]]]] == i, "ngram"]))
     
-    names(dat) <- levels(split_factor)
+    names(dat) <- split_factor[[1]]
   }
   
   dat
