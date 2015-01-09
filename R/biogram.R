@@ -44,7 +44,6 @@
 #' 
 #' @import slam
 #' @importFrom bit as.bit
-#' @importFrom stats aggregate
 #' @author Michal Burdukiewicz, Piotr Sobczyk, Chris Lauber
 #' @docType package
 #' @name biogram-package
@@ -67,7 +66,7 @@
 #' #see a summary
 #' summary(test1)
 #' #aggregate features in groups based on their p-value
-#' gr <- aggregate(test1)
+#' gr <- cut(test1)
 #' #analyze deeper the most significant n-grams
 #' decode_ngrams(gr[[1]])
 NULL

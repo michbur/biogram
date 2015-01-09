@@ -55,7 +55,7 @@ tar_feat2 <- create_feature_target(9, 391, 1, 599)
 tar_feat3 <- create_feature_target(8, 392, 0, 600)
 test_res <- test_features(tar_feat1[, 1], cbind(tar_feat1[, 2], tar_feat2[, 2], tar_feat3[, 2]))
 summary(test_res)
-aggregate(test_res)
+cut(test_res)
 }
 \references{
 Radivojac P, Obradovic Z, Dunker AK, Vucetic S,
@@ -68,7 +68,7 @@ See \code{\link{criterion_distribution}} for insight on QuiPT.
 
 \code{\link{summary.feature_test}} - summary of results.
 
-\code{\link{aggregate.feature_test}} - aggregates test results in groups based on feature's
+\code{\link{cut.feature_test}} - aggregates test results in groups based on feature's
 p-value.
 }
 \keyword{nonparametric}
