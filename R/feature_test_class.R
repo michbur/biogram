@@ -14,7 +14,7 @@
 #' @docType class
 NULL
 
-create_feature_test <- function(p_value, criterion, adjust, times) {
+create_feature_test <- function(p_value, criterion, adjust, times, occ) {
   if (!(is.numeric(p_value) && is.vector(p_value)))
     stop("p_values must be numeric")
   
@@ -27,7 +27,8 @@ create_feature_test <- function(p_value, criterion, adjust, times) {
                           criterion = criterion,
                           adjust = adjust,
                           times = times,
-                          class = "feature_test")
+                          class = "feature_test",
+                          occ = occ)
   res
 }
 

@@ -104,10 +104,20 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
   if(!is.null(adjust))
     p_vals <- p.adjust(p_vals, method = adjust)
   
+  #occurences of features in target+ and target- groups
+  target_b <- as.bit(target)
+  len_target <- length(target)
+  pos_target <- sum(target)
+  occ <- apply(features, 2, function(i)
+    fast_crosstable(target_b, len_target, pos_target, i))[c(1, 3), ]/
+    c(pos_target, len_target - pos_target)
+  rownames(occ) <- c("pos", "neg")
+  
   create_feature_test(p_value = p_vals, 
                       criterion = valid_criterion[["nice_name"]],
                       adjust = adjust,
-                      times = ifelse(quick, NA, times))
+                      times = ifelse(quick, NA, times),
+                      occ = occ)
 }
 
 
