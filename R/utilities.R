@@ -46,6 +46,7 @@ create_feature_target <- function(n11, n01, n10, n00){
 #' fast_crosstable(as.bit(tar), length(tar), sum(tar),  feat)
 
 fast_crosstable <- function(target_b, len_target, pos_target, feature) {
+  #no input tests - every if clause slows a little bit
   feature_b = as.bit(feature) #from bit library, faster than any other type
   
   #target positive and feature positive
