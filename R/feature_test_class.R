@@ -56,8 +56,21 @@ summary.feature_test <- function(object, conf_level = 0.95, ...) {
                     " permutations)")), "\n")
   cat("p-values adjustment method:", 
       attr(object, "adjust"), "\n")
-  
 }
+
+#' Print tested features
+#'
+#' Prints results of \code{\link{test_features}} function.
+#'
+#' @param x object of class \code{\link{feature_test}}.
+#' @param ... further arguments passed to \code{\link[base]{print.default}}.
+#' @return nothing.
+#' @export
+print.feature_test <- function(x, ...) {
+  #strange workaround but may be faster than setting all other attributes to NULL
+  print(vapply(x, function(i) i, 0))
+}
+
 
 #' Categorize tested features
 #'
