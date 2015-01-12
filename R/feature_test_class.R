@@ -68,7 +68,7 @@ summary.feature_test <- function(object, conf_level = 0.95, ...) {
 #' @export
 print.feature_test <- function(x, ...) {
   #strange workaround but may be faster than setting all other attributes to NULL
-  print(vapply(x, function(i) i, 0))
+  print(vapply(x, function(i) i, 0), ...)
 }
 
 
