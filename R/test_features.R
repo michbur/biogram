@@ -1,27 +1,29 @@
 #' Permutation test for feature selection
 #'
-#' Performs a feature selection on positioned N-gram data using a Fisher's 
+#' Performs a feature selection on positioned n-gram data using a Fisher's 
 #' permutation test.
 #'
-#' @param target target vector.
+#' @param target \code{integer} vector with target information (e.g. class labels).
 #' @param features \code{integer} matrix of features with number of rows equal 
-#' to the length of target vector.
+#' to the length of the target vector.
 #' @param criterion criterion used in permutation test. See \code{\link{criterions}} for the
 #' list of possible criterions.
-#' @param adjust name of p-value adjusting method. See \code{\link[stats]{p.adjust}}
+#' @param adjust name of p-value adjustment method. See \code{\link[stats]{p.adjust}}
 #' for the list of possible values. If \code{NULL}, no adjustment is done.
 #' @param threshold \code{integer}. Features that occur less than \code{threshold}
-#' and more often than \code{nrow(features) - threshold} are not analyzed in permutation test.
+#' and more often than \code{nrow(features)-threshold} are discarded from the permutation test.
 #' @param quick \code{logical}, if \code{TRUE} Quick Permutation Test (QuiPT) is used.
-#' @param times number of times procedure should be repetead. Ignored if \code{quick} is 
+#' @param times number of times procedure should be repeated. Ignored if \code{quick} is 
 #' \code{TRUE}.
+#' 
 #' @details Currently implemented criterions:
 #' \itemize{
 #' \item{"\code{ig}" - information gain}
 #' }
 #' 
-#' Since the procedure involes multiple testing, it is advisable to use one of avaible p-value
-#' adjustment method. Such methods can be used directly by specifying \code{adjust} parameter.
+#' Since the procedure involes multiple testing, it is advisable to use one of the avaible
+#' p-value adjustment methods. Such methods can be used directly by specifying the 
+#' \code{adjust} parameter.
 #' @return an object of class \code{\link{feature_test}}.
 #' @note Both \code{target} and \code{features} must be binary, i.e. contain only 0 
 #' and 1 values.
