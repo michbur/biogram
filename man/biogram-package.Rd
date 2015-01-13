@@ -39,7 +39,7 @@ of length 6 \eqn{20^{n}} n-grams and \eqn{6 \times 20^{n}} positioned n-grams ar
 Data sets of such an enormous size are hard to manage and analyze in R.
 
 The \code{biogram} package deals with both of the abovementioned problems. It uses
-innate properties of the n-gram data which usually can be represented by parse
+innate properties of the n-gram data which usually can be represented by sparse
 matrices. Data storage is done using functionalities from the \code{slam} package. To ease
 the selection of significant features, \code{biogram} provides the user with QuiPT,
 a very fast permutation test for binary data (see \code{\link{test_features}}).
