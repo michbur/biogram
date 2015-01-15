@@ -1,4 +1,4 @@
-#' Decode n-grams
+#' Position n-grams
 #'
 #' Tranforms a vector of positioned n-grams into a list of positions filled with unigrams 
 #' appearing on them.
@@ -8,9 +8,9 @@
 #' the list contains unigrams that are present on this position.
 #' @export
 #' @examples
-#' decode_ngrams(c("2_1.1.2_0.0", "3_1.1.2_0.0", "3_2.2.2_0.0"))
+#' position_ngrams(c("2_1.1.2_0.0", "3_1.1.2_0.0", "3_2.2.2_0.0"))
 
-decode_ngrams <- function(ngrams) {
+position_ngrams <- function(ngrams) {
   
   sngrams <- strsplit(ngrams, "_")
   #check if there is information about position

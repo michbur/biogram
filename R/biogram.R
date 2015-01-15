@@ -66,5 +66,5 @@
 #' #aggregate features in groups based on their p-value
 #' gr <- cut(test1)
 #' #analyze deeper the most significant n-grams
-#' decode_ngrams(gr[[1]])
+#' position_ngrams(gr[[1]])
 NULL
