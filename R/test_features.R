@@ -44,9 +44,12 @@
 #' \code{\link{cut.feature_test}} - aggregates test results in groups based on feature's
 #' p-value.
 #' @examples
+#' #significant feature
 #' tar_feat1 <- create_feature_target(10, 390, 0, 600) 
+#' #significant feature
 #' tar_feat2 <- create_feature_target(9, 391, 1, 599)
-#' tar_feat3 <- create_feature_target(8, 392, 0, 600)
+#' #insignificant feature
+#' tar_feat3 <- create_feature_target(198, 202, 300, 300)
 #' test_res <- test_features(tar_feat1[, 1], cbind(tar_feat1[, 2], tar_feat2[, 2], tar_feat3[, 2]))
 #' summary(test_res)
 #' cut(test_res)
