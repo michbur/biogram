@@ -4,24 +4,21 @@
 #' values of \code{n} and \code{d}.
 #'
 #' @inheritParams count_ngrams
-#' @param n_d \code{list} list of n-grams' sizes and distances between elements of n-gram.
-#' See Details.
+#' @param ns \code{numeric} vector of n-grams' sizes. See Details.
+#' @param ds \code{list} of distances between elements of n-grams. Each element of the list
+#' is a vector used as distance for the respective n-gram size given by the \code{ns}
+#' parameter.
 #' @return a \code{integer} matrix with named columns. The naming conventions are the same
-#' as in \code{\link{count_ngrams}}. 
-#' @details Each element of \code{n_d} is a list consisting of two vectors. 
-#' First element is a single \code{integer} value which determines the number of 
-#' words in n-gram (equivalent of \code{n} from \code{\link{count_ngrams}}). Second 
-#' element must be an \code{integer} vector describing distances between words in 
-#' n-gram (equivalent of \code{d} from \code{\link{count_ngrams}}).
+#' as in \code{\link{count_ngrams}}.
 #' @export
 #' @examples 
 #' seqs <- matrix(sample(1L:4, 600, replace = TRUE), ncol = 50)
-#' count_multigrams(list(list(2, 1), list(2, 3)), seqs, 1L:4, pos = TRUE)
+#' count_multigrams(c(3, 1), list(c(1, 0), 0), seqs, 1L:4, pos = TRUE)
 
-count_multigrams <- function(n_d, seq, u, d = 0, pos = FALSE, scale = FALSE, threshold = 0) {
-  n_loops <- length(n_d)
+count_multigrams <- function(ns, ds, seq, u, pos = FALSE, scale = FALSE, threshold = 0) {
+  n_loops <- length(ns)
   do.call(cbind, lapply(1L:n_loops, function(current_loop) {
-      count_ngrams(seq, n_d[[current_loop]][[1]], u, n_d[[current_loop]][[2]], 
+      count_ngrams(seq, ns[current_loop], u, ds[[current_loop]], 
                    pos, scale, threshold)
   }))
 }

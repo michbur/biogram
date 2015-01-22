@@ -4,20 +4,20 @@
 \alias{count_multigrams}
 \title{Detect and count multiple n-grams in sequences}
 \usage{
-count_multigrams(n_d, seq, u, d = 0, pos = FALSE, scale = FALSE,
+count_multigrams(ns, ds, seq, u, pos = FALSE, scale = FALSE,
   threshold = 0)
 }
 \arguments{
-\item{n_d}{\code{list} list of n-grams' sizes and distances between elements of n-gram.
-See Details.}
+\item{ns}{\code{numeric} vector of n-grams' sizes. See Details.}
+
+\item{ds}{\code{list} of distances between elements of n-grams. Each element of the list
+is a vector used as distance for the respective n-gram size given by the \code{ns}
+parameter.}
 
 \item{seq}{\code{integer} vector or matrix describing sequence(s).}
 
 \item{u}{\code{integer}, \code{numeric} or \code{character} vector of all
 possible unigrams.}
-
-\item{d}{\code{integer} vector of distances between elements of n-gram (0 means
-consecutive elements). See Details.}
 
 \item{pos}{\code{logical}, if \code{TRUE} position-specific n_grams are counted.}
 
@@ -35,15 +35,8 @@ as in \code{\link{count_ngrams}}.
 A convinient wrapper around \code{\link{count_ngrams}} for counting multiple
 values of \code{n} and \code{d}.
 }
-\details{
-Each element of \code{n_d} is a list consisting of two vectors.
-First element is a single \code{integer} value which determines the number of
-words in n-gram (equivalent of \code{n} from \code{\link{count_ngrams}}). Second
-element must be an \code{integer} vector describing distances between words in
-n-gram (equivalent of \code{d} from \code{\link{count_ngrams}}).
-}
 \examples{
 seqs <- matrix(sample(1L:4, 600, replace = TRUE), ncol = 50)
-count_multigrams(list(list(2, 1), list(2, 3)), seqs, 1L:4, pos = TRUE)
+count_multigrams(c(3, 1), list(c(1, 0), 0), seqs, 1L:4, pos = TRUE)
 }
 
