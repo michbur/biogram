@@ -7,7 +7,7 @@
 decode_ngrams(ngrams)
 }
 \arguments{
-\item{ngrams}{a vector of n-grams.}
+\item{ngrams}{a \code{character} vector of n-grams.}
 }
 \value{
 a \code{character} vector of length equal to the number of n-grams.

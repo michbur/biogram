@@ -2,7 +2,7 @@
 #'
 #' Tranforms a vector of n-grams into a human-friendly form.
 #'
-#' @param ngrams a vector of n-grams.
+#' @param ngrams a \code{character} vector of n-grams.
 #' @return a \code{character} vector of length equal to the number of n-grams. 
 #' @export
 #' @seealso
@@ -10,6 +10,10 @@
 #' @examples
 #' decode_ngrams(c("2_1.1.2_0.0", "3_1.1.2_0.0", "3_2.2.2_0.0"))
 decode_ngrams <- function(ngrams) {
+  validated_ngram <- sapply(ngrams, is_ngram)
+  if(!all(validated_ngram))
+    stop("Improper n-grams: paste(names(which(!validated_ngram)), collapse = ", ").")
+  
   sngrams <- strsplit(ngrams, "_")
   vapply(sngrams, decode_single_ngrams, "a")
 }

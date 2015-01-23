@@ -1,4 +1,4 @@
-# Choosen criterions
+# Check chosen criterion
 # 
 # Checks if the criterion is viable or matches it to the list of implemented 
 # criterions.
