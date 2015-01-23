@@ -3,10 +3,12 @@
 #' Tranforms a vector of positioned n-grams into a list of positions filled with unigrams 
 #' appearing on them.
 #'
-#' @param ngrams a vector of n-grams.
-#' @return a list of length equal to the number of positions present in n-grams. Each element of 
-#' the list contains unigrams that are present on this position.
+#' @param ngrams a vector of positioned n-grams (as created by \code{\link{count_ngrams}}).
+#' @return a list of length equal to the number of unique positions present in n-grams. Each 
+#' element of the list contains unigrams that are present on this position.
 #' @export
+#' @seealso
+#' Other n-gram deciphering functions: \code{\link{decode_ngrams}}.
 #' @examples
 #' position_ngrams(c("2_1.1.2_0.0", "3_1.1.2_0.0", "3_2.2.2_0.0"))
 
@@ -15,7 +17,7 @@ position_ngrams <- function(ngrams) {
   sngrams <- strsplit(ngrams, "_")
   #check if there is information about position
   if(length(sngrams[[1]]) != 3)
-    stop("Only n-grams with position can be decoded.")
+    stop("n-grams do not have position information.")
   
   #table of positions
   pos_table <- do.call(rbind, lapply(sngrams, function(single_ngram) {
@@ -35,3 +37,4 @@ position_ngrams <- function(ngrams) {
   names(res) <- sort(unique(pos_table[["pos"]]))
   res
 }
+

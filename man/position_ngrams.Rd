@@ -7,11 +7,11 @@
 position_ngrams(ngrams)
 }
 \arguments{
-\item{ngrams}{a vector of n-grams.}
+\item{ngrams}{a vector of positioned n-grams (as created by \code{\link{count_ngrams}}).}
 }
 \value{
-a list of length equal to the number of positions present in n-grams. Each element of
-the list contains unigrams that are present on this position.
+a list of length equal to the number of unique positions present in n-grams. Each
+element of the list contains unigrams that are present on this position.
 }
 \description{
 Tranforms a vector of positioned n-grams into a list of positions filled with unigrams
@@ -19,5 +19,8 @@ appearing on them.
 }
 \examples{
 position_ngrams(c("2_1.1.2_0.0", "3_1.1.2_0.0", "3_2.2.2_0.0"))
+}
+\seealso{
+Other n-gram deciphering functions: \code{\link{decode_ngrams}}.
 }
 
