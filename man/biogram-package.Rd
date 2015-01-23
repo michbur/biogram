@@ -70,6 +70,7 @@ summary(test1)
 gr <- cut(test1)
 #analyze deeper the most significant n-grams
 position_ngrams(gr[[1]])
+decode_ngrams(gr[[1]])
 }
 \author{
 Michal Burdukiewicz, Piotr Sobczyk, Chris Lauber

@@ -18,7 +18,7 @@ Tranforms a vector of positioned n-grams into a list of positions filled with un
 appearing on them.
 }
 \examples{
-position_ngrams(c("2_1.1.2_0.0", "3_1.1.2_0.0", "3_2.2.2_0.0"))
+position_ngrams(c("2_1.1.2_0.1", "3_1.1.2_0.0", "3_2.2.2_0.0"))
 }
 \seealso{
 Other n-gram deciphering functions: \code{\link{decode_ngrams}}.
