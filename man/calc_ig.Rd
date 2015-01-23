@@ -36,6 +36,7 @@ Wiley, 2006.
 \code{\link{test_features}}.
 
 Other implemented \code{\link{criterions}}.
+
 Subroutine used in \code{\link[base]{apply}} statement in \code{calc_ig}:
 \code{\link{calc_ig_single}}
 }

@@ -1,6 +1,6 @@
 #' Calculate IG for single feature
 #'
-#' Computes information gain of feature and target vector.
+#' Computes information gain of single feature and target vector.
 #'
 #' @param feature feature vector.
 #' @param target_b target in bits (as per \code{\link[bit]{as.bit}}).
@@ -53,6 +53,7 @@ calc_ig_single <- function(feature, target_b, len_target, pos_target, ES) {
 #' calc_ig(sample(0L:1, 100, replace = TRUE), matrix(sample(0L:1, 400, replace = TRUE), ncol = 4))
 #' @seealso
 #' Other implemented \code{\link{criterions}}.
+#' 
 #' Subroutine used in \code{\link[base]{apply}} statement in \code{calc_ig}: 
 #' \code{\link{calc_ig_single}}
 

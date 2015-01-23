@@ -21,7 +21,7 @@ calc_ig_single(feature, target_b, len_target, pos_target, ES)
 a single numeric value - information gain in nats.
 }
 \description{
-Computes information gain of feature and target vector.
+Computes information gain of single feature and target vector.
 }
 \details{
 Input looks strange, but the function was designed to be as fast

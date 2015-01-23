@@ -1,6 +1,6 @@
 #' Decode n-grams
 #'
-#' Tranforms a vector of n-grams into a more human-friendl form.
+#' Tranforms a vector of n-grams into a human-friendly form.
 #'
 #' @param ngrams a vector of n-grams.
 #' @return a \code{character} vector of length equal to the number of n-grams. 

@@ -13,7 +13,7 @@ decode_ngrams(ngrams)
 a \code{character} vector of length equal to the number of n-grams.
 }
 \description{
-Tranforms a vector of n-grams into a more human-friendl form.
+Tranforms a vector of n-grams into a human-friendly form.
 }
 \examples{
 decode_ngrams(c("2_1.1.2_0.0", "3_1.1.2_0.0", "3_2.2.2_0.0"))

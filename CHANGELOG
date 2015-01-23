@@ -1,0 +1,7 @@
+Changes from Version 1.0 to 1.1
+* Improved functionalities of calc_multigrams
+* Improved explanation of n-gram naming convention.
+* Added more universal version of calc_distribution
+* Added feature_test class followed with new methods: print, summary, cut.
+* Added functions transforming n-grams to less abstruse form: decode_ngrams,
+  position_ngrams.
