@@ -69,7 +69,9 @@ summary(test1)
 #aggregate features in groups based on their p-value
 gr <- cut(test1)
 #analyze deeper the most significant n-grams
+#get position map of n-grams
 position_ngrams(gr[[1]])
+#transform n-grams to more readable form
 decode_ngrams(gr[[1]])
 }
 \author{

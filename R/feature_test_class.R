@@ -8,7 +8,7 @@
 #' \describe{
 #'   \item{criterion}{the criterion used in permutation test.}
 #'   \item{adjust}{the name of p-value adjusting method}
-#'   \item{times}{the number of permutations or \code{NA} if QuiPT was chosen.}
+#'   \item{times}{the number of permutations.  If QuiPT was chosen \code{NA}.}
 #' }
 #' @name feature_test
 #' @docType class

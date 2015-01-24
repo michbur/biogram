@@ -10,13 +10,14 @@ is_ngram(x)
 \item{x}{a \code{character} string representing single n-gram.}
 }
 \value{
-\code{TRUE} if n-gram's notation is correct, \\code{FALSE} if not.
+\code{TRUE} if n-gram's notation is correct, \code{FALSE} if not.
 }
 \description{
 Checks if the character string may be used as an n-gram and its notation follows specific
 convention of \code{biogram} package.
 }
 \examples{
-is_ngram("1_1.1.1_0.0")
+print(is_ngram("1_1.1.1_0.0"))
+print(is_ngram("not_ngram"))
 }
 

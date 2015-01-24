@@ -3,10 +3,11 @@
 #' Checks if the character string may be used as an n-gram and its notation follows specific 
 #' convention of \code{biogram} package.
 #' @param x a \code{character} string representing single n-gram.
-#' @return \code{TRUE} if n-gram's notation is correct, \\code{FALSE} if not.
+#' @return \code{TRUE} if n-gram's notation is correct, \code{FALSE} if not.
 #' @export
 #' @examples
-#' is_ngram("1_1.1.1_0.0")
+#' print(is_ngram("1_1.1.1_0.0"))
+#' print(is_ngram("not_ngram"))
 
 
 is_ngram <- function(x) {
