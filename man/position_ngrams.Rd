@@ -21,6 +21,8 @@ appearing on them.
 position_ngrams(c("2_1.1.2_0.1", "3_1.1.2_0.0", "3_2.2.2_0.0"))
 }
 \seealso{
-Other n-gram deciphering functions: \code{\link{decode_ngrams}}.
+Change n-gram name to human-friendly form: \code{\link{decode_ngrams}}.
+
+Validate n-gram structure: \code{\link{is_ngram}}.
 }
 

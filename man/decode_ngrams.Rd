@@ -19,6 +19,8 @@ Tranforms a vector of n-grams into a human-friendly form.
 decode_ngrams(c("2_1.1.2_0.0", "3_1.1.2_0.0", "3_2.2.2_0.0"))
 }
 \seealso{
-Other n-gram deciphering functions: \code{\link{position_ngrams}}.
+Assign n-grams to positions: \code{\link{position_ngrams}}.
+
+Validate n-gram structure: \code{\link{is_ngram}}.
 }
 

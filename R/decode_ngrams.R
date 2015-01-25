@@ -6,7 +6,9 @@
 #' @return a \code{character} vector of length equal to the number of n-grams. 
 #' @export
 #' @seealso
-#' Other n-gram deciphering functions: \code{\link{position_ngrams}}.
+#' Assign n-grams to positions: \code{\link{position_ngrams}}.
+#' 
+#' Validate n-gram structure: \code{\link{is_ngram}}.
 #' @examples
 #' decode_ngrams(c("2_1.1.2_0.0", "3_1.1.2_0.0", "3_2.2.2_0.0"))
 decode_ngrams <- function(ngrams) {
