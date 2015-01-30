@@ -24,3 +24,12 @@ install.packages("devtools")
 library(devtools)
 install_github("michbur/biogram")
 ```
+
+For citation type:
+
+```
+citation("biogram")
+```
+
+or use:
+Michal Burdukiewicz, Piotr Sobczyk and Chris Lauber (2014). biogram: N-Gram Analysis of Biological Sequences. R package version 1.1. http://CRAN.R-project.org/package=biogram

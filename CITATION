@@ -1,0 +1,11 @@
+year <- sub("-.*", "", meta$Date)
+note <- sprintf("R package version %s", meta$Version)
+
+bibentry(bibtype = "Manual",
+         title = "{biogram}: analysis of biological sequences using n-grams",
+         author = c(person("Michal", "Burdukiewicz"),
+                    person("Piotr", "Sobczyk"),
+                    person("Chris", "Lauber")),
+         year = year,
+         note = note,
+         url = "http://CRAN.R-project.org/package=nlme")
