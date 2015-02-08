@@ -7,7 +7,7 @@
 #' @param graphical_output default value is \code{FALSE}, if \code{TRUE}
 #'        probability density function is plotted
 #' @param criterion the criterion used for calculations of distribution. 
-#' See list of possible \code{\link{criterions}}.
+#' See \code{\link{calc_criterion}}.
 #' @export
 #' @details both \code{target} and \code{feature} vectors may contain only 0 and 1.
 #' @return A matrix of 3 rows:
@@ -16,7 +16,7 @@
 #'   \item{2nd row:}{probability density function.}
 #'   \item{3rd row:}{cumulative distribution function.}
 #' }
-#' @seealso \code{\link{criterions}}.
+#' @seealso \code{\link{calc_criterion}}.
 #' @keywords distribution
 #' @examples
 #' target_feature <- create_feature_target(10, 375, 15, 600) 
@@ -36,6 +36,9 @@ criterion_distribution <- function(target, feature, graphical_output = FALSE, cr
   
   valid_criterion <- check_criterion(criterion)
   
+  crit_function <- function(target, features)
+    calc_criterion(target, features, valid_criterion[["crit_function"]])
+  
   non_zero_target <- sum(target)
   non_zero_feat <- sum(feature)
   p <- non_zero_target/n
@@ -53,7 +56,7 @@ criterion_distribution <- function(target, feature, graphical_output = FALSE, cr
     ft_data <- create_feature_target(i, non_zero_feat - i, non_zero_target - i,
                                      n-non_zero_target - non_zero_feat + i)
     #values of criterion
-    vals <- unname(valid_criterion[["crit_function"]](ft_data[,1], ft_data[, 2, drop = FALSE]))
+    vals <- unname(crit_function(ft_data[,1], ft_data[, 2, drop = FALSE]))
     c(prob_log = prob_log, vals = vals)
   })
   
