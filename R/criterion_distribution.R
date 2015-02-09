@@ -44,18 +44,28 @@ criterion_distribution <- function(target, feature, graphical_output = FALSE, cr
   p <- non_zero_target/n
   q <- non_zero_feat/n
   
+  
   #values of criterion for different contingency tables
   diff_conts <- sapply(0L:min(non_zero_target, non_zero_feat), function(i) {
     #to do - check if other criterions also follow this distribution
     
-    prob_log <- dmultinom(x = c(i, non_zero_feat - i, non_zero_target - i, 
-                                n - non_zero_target - non_zero_feat + i),
+    #if there are more 1 than 0
+    ones <- n - non_zero_target - non_zero_feat + i > 0
+    
+    k <- if(ones) {
+      c(i, non_zero_feat - i, non_zero_target - i, 
+        n - non_zero_target - non_zero_feat + i)
+    } else {
+      c(i, n - non_zero_feat - i, n - non_zero_target - i, 
+        - n + non_zero_target + non_zero_feat + i)
+    }
+    
+    prob_log <- dmultinom(x = k,
                           size = n,
                           prob = c(p*q, (1-p)*q, p*(1-q), (1-p)*(1-q)),
                           log = TRUE)
     #feature-target data - different contingency tables
-    ft_data <- create_feature_target(i, non_zero_feat - i, non_zero_target - i,
-                                     n-non_zero_target - non_zero_feat + i)
+    ft_data <- do.call(create_feature_target, as.list(k))
     #values of criterion
     vals <- unname(crit_function(ft_data[,1], ft_data[, 2, drop = FALSE]))
     c(prob_log = prob_log, vals = vals)
