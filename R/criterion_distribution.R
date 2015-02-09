@@ -47,8 +47,9 @@ criterion_distribution <- function(target, feature, graphical_output = FALSE, cr
   #values of criterion for different contingency tables
   diff_conts <- sapply(0L:min(non_zero_target, non_zero_feat), function(i) {
     #to do - check if other criterions also follow this distribution
+    
     prob_log <- dmultinom(x = c(i, non_zero_feat - i, non_zero_target - i, 
-                                n-non_zero_target - non_zero_feat + i),
+                                n - non_zero_target - non_zero_feat + i),
                           size = n,
                           prob = c(p*q, (1-p)*q, p*(1-q), (1-p)*(1-q)),
                           log = TRUE)
