@@ -6,7 +6,7 @@
 #' @param target \code{integer} vector with target information (e.g. class labels).
 #' @param features \code{integer} matrix of features with number of rows equal 
 #' to the length of the target vector.
-#' @param criterion criterion used in permutation test. See \code{\link{criterions}} for the
+#' @param criterion criterion used in permutation test. See \code{\link{calc_criterion}} for the
 #' list of possible criterions.
 #' @param adjust name of p-value adjustment method. See \code{\link[stats]{p.adjust}}
 #' for the list of possible values. If \code{NULL}, no adjustment is done.
@@ -58,6 +58,10 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
   
   valid_criterion <- check_criterion(criterion)
   
+  #criterion function
+  crit_function <- function(target, features)
+    calc_criterion(target, features, valid_criterion[["crit_function"]])
+  
   #few tests for data consistency
   if (!all(target %in% c(0, 1))) {
     stop("target is not {0,1}-valued vector")
@@ -96,14 +100,14 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
     apply(features, 2, function(feature) {
       feature <- as.matrix(feature, ncol = 1)
       n <- length(target)
-      estm <- valid_criterion[["crit_function"]](target = target, features = feature)
+      estm <- crit_function(target, feature)
       dist <- dists[[paste(sum(feature))]]
       1 - dist[3, which.max(dist[1, ] >= estm - 1e-15)]
     })
   } else {
     #slow version
-    rowMeans(valid_criterion[["crit_function"]](target, features) <= 
-               replicate(times, valid_criterion[["crit_function"]](sample(target), features)))
+    rowMeans(crit_function(target, features) <= 
+               replicate(times, crit_function(sample(target), features)))
   }
   
   if(!is.null(adjust))

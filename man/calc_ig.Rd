@@ -2,42 +2,52 @@
 % Please edit documentation in R/information_gain.R
 \name{calc_ig}
 \alias{calc_ig}
-\title{Calculate IG of features}
+\title{Calculate IG for single feature}
 \usage{
-calc_ig(target, features)
+calc_ig(feature, target_b, len_target, pos_target, ES)
 }
 \arguments{
-\item{target}{\code{integer} vector with target information (e.g. class labels).}
+\item{feature}{feature vector.}
 
-\item{features}{\code{integer} matrix of features with number of rows equal
-to the length of the target vector.}
+\item{target_b}{target in bits (as per \code{\link[bit]{as.bit}}).}
+
+\item{len_target}{length of target vector.}
+
+\item{pos_target}{number of positive cases in target vector.}
+
+\item{ES}{numeric value of target entropy.}
 }
 \value{
-a \code{integer} vector of length equal to the number of features
-containing computed information gain values.
+a single numeric value - information gain in nats.
 }
 \description{
-Computes information gain between features and target vector.
+Computes information gain of single feature and target vector.
+}
+\details{
+The information gain term is used here (improperly) as a synonym of mutual information.
+It is defined as:
+\deqn{IG(X; Y) = \sum_{y \in Y} \sum_{x \in X} p(x, y) \log \left(\frac{p(x, y)}{p(x) p(y)}  \right)}
+
+In biogram package information gain is calculated using following relationship:
+\eqn{IG = E(S) - E(S|F)}
 }
 \note{
-Both \code{target} and \code{features} must be binary, i.e. contain only 0
-and 1 values.
-
 During calculations \eqn{0 \log 0  = 0}. For justification see References.
+
+Input looks strange, but the function was designed to be as fast
+as possible subroutine of \code{\link{calc_ig}} and generally should not be directly
+called by user.
 }
 \examples{
-calc_ig(sample(0L:1, 100, replace = TRUE), matrix(sample(0L:1, 400, replace = TRUE), ncol = 4))
+tar <- sample(0L:1, 100, replace = TRUE)
+feat <- sample(0L:1, 100, replace = TRUE)
+prop <- c(100 - sum(tar), sum(tar))/100
+entr <- - sum(prop*log(prop))
+library(bit) #used to code vector as bit
+calc_ig(feat, as.bit(tar), 100, sum(tar), entr)
 }
 \references{
 Cover TM, Thomas JA \emph{Elements of Information Theory, 2nd Edition}
 Wiley, 2006.
-}
-\seealso{
-\code{\link{test_features}}.
-
-Other implemented \code{\link{criterions}}.
-
-Subroutine used in \code{\link[base]{apply}} statement in \code{calc_ig}:
-\code{\link{calc_ig_single}}
 }
 

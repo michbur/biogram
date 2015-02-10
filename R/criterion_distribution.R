@@ -7,7 +7,7 @@
 #' @param graphical_output default value is \code{FALSE}, if \code{TRUE}
 #'        probability density function is plotted
 #' @param criterion the criterion used for calculations of distribution. 
-#' See list of possible \code{\link{criterions}}.
+#' See \code{\link{calc_criterion}}.
 #' @export
 #' @details both \code{target} and \code{feature} vectors may contain only 0 and 1.
 #' @return A matrix of 3 rows:
@@ -16,7 +16,7 @@
 #'   \item{2nd row:}{probability density function.}
 #'   \item{3rd row:}{cumulative distribution function.}
 #' }
-#' @seealso \code{\link{criterions}}.
+#' @seealso \code{\link{calc_criterion}}.
 #' @keywords distribution
 #' @examples
 #' target_feature <- create_feature_target(10, 375, 15, 600) 
@@ -36,24 +36,38 @@ criterion_distribution <- function(target, feature, graphical_output = FALSE, cr
   
   valid_criterion <- check_criterion(criterion)
   
+  crit_function <- function(target, features)
+    calc_criterion(target, features, valid_criterion[["crit_function"]])
+  
   non_zero_target <- sum(target)
   non_zero_feat <- sum(feature)
   p <- non_zero_target/n
   q <- non_zero_feat/n
   
+  
   #values of criterion for different contingency tables
   diff_conts <- sapply(0L:min(non_zero_target, non_zero_feat), function(i) {
     #to do - check if other criterions also follow this distribution
-    prob_log <- dmultinom(x = c(i, non_zero_feat - i, non_zero_target - i, 
-                                n-non_zero_target - non_zero_feat + i),
+    
+    #if there are more 1 than 0
+    ones <- n - non_zero_target - non_zero_feat + i > 0
+    
+    k <- if(ones) {
+      c(i, non_zero_feat - i, non_zero_target - i, 
+        n - non_zero_target - non_zero_feat + i)
+    } else {
+      c(i, n - non_zero_feat - i, n - non_zero_target - i, 
+        - n + non_zero_target + non_zero_feat + i)
+    }
+    
+    prob_log <- dmultinom(x = k,
                           size = n,
                           prob = c(p*q, (1-p)*q, p*(1-q), (1-p)*(1-q)),
                           log = TRUE)
     #feature-target data - different contingency tables
-    ft_data <- create_feature_target(i, non_zero_feat - i, non_zero_target - i,
-                                     n-non_zero_target - non_zero_feat + i)
+    ft_data <- do.call(create_feature_target, as.list(k))
     #values of criterion
-    vals <- unname(valid_criterion[["crit_function"]](ft_data[,1], ft_data[, 2, drop = FALSE]))
+    vals <- unname(crit_function(ft_data[,1], ft_data[, 2, drop = FALSE]))
     c(prob_log = prob_log, vals = vals)
   })
   

@@ -27,7 +27,7 @@ create_feature_target <- function(n11, n01, n10, n00){
 #'
 #' Quickly cross-tabulates two binary vectors.
 #'
-#' @inheritParams calc_ig_single
+#' @inheritParams calc_ig
 #' @return a vector of length four: 
 #' \enumerate{
 #' \item target +, feature+

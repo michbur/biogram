@@ -16,7 +16,7 @@ criterion_distribution(target, feature, graphical_output = FALSE,
 probability density function is plotted}
 
 \item{criterion}{the criterion used for calculations of distribution.
-See list of possible \code{\link{criterions}}.}
+See \code{\link{calc_criterion}}.}
 }
 \value{
 A matrix of 3 rows:
@@ -38,7 +38,7 @@ criterion_distribution(target = target_feature[,1], feature = target_feature[,2]
 graphical_output = TRUE)
 }
 \seealso{
-\code{\link{criterions}}.
+\code{\link{calc_criterion}}.
 }
 \keyword{distribution}
 

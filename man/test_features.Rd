@@ -13,7 +13,7 @@ test_features(target, features, criterion = "ig", adjust = "BH",
 \item{features}{\code{integer} matrix of features with number of rows equal
 to the length of the target vector.}
 
-\item{criterion}{criterion used in permutation test. See \code{\link{criterions}} for the
+\item{criterion}{criterion used in permutation test. See \code{\link{calc_criterion}} for the
 list of possible criterions.}
 
 \item{adjust}{name of p-value adjustment method. See \code{\link[stats]{p.adjust}}
