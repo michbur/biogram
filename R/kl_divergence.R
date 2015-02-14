@@ -1,6 +1,6 @@
 #' Calculate KL divergence of features
 #'
-#' Computes Kullback-Leiber divergence between features and target vector.
+#' Computes Kullback-Leibler divergence between features and target vector.
 #'
 #' @inheritParams calc_ig
 #' @return a \code{integer} vector of length equal to the number of features 
@@ -8,6 +8,8 @@
 #' @note Both \code{target} and \code{features} must be binary, i.e. contain only 0 
 #' and 1 values.
 #' @seealso \code{\link{test_features}}.
+#' 
+#' Kullback-Leibler divergence is calculated using \code{\link[entropy]{KL.plugin}}.
 #' @export
 #' @references STH here
 #' @examples tar <- sample(0L:1, 100, replace = TRUE)

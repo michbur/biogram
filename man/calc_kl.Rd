@@ -22,7 +22,7 @@ a \code{integer} vector of length equal to the number of features
 containing computed information gain values.
 }
 \description{
-Computes Kullback-Leiber divergence between features and target vector.
+Computes Kullback-Leibler divergence between features and target vector.
 }
 \note{
 Both \code{target} and \code{features} must be binary, i.e. contain only 0
@@ -41,5 +41,7 @@ STH here
 }
 \seealso{
 \code{\link{test_features}}.
+
+Kullback-Leibler divergence is calculated using \code{\link[entropy]{KL.plugin}}.
 }
 

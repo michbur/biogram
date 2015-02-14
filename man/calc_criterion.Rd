@@ -29,6 +29,7 @@ important features. Each can be used by \code{\link{test_features}} by specifyin
 Possible criterions are:
 \describe{
   \item{ig}{Information Gain. Calculated using \code{\link{calc_ig}}.}
+  \item{kl}{Kullback-Leibler divergence. Calculated using \code{\link{calc_kl}}.}
 }
 }
 \note{

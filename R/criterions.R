@@ -14,7 +14,7 @@
 # }
 # @seealso
 # Calculate the value of criterion: \code{\link{calc_criterion}}.
-check_criterion <- function(input_criterion, criterion_names = c("ig")) {
+check_criterion <- function(input_criterion, criterion_names = c("ig", "kl")) {
   #think twice about grep
   valid_name <- criterion_names[grepl(tolower(input_criterion), criterion_names)]
   
@@ -26,7 +26,8 @@ check_criterion <- function(input_criterion, criterion_names = c("ig")) {
   
   
   criterion_data <- switch(valid_name,
-                               ig = list(crit_function = calc_ig, nice_name = "Information Gain"))
+                           ig = list(crit_function = calc_ig, nice_name = "Information Gain"),
+                           kl = list(crit_function = calc_kl, nice_name = "Kullback-Leibler divergence"))
   #TO DO - should also return the full name of criterion for purpose of summaries/plots
   c(crit_name = valid_name, criterion_data)
 }
@@ -40,6 +41,7 @@ check_criterion <- function(input_criterion, criterion_names = c("ig")) {
 #' Possible criterions are:
 #' \describe{
 #'   \item{ig}{Information Gain. Calculated using \code{\link{calc_ig}}.}
+#'   \item{kl}{Kullback-Leibler divergence. Calculated using \code{\link{calc_kl}}.}
 #' }
 #' @inheritParams test_features
 #' @param criterion_function a function calculating criterion. For a full list, see See also.
