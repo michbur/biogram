@@ -34,6 +34,8 @@ check_criterion <- function(input_criterion, criterion_names = c("ig", "kl")) {
 
 #' Calculate criterion
 #'
+#' Calculates independently chosen statistical criterion for each feature versus target vector.
+#'
 #' @details Permutation test implemented in \code{biogram} uses several criterions to filter 
 #' important features. Each can be used by \code{\link{test_features}} by specifying
 #' \code{criterion} parameter.
@@ -55,9 +57,6 @@ check_criterion <- function(input_criterion, criterion_names = c("ig", "kl")) {
 #' calc_criterion(sample(0L:1, 100, replace = TRUE), 
 #'                matrix(sample(0L:1, 400, replace = TRUE), ncol = 4),
 #'                calc_ig)
-#' @seealso
-#' Implemented criterions: 
-#' \code{\link{calc_ig}}
 calc_criterion <- function(target, features, criterion_function) {
   tar_bit <- as.bit(target)
   l_tar <- length(target)

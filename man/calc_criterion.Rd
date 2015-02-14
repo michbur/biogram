@@ -19,7 +19,7 @@ a \code{integer} vector of length equal to the number of features
 containing computed information gain values.
 }
 \description{
-Calculate criterion
+Calculates independently chosen statistical criterion for each feature versus target vector.
 }
 \details{
 Permutation test implemented in \code{biogram} uses several criterions to filter
@@ -43,8 +43,5 @@ calc_criterion(sample(0L:1, 100, replace = TRUE),
 }
 \seealso{
 \code{\link{test_features}}.
-
-Implemented criterions:
-\code{\link{calc_ig}}
 }
 
