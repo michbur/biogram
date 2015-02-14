@@ -41,6 +41,7 @@
 #' 
 #' @import slam
 #' @importFrom bit as.bit
+#' @importFrom entropy KL.plugin
 #' @author Michal Burdukiewicz, Piotr Sobczyk, Chris Lauber
 #' @docType package
 #' @name biogram-package

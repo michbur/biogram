@@ -23,7 +23,8 @@ Depends:
     R (>= 3.0.0),
     slam
 Imports:
-    bit
+    bit,
+    entropy
 Suggests:
     testthat
 NeedsCompilation: no

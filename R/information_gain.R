@@ -28,7 +28,6 @@
 #' entr <- - sum(prop*log(prop))
 #' library(bit) #used to code vector as bit
 #' calc_ig(feat, as.bit(tar), 100, sum(tar), entr)
-
 calc_ig <- function(feature, target_b, len_target, pos_target, ES) {
   crosstable <- fast_crosstable(target_b, len_target, pos_target, feature)
   counts_feature <- c(crosstable[2] + crosstable[4], crosstable[1] + crosstable[3])
