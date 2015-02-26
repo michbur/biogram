@@ -71,4 +71,5 @@
 #' position_ngrams(gr[[1]])
 #' #transform n-grams to more readable form
 #' decode_ngrams(gr[[1]])
+
 NULL

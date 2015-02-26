@@ -71,6 +71,11 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE, scale = FALSE, threshold
   if (scale && pos)
     stop("Cannot scale positioned n-grams (scaling a sparse matrix).")
   
+  u_seq <- unique(as.vector(seq))
+  if (!(all(u_seq %in% u)))
+    warning(paste0("'seq' contains following unigrams not present in 'u' parameter:\n",
+                   paste(u_seq[!(u_seq %in% u)], collapse = ", ")))
+  
   #length of sequence
   len_seq <- ncol(seq)
   #number of sequences
