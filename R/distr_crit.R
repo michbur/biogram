@@ -115,6 +115,6 @@ distr_crit <- function(target, feature, graphical_output = FALSE, criterion = "i
                 criterion_distribution, 
                 1 - rev(cumsum(rev(criterion_distribution))),
                 diff_conts["vals", ])
-  colnames(dist) <- c("criterion", "pdf", "cdf", "unsort_criterion")
+  colnames(dist) <- c("criterion", "pdf", "cdf", "range", "unsort_criterion")
   dist
 }
