@@ -30,7 +30,6 @@
 #' 
 #' Features occuring too often and too rarely are considered not informative and may be removed 
 #' using the threshold parameter.
-#' @seealso See \code{\link{criterion_distribution}} for insight on QuiPT.
 #' @export
 #' @keywords nonparametric
 #' @references 
@@ -39,6 +38,8 @@
 #' Machine Learning: ECML 2004, 15th European 
 #' Conference on Machine Learning, Springer, 2004.
 #' @seealso 
+#' \code{\link{distr_crit}} - distribution of criterion used in QuiPT.
+#' 
 #' \code{\link{summary.feature_test}} - summary of results.
 #' 
 #' \code{\link{cut.feature_test}} - aggregates test results in groups based on feature's
@@ -92,7 +93,7 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
     
     dists <- lapply(feature_size, function(i){
       t <- create_feature_target(i, abs(sum(target) - i), 0, abs(length(target) - sum(target))) 
-      criterion_distribution(t[, 1], t[, 2], graphical_output = FALSE, criterion = criterion)
+      distr_crit(t[, 1], t[, 2], graphical_output = FALSE, criterion = criterion)
     })
     
     names(dists) <- feature_size
@@ -102,7 +103,7 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
       n <- length(target)
       estm <- crit_function(target, feature)
       dist <- dists[[paste(sum(feature))]]
-      1 - dist[3, which.max(dist[1, ] >= estm - 1e-15)]
+      1 - dist[which.max(dist[, "criterion"] >= estm - 1e-15), "cdf"]
     })
   } else {
     #slow version

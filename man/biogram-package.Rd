@@ -61,7 +61,7 @@ deg_seqs <- degenerate(human_cleave[, 1L:9],
                            `4` = c(7, 9, 12, 15),
                            '5' = c(3, 4)))
 #extract trigrams
-trigrams <- count_ngrams(deg_seqs, 3, 1L:4, pos = TRUE)
+trigrams <- count_ngrams(deg_seqs, 3, 1L:5, pos = TRUE)
 #select features that differ between the two target groups
 test1 <- test_features(human_cleave[, "tar"], trigrams)
 #see a summary of the results

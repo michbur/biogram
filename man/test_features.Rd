@@ -69,7 +69,7 @@ Machine Learning: ECML 2004, 15th European
 Conference on Machine Learning, Springer, 2004.
 }
 \seealso{
-See \code{\link{criterion_distribution}} for insight on QuiPT.
+\code{\link{distr_crit}} - distribution of criterion used in QuiPT.
 
 \code{\link{summary.feature_test}} - summary of results.
 

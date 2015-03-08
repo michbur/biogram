@@ -2,7 +2,7 @@
 #'
 #' A result of \code{\link{test_features}} function.
 #'
-#' @details An object of class \code{test_features} is a numeric vector of p-values. Additional 
+#' @details An object of class \code{feature_test} is a numeric vector of p-values. Additional 
 #' attributes characterizes futher the details of test which returned these p-values.
 #' @section Attributes:
 #' \describe{
