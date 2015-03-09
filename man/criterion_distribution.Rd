@@ -22,7 +22,8 @@ An object of class \code{criterion_distribution} is a numeric matrix.
 \section{Attributes}{
 
 \describe{
-  \item{XX}{fill me.}
+  \item{plot_data}{A matrix with values of the criterion and their probabilities.}
+  \item{nice_name}{'Nice' name of the criterion.}
 }
 }
 

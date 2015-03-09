@@ -93,6 +93,8 @@ distr_crit <- function(target, feature, graphical_output = FALSE, criterion = "i
   dist_temp <- dist_temp[order(diff_conts["vals", ])]
   val_temp <- diff_conts["vals", ][order(diff_conts["vals", ])]
   
+  
+  
   j <- 1
   criterion_distribution <- dist_temp[1]
   criterion_values <- val_temp[1]
@@ -111,10 +113,10 @@ distr_crit <- function(target, feature, graphical_output = FALSE, criterion = "i
     }
   
   
-  dist <- cbind(criterion_values, 
-                criterion_distribution, 
-                1 - rev(cumsum(rev(criterion_distribution))),
-                diff_conts["vals", ])
-  colnames(dist) <- c("criterion", "pdf", "cdf", "range", "unsort_criterion")
-  dist
+  create_criterion_distribution(criterion_values, 
+                                criterion_distribution, 
+                                0L:min(non_zero_target, non_zero_feat), 
+                                diff_conts["vals", ],
+                                exp(diff_conts["prob_log", ])/sum(exp(diff_conts["prob_log", ])),
+                                valid_criterion[["nice_name"]])
 }

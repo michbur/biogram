@@ -11,18 +11,24 @@
 #' }
 #' @section Attributes:
 #' \describe{
-#'   \item{XX}{fill me.}
+#'   \item{plot_data}{A matrix with values of the criterion and their probabilities.}
+#'   \item{nice_name}{'Nice' name of the criterion.}
 #' }
 #' @name criterion_distribution
 #' @docType class
 NULL
 
-create_criterion_distribution <- function(criterion, pdf, range, unsort_criterion) {
+create_criterion_distribution <- function(criterion, pdf, range, unsort_criterion,
+                                          unsort_prob, nice_name) {
   dist <- cbind(criterion, 
                 pdf, 
-                1 - rev(cumsum(rev(pdf))),
-                range,
-                unsort_criterion)
-  colnames(dist) <- c("criterion", "pdf", "cdf", "range", "unsort_criterion")
+                1 - rev(cumsum(rev(pdf))))
+  colnames(dist) <- c("criterion", "pdf", "cdf")
+
+  attr(dist, "plot_data") <- matrix(c(unsort_criterion, unsort_prob), ncol = 2,
+                                    dimnames = list(range, c("unsort_criterion",
+                                                             "unsort_prob")))
+  attr(dist, "nice_name") <- nice_name
+  
   dist
 }
