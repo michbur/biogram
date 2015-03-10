@@ -4,8 +4,6 @@
 #' 
 #' @param target \{0,1\}-valued target vector. See Details.
 #' @param feature \{0,1\}-valued feature vector. See Details.
-#' @param graphical_output default value is \code{FALSE}, if \code{TRUE}
-#'        probability density function is plotted
 #' @param criterion the criterion used for calculations of distribution. 
 #' See \code{\link{calc_criterion}}.
 #' @export
@@ -15,9 +13,8 @@
 #' @keywords distribution
 #' @examples
 #' target_feature <- create_feature_target(10, 375, 15, 600) 
-#' distr_crit(target = target_feature[,1], feature = target_feature[,2], 
-#' graphical_output = TRUE)
-distr_crit <- function(target, feature, graphical_output = FALSE, criterion = "ig") {
+#' distr_crit(target = target_feature[,1], feature = target_feature[,2])
+distr_crit <- function(target, feature, criterion = "ig") {
   n <- length(target)
   if (length(feature) != n) {
     stop("Target and feature have different lengths.")
@@ -67,33 +64,11 @@ distr_crit <- function(target, feature, graphical_output = FALSE, criterion = "i
   })
   
   dist_temp <- exp(diff_conts["prob_log", ])/sum(exp(diff_conts["prob_log", ]))
-  if (graphical_output){
-    #TO DO - remember that par manipulations changes pars for all plots in future. Revert old parameters
-    #after plotting. Very clunky solution below.
-    old_par <- par(c("mar", "fig", "oma"))
-    par(mar = c(5,4,4,5) + 0.1)
-    plot(0L:min(non_zero_target, non_zero_feat), diff_conts["vals", ], col="red", 
-         xlab = "Number of cases with feature=1 and target=1",
-         ylab = valid_criterion[["nice_name"]])
-    par(new = TRUE)
-    plot(0L:min(non_zero_target,non_zero_feat), dist_temp, type = "l", 
-         col = "green", xaxt = "n", yaxt = "n",xlab = "",ylab = "")
-    axis(4)
-    mtext("density",side = 4,line = 3)
-    par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), 
-        new = TRUE)
-    plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-    legend("top", legend = c(valid_criterion[["nice_name"]], "Probability"), xpd = TRUE, 
-           horiz = TRUE, fill = c("red", "green"), bty = "n", cex = 1)
-    par(mar = old_par[["mar"]], fig = old_par[["fig"]], oma = old_par[["oma"]])
-  }
   
   # We get the same IG values for different contingency tables
   # therefore we need to combine them for distribution
   dist_temp <- dist_temp[order(diff_conts["vals", ])]
   val_temp <- diff_conts["vals", ][order(diff_conts["vals", ])]
-  
-  
   
   j <- 1
   criterion_distribution <- dist_temp[1]

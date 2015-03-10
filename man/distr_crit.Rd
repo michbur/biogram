@@ -4,15 +4,12 @@
 \alias{distr_crit}
 \title{Compute criterion distribution}
 \usage{
-distr_crit(target, feature, graphical_output = FALSE, criterion = "ig")
+distr_crit(target, feature, criterion = "ig")
 }
 \arguments{
 \item{target}{\{0,1\}-valued target vector. See Details.}
 
 \item{feature}{\{0,1\}-valued feature vector. See Details.}
-
-\item{graphical_output}{default value is \code{FALSE}, if \code{TRUE}
-probability density function is plotted}
 
 \item{criterion}{the criterion used for calculations of distribution.
 See \code{\link{calc_criterion}}.}
@@ -28,8 +25,7 @@ both \code{target} and \code{feature} vectors may contain only 0 and 1.
 }
 \examples{
 target_feature <- create_feature_target(10, 375, 15, 600)
-distr_crit(target = target_feature[,1], feature = target_feature[,2],
-graphical_output = TRUE)
+distr_crit(target = target_feature[,1], feature = target_feature[,2])
 }
 \seealso{
 \code{\link{calc_criterion}}.

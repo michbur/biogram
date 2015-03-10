@@ -29,6 +29,36 @@ create_criterion_distribution <- function(criterion, pdf, range, unsort_criterio
                                     dimnames = list(range, c("unsort_criterion",
                                                              "unsort_prob")))
   attr(dist, "nice_name") <- nice_name
-  
+  class(dist) <- "criterion_distribution"
   dist
+}
+
+#' Plot criterion distribution
+#'
+#' Plots results of \code{\link{distr_crit}} function.
+#'
+#' @param x object of class \code{\link{criterion_distribution}}.
+#' @param ... further arguments passed to \code{\link[graphics]{plot}}.
+#' @return nothing.
+#' @export
+plot.criterion_distribution <- function(x, ...) {
+  old_par <- par(c("mar", "fig", "oma"))
+  par(mar = c(5,4,4,5) + 0.1)
+  plot(as.numeric(rownames(attr(x, "plot_data"))), 
+       attr(x, "plot_data")[, "unsort_criterion"], 
+       col="red", 
+       xlab = "Number of cases with feature=1 and target=1",
+       ylab = attr(x, "nice_name"))
+  par(new = TRUE)
+  plot(as.numeric(rownames(attr(x, "plot_data"))), 
+       attr(x, "plot_data")[, "unsort_prob"], type = "l", 
+       col = "green", xaxt = "n", yaxt = "n", xlab = "", ylab = "")
+  axis(4)
+  mtext("density",side = 4,line = 3)
+  par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), 
+      new = TRUE)
+  plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
+  legend("top", legend = c(attr(x, "nice_name"), "Probability"), xpd = TRUE, 
+         horiz = TRUE, fill = c("red", "green"), bty = "n", cex = 1)
+  par(mar = old_par[["mar"]], fig = old_par[["fig"]], oma = old_par[["oma"]])
 }
