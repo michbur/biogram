@@ -4,24 +4,30 @@
 \alias{position_ngrams}
 \title{Position n-grams}
 \usage{
-position_ngrams(ngrams)
+position_ngrams(ngrams, df = FALSE)
 }
 \arguments{
 \item{ngrams}{a vector of positioned n-grams (as created by \code{\link{count_ngrams}}).}
+
+\item{df}{logical, if \code{TRUE} returns a data frame, if \code{FALSE} returns a list.}
 }
 \value{
-a list of length equal to the number of unique positions present in n-grams. Each
-element of the list contains unigrams that are present on this position.
+if \code{df} is \code{FALSE}, returns a list of length equal to the number of unique positions present in n-grams. Each
+element of the list contains unigrams that are present on this position. If \code{df} is \code{FALSE}, returns a data frame
+where first column contains unigrams and the second column represent their positions
 }
 \description{
 Tranforms a vector of positioned n-grams into a list of positions filled with unigrams
 appearing on them.
 }
 \examples{
+#position data in the list format
 position_ngrams(c("2_1.1.2_0.1", "3_1.1.2_0.0", "3_2.2.2_0.0"))
+#position data in the data frame format
+position_ngrams(c("2_1.1.2_0.1", "3_1.1.2_0.0", "3_2.2.2_0.0"), df = TRUE)
 }
 \seealso{
-Change n-gram name to human-friendly form: \code{\link{decode_ngrams}}.
+Transform n-gram name to human-friendly form: \code{\link{decode_ngrams}}.
 
 Validate n-gram structure: \code{\link{is_ngram}}.
 }
