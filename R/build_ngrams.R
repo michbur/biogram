@@ -16,6 +16,10 @@
 #' "5_2_0", "7_2_0", "8_5_0"))
 
 build_ngrams <- function(ngrams) {
+  validated_ngram <- sapply(ngrams, is_ngram)
+  if(!all(validated_ngram))
+    stop("Improper n-grams: paste(names(which(!validated_ngram)), collapse = ", ").")
+  
   splitted_ngrams <- strsplit(ngrams, "_")
   if(unique(sapply(splitted_ngrams, length)) != 3)
     stop("Use only n-grams with position information.")
@@ -27,6 +31,7 @@ build_ngrams <- function(ngrams) {
     build_bigrams(ngrams)
 }
 
+#build unigrams
 build_bigrams <- function(ngrams) {
   positioned_ngrams <- position_ngrams(ngrams, df = TRUE)
   positions <- unique(positioned_ngrams[["position"]])
@@ -35,7 +40,7 @@ build_bigrams <- function(ngrams) {
   
   res <- unlist(lapply(positions, function(single_position) {
     chosen_ugrams <- positioned_ngrams[positioned_ngrams[["position"]] == single_position, 
-                                        "unigram"]
+                                        "ngram"]
     other_ugrams <- positioned_ngrams[positioned_ngrams[["position"]] > single_position, ]
     #position in other_ugrams is now distance between single_position and their position
     other_ugrams[["position"]] <- other_ugrams[["position"]] - single_position - 1

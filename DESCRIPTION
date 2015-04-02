@@ -1,9 +1,9 @@
 Package: biogram
 Type: Package
 Title: N-Gram Analysis of Biological Sequences
-Version: 1.1
+Version: 1.2
 LazyData: true
-Date: 2014-12-19
+Date: 2015-04-02
 Authors@R: c(
     person("Michal", "Burdukiewicz",
     email = "michalburdukiewicz@gmail.com",

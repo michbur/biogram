@@ -4,21 +4,25 @@
 \alias{position_ngrams}
 \title{Position n-grams}
 \usage{
-position_ngrams(ngrams, df = FALSE)
+position_ngrams(ngrams, df = FALSE, unigrams_output = TRUE)
 }
 \arguments{
 \item{ngrams}{a vector of positioned n-grams (as created by \code{\link{count_ngrams}}).}
 
 \item{df}{logical, if \code{TRUE} returns a data frame, if \code{FALSE} returns a list.}
+
+\item{unigrams_output}{logical, if \code{TRUE} extracts unigrams from the data and returns
+information about their position.}
 }
 \value{
-if \code{df} is \code{FALSE}, returns a list of length equal to the number of unique positions present in n-grams. Each
-element of the list contains unigrams that are present on this position. If \code{df} is \code{FALSE}, returns a data frame
-where first column contains unigrams and the second column represent their positions
+if \code{df} is \code{FALSE}, returns a list of length equal to the number of unique
+n-gram starts present in n-grams. Each element of the list contains n-grams that start on
+this position. If \code{df} is \code{FALSE}, returns a data frame where first column contains
+unigrams and the second column represent their start positions.
 }
 \description{
-Tranforms a vector of positioned n-grams into a list of positions filled with unigrams
-appearing on them.
+Tranforms a vector of positioned n-grams into a list of positions filled with n-grams
+that start on them.
 }
 \examples{
 #position data in the list format

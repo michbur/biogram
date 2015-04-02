@@ -3,7 +3,7 @@ citHeader("To cite chipPCR in publications, please use:")
 citEntry(entry = "Manual",
   author = "Michal Burdukiewicz and Piotr Sobczyk and Chris Lauber",
   title = "biogram: analysis of biological sequences using n-grams",
-  year = "2014",
+  year = "2015",
   note = "R package version 1.2",
   url = "http://CRAN.R-project.org/package=biogram",
   textVersion = "Burdukiewicz M, Sobczyk P and Lauber C (2014). biogram: analysis of biological sequences using n-grams. R package version 1.2, <URL: http://CRAN.R-project.org/package=biogram>."
