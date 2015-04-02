@@ -18,7 +18,7 @@ information about their position.}
 if \code{df} is \code{FALSE}, returns a list of length equal to the number of unique
 n-gram starts present in n-grams. Each element of the list contains n-grams that start on
 this position. If \code{df} is \code{FALSE}, returns a data frame where first column contains
-unigrams and the second column represent their start positions.
+n-grams and the second column represent their start positions.
 }
 \description{
 Tranforms a vector of positioned n-grams into a list of positions filled with n-grams

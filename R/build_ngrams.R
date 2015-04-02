@@ -27,12 +27,54 @@ build_ngrams <- function(ngrams) {
     ngram[2]), ".", fixed = TRUE), length)
   if(length(unique(n)) != 1)
     stop("Unequal n-gram size. Use n-grams with the same size (n).")
-  if(unique(n) == 1)
-    build_bigrams(ngrams)
+
+  positioned_ngrams <- position_ngrams(ngrams, df = TRUE, unigrams_output = FALSE)
+  
+  #calculate end of the n-gram
+  position_data <- cbind(positioned_ngrams, 
+                         positioned_ngrams[["position"]] + 
+                           apply(positioned_ngrams, 1, function(ngram) {
+                           sn <- strsplit(as.character(ngram[1]), "_")[[1]]
+                           ngram_end <- sum(as.numeric(strsplit(sn[2], ".", fixed = TRUE)[[1]])) +
+                             length(strsplit(sn[2], ".", fixed = TRUE)[[1]])
+                           ngram_end
+                         }))
+  #ngram, start position of n-gram, end position of n-gram
+  colnames(position_data) <- c("ngram", "pstart", "pend")
+
+  positioned_ugrams <- position_ngrams(ngrams, df = TRUE, unigrams_output = TRUE)
+  positioned_ugrams <- positioned_ugrams[!duplicated(positioned_ugrams), ]
+  positioned_ugrams[["ngram"]] <- as.character(positioned_ugrams[["ngram"]])
+  
+  u_positions <- unique(positioned_ugrams[["position"]])
+  #remove n-grams which end with the sequence
+  position_data <- position_data[position_data[["pend"]] < max(u_positions), ]
+  position_data[["ngram"]] <- as.character(position_data[["ngram"]])
+  
+  res <- unlist(apply(position_data, 1, function(single_row) {
+    chosen_ngrams <- strsplit(single_row["ngram"], "_")
+    single_position <- as.numeric(single_row["pend"])
+    #u_grams that may be pasted
+    other_ugrams <- positioned_ugrams[positioned_ugrams[["position"]] > single_position, ]
+    #position in other_ugrams is now distance between single_position and their position
+    other_ugrams[["position"]] <- other_ugrams[["position"]] - single_position - 1
+    
+    single_ngram <- chosen_ngrams[[1]]
+    
+    lapply(chosen_ngrams, function(single_ngram)
+      apply(other_ugrams, 1, function(other_ugram)
+        paste0(single_row["pstart"], "_", #position 
+               single_ngram[[1]], ".", substr(other_ugram[1], 1, 1), #ngram 
+               "_", single_ngram[[2]], ".", other_ugram[2]))) #distance
+  }))
+
+  names(res) <- NULL
+  res
 }
 
 #build unigrams
 build_bigrams <- function(ngrams) {
+  browser()
   positioned_ngrams <- position_ngrams(ngrams, df = TRUE)
   positions <- unique(positioned_ngrams[["position"]])
   #remove last position, because there is nothing to paste it with
@@ -44,7 +86,6 @@ build_bigrams <- function(ngrams) {
     other_ugrams <- positioned_ngrams[positioned_ngrams[["position"]] > single_position, ]
     #position in other_ugrams is now distance between single_position and their position
     other_ugrams[["position"]] <- other_ugrams[["position"]] - single_position - 1
-    
     lapply(chosen_ugrams, function(single_ugram)
       apply(other_ugrams, 1, function(other_ugram)
         paste0(single_position, "_", #position 

@@ -10,7 +10,7 @@
 #' @return if \code{df} is \code{FALSE}, returns a list of length equal to the number of unique 
 #' n-gram starts present in n-grams. Each element of the list contains n-grams that start on 
 #' this position. If \code{df} is \code{FALSE}, returns a data frame where first column contains 
-#' unigrams and the second column represent their start positions.
+#' n-grams and the second column represent their start positions. 
 #' @export
 #' @seealso
 #' Transform n-gram name to human-friendly form: \code{\link{decode_ngrams}}.
@@ -55,7 +55,8 @@ position_ngrams <- function(ngrams, df = FALSE, unigrams_output = TRUE) {
   if(df) {
     res <- pos_table
     colnames(res) <- c("ngram", "position")
-    res <- res[!duplicated(res), ]
+    #duplicates shouldn't be removed
+    #res <- res[!duplicated(res), ]
     res <- res[order(res[["ngram"]]), ]
     res <- res[order(res[["position"]]), ]
     rownames(res) <- NULL
