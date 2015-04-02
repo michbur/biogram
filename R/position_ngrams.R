@@ -43,6 +43,10 @@ position_ngrams <- function(ngrams, df = FALSE) {
   if(df) {
     res <- pos_table
     colnames(res) <- c("unigram", "position")
+    res <- res[!duplicated(res), ]
+    res <- res[order(res[["unigram"]]), ]
+    res <- res[order(res[["position"]]), ]
+    rownames(res) <- NULL
   } else {
     res <- lapply(sort(unique(pos_table[["pos"]])), function(unique_pos) {
       sort(pos_table[pos_table[["pos"]] == unique_pos, "unigrams"])
