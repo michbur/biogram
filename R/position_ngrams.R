@@ -39,8 +39,10 @@ position_ngrams <- function(ngrams, df = FALSE, unigrams_output = TRUE) {
       dists <- strsplit(single_ngram[[3]], ".", fixed = TRUE)[[1]]
       #positions of unigrams
       uni_positions <- as.numeric(single_ngram[[1]])
-      for (next_unigram in as.numeric(dists))
-        uni_positions[length(uni_positions) + 1] <- next_unigram + uni_positions[length(uni_positions)] + 1
+      #for loop suitable only for n-grams bigger than unigrams
+      if(nchar(single_ngram[[2]]) > 1)
+        for (next_unigram in as.numeric(dists))
+          uni_positions[length(uni_positions) + 1] <- next_unigram + uni_positions[length(uni_positions)] + 1
       data.frame(ngrams = paste0(unigrams, "_0"), pos = uni_positions)
     }))
   } else {
