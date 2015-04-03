@@ -19,7 +19,7 @@
 build_ngrams <- function(ngrams) {
   validated_ngram <- sapply(ngrams, is_ngram)
   if(!all(validated_ngram))
-    stop("Improper n-grams: paste(names(which(!validated_ngram)), collapse = ", ").")
+    stop("Improper n-grams: ", paste(names(which(!validated_ngram)), collapse = ", "))
   
   splitted_ngrams <- strsplit(ngrams, "_")
   if(unique(sapply(splitted_ngrams, length)) != 3)

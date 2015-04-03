@@ -25,7 +25,7 @@
 position_ngrams <- function(ngrams, df = FALSE, unigrams_output = TRUE) {
   validated_ngram <- sapply(ngrams, is_ngram)
   if(!all(validated_ngram))
-    stop("Improper n-grams: paste(names(which(!validated_ngram)), collapse = ", ").")
+    stop("Improper n-grams: ", paste(names(which(!validated_ngram)), collapse = ", "))
   
   sngrams <- strsplit(ngrams, "_")
   #check if there is information about position
