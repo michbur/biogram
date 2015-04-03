@@ -14,6 +14,7 @@
 #' @examples
 #' build_ngrams(c("1_1_0", "2_1_0", "5_1_0", "7_1_0", "4_2_0", 
 #' "5_2_0", "7_2_0", "8_5_0"))
+#' build_ngrams(c("1_2.3.4_0.0", "4_1.1.1_0.0"))
 
 build_ngrams <- function(ngrams) {
   validated_ngram <- sapply(ngrams, is_ngram)
@@ -42,39 +43,68 @@ build_ngrams <- function(ngrams) {
   #ngram, start position of n-gram, end position of n-gram
   colnames(position_data) <- c("ngram", "pstart", "pend")
 
+  #create table for unigrams that will be added to existing n-grams
   positioned_ugrams <- position_ngrams(ngrams, df = TRUE, unigrams_output = TRUE)
   positioned_ugrams <- positioned_ugrams[!duplicated(positioned_ugrams), ]
   positioned_ugrams[["ngram"]] <- as.character(positioned_ugrams[["ngram"]])
-  
+
   u_positions <- unique(positioned_ugrams[["position"]])
-  #remove n-grams which end with the sequence
-  position_data <- position_data[position_data[["pend"]] < max(u_positions), ]
+  # n-grams to which we cannot add anything on the right side
+  # position_data[["pend"]] < max(u_positions)
+  # n-grams to which we cannot add anything on the left side
+  # position_data[["pstart"]] > min(u_positions)
   position_data[["ngram"]] <- as.character(position_data[["ngram"]])
   
-  res <- unlist(apply(position_data, 1, function(single_row) {
+  #add unigrams on the right side
+  res_right <- add_unigrams_right(position_data[position_data[["pend"]] < max(u_positions), ], 
+                           positioned_ugrams)
+  res_left <- add_unigrams_left(position_data[position_data[["pend"]] > min(u_positions), ], 
+                      positioned_ugrams)
+  res <-c(res_right, res_left)
+
+  names(res) <- NULL
+  res
+}
+
+
+#TODO - add_unigrams_right and add_unigrams_left should be collapsed into a single function 
+add_unigrams_right <- function(position_data, positioned_ugrams) {
+  unlist(apply(position_data, 1, function(single_row) {
     chosen_ngrams <- strsplit(single_row["ngram"], "_")
     single_position <- as.numeric(single_row["pend"])
     #u_grams that may be pasted
     other_ugrams <- positioned_ugrams[positioned_ugrams[["position"]] > single_position, ]
     #position in other_ugrams is now distance between single_position and their position
     other_ugrams[["position"]] <- other_ugrams[["position"]] - single_position - 1
-    
     single_ngram <- chosen_ngrams[[1]]
-    
     lapply(chosen_ngrams, function(single_ngram)
       apply(other_ugrams, 1, function(other_ugram)
         paste0(single_row["pstart"], "_", #position 
                single_ngram[[1]], ".", substr(other_ugram[1], 1, 1), #ngram 
                "_", single_ngram[[2]], ".", other_ugram[2]))) #distance
   }))
-
-  names(res) <- NULL
-  res
 }
 
-#build unigrams
+add_unigrams_left <- function(position_data, positioned_ugrams) {
+  unlist(apply(position_data, 1, function(single_row) {
+    chosen_ngrams <- strsplit(single_row["ngram"], "_")
+    single_position <- as.numeric(single_row["pstart"])
+    #u_grams that may be pasted
+    other_ugrams <- positioned_ugrams[positioned_ugrams[["position"]] < single_position, ]
+    #position in other_ugrams is now distance between single_position and their position
+    other_ugrams[["position"]] <- single_position - other_ugrams[["position"]]
+    single_ngram <- chosen_ngrams[[1]]
+    lapply(chosen_ngrams, function(single_ngram)
+      apply(other_ugrams, 1, function(other_ugram)
+        paste0(as.numeric(single_row["pstart"]) - as.numeric(other_ugram[2]), "_", #position 
+               substr(other_ugram[1], 1, 1), ".", single_ngram[[1]], #ngram 
+               "_", other_ugram[2], ".", single_ngram[[2]]))) #distance
+  }))
+}
+
+
+#build bigrams from unigram - useless now
 build_bigrams <- function(ngrams) {
-  browser()
   positioned_ngrams <- position_ngrams(ngrams, df = TRUE)
   positions <- unique(positioned_ngrams[["position"]])
   #remove last position, because there is nothing to paste it with

@@ -26,6 +26,7 @@ All n-grams must have the same length (\code{n}).
 \examples{
 build_ngrams(c("1_1_0", "2_1_0", "5_1_0", "7_1_0", "4_2_0",
 "5_2_0", "7_2_0", "8_5_0"))
+build_ngrams(c("1_2.3.4_0.0", "4_1.1.1_0.0"))
 }
 \seealso{
 Function used by \code{build_ngrams} to extract unigrams: \code{\link{position_ngrams}}.
