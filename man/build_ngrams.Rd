@@ -17,7 +17,7 @@ with position information.
 Builds longer n-grams from shorter n-grams.
 }
 \details{
-n-grams are build iteratively by pasting existing n-grams with unigrams extracted
+n-grams are built by pasting existing n-grams with unigrams extracted
 from them.
 }
 \note{
