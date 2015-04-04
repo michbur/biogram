@@ -2,15 +2,16 @@
 #'
 #' Step-by-step builds and selects important n-grams.
 #'
-#' @inheritParams position_ngrams
-#' @return a vector of n-grams (where \code{n} is equal to the \code{n} of the input plus one) 
-#' with position information.
-#' @details n-grams are built by pasting existing n-grams with unigrams extracted 
-#' from them.
+#' @inheritParams test_features
+#' @inheritParams count_ngrams
+#' @param n_max size of constructed n-grams.
+#' @return a vector of n-grams.
+#' @details \code{construct_ngrams} extracts unigrams from the sequences and filters 
+#' significant features. From filtered unigrams, the function builds all possible 
+#' bigrams using \code{\link{build_ngrams}} and so on, till the required size of 
+#' the n-gram is achieved. On each step, obtained n-grams are filtered using 
+#' \code{\link{test_features}}.
 #' @export
-#' @seealso
-#' Function used by \code{build_ngrams} to extract unigrams: \code{\link{position_ngrams}}.
-#' @note All n-grams must have the same length (\code{n}).
 #' @examples
 #' deg_seqs <- degenerate(human_cleave[, 1L:9],
 #' list(`1` = c(1, 6, 8, 10, 11, 18),
@@ -20,12 +21,14 @@
 #'      '5' = c(3, 4)))
 
 construct_ngrams <- function(target, seq, u, n_max) {
-  unigrams <- count_ngrams(deg_seqs, n, 1L:5, pos = TRUE)
-  test_unigrams <- test_features(human_cleave[, "tar"], unigrams)
+  #build unigrams
+  unigrams <- count_ngrams(seq, 1, 1L:5, pos = TRUE)
+  #filter unigrams
+  test_unigrams <- test_features(target, unigrams)
   signif_ngrams <- cut(test_unigrams, breaks = c(0, 0.05, 1))[[1]]
   for(i in 1L:n_max) {
-    signif_ngrams <- build_and_test(signif_ngrams, deg_seqs, i, 1L:5, 
-                                    human_cleave[, "tar"])
+    signif_ngrams <- build_and_test(signif_ngrams, seq, i, 1L:5, 
+                                    target)
   }
   signif_ngrams
 }
@@ -36,7 +39,7 @@ build_and_test <- function(signif_ngrams, seqs, n, u, target) {
   colnames(nplusgrams_table) <- c("position", "ngram", "distance")
   unique_dists <- unique(nplusgrams_table[, "distance"])
   new_counts <- do.call(cbind, lapply(unique_dists, function(unique_dist) {
-    nplusgrams_counts <- count_ngrams(deg_seqs, n, u, 
+    nplusgrams_counts <- count_ngrams(seqs, n, u, 
                                       d = as.numeric(strsplit(unique_dist, ".", fixed = TRUE)[[1]]),
                                       pos = TRUE)
     nplusgrams_counts[, nplusgrams[nplusgrams_table[, "distance"] == unique_dist]]
