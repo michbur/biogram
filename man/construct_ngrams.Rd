@@ -30,11 +30,14 @@ the n-gram is achieved. On each step, obtained n-grams are filtered using
 \code{\link{test_features}}.
 }
 \examples{
+\donttest{
 deg_seqs <- degenerate(human_cleave[, 1L:9],
 list(`1` = c(1, 6, 8, 10, 11, 18),
      `2` = c(2, 13, 14, 16, 17),
      `3` = c(5, 19, 20),
      `4` = c(7, 9, 12, 15),
      '5' = c(3, 4)))
+bigrams <- construct_ngrams(human_cleave[, "tar"], deg_seqs, 1L:5, 2)
+}
 }
 
