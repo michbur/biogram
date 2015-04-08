@@ -62,3 +62,29 @@ plot.criterion_distribution <- function(x, ...) {
          horiz = TRUE, fill = c("red", "green"), bty = "n", cex = 1)
   par(mar = old_par[["mar"]], fig = old_par[["fig"]], oma = old_par[["oma"]])
 }
+
+#' Plot criterion distribution with ggplot2
+#'
+#' Plots results of \code{\link{distr_crit}} function.with package ggplot2
+#'
+#' @param x object of class \code{\link{criterion_distribution}}.
+#' @param ... further arguments passed to \code{\link[graphics]{plot}}.
+#' @return nothing.
+#' @export
+ggplot2.criterion_distribution <- function(x, ...) {
+  b <- data.frame(cbind(x=as.numeric(rownames(attr(x, "plot_data"))), attr(x, "plot_data")))
+  d1 <- cbind(b[,c(1,2)], attr(x, "nice_name"))
+  d2 <- cbind(b[,c(1,3)], "Probability")
+  colnames(d1) <- c("x", "y", "panel")
+  colnames(d2) <- c("x", "y", "panel")
+  d <- rbind(d1, d2)
+  p <- ggplot(data = d, mapping = aes(x = x, y = y))
+  p <- p + facet_grid(panel~., scale="free")
+  p <- p + geom_freqpoly(data= d2, aes(color=y), stat = "identity")
+  p <- p + scale_fill_brewer(palette = "Set1")
+  p <- p + geom_point(data=d1, aes(size=y), stat = "identity")
+  p <- p + guides(color = "none")
+  p <- p + guides(size = "none")
+  p <- p + xlab("Number of cases with feature=1 and target=1") + ylab("")
+  p
+}
