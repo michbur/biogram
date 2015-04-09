@@ -34,3 +34,31 @@ decode_single_ngrams <- function(splitted_ngram) {
     seq
   }
 }
+
+
+
+#' n-grams to data frame
+#'
+#' Tranforms a vector of n-grams into a data frame.
+#' 
+#' @inheritParams decode_ngrams
+#' @return a \code{data.frame} with 2 (in case of n-grams without known position) or
+#' three columns (n-grams with position information). 
+#' @export
+#' @seealso
+#' Decode n-grams: \code{\link{decode_ngrams}}.
+#' @examples
+#' ngrams2df(c("2_1.1.2_0.0", "3_1.1.2_0.0", "3_2.2.2_0.0"))
+
+ngrams2df <- function(ngrams) {
+  sngrams <- strsplit(ngrams, "_")
+  df <- data.frame(do.call(rbind, strsplit(ngrams, "_")))
+  if(ncol(df) == 2) {
+    colnames(df) <- c("ngram", "distance")
+  } else {
+    colnames(df) <- c("position", "ngram", "distance")
+    df[, "position"] <- as.numeric(as.character(df[, "position"]))
+  }
+  df
+}
+

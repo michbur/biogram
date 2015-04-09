@@ -29,7 +29,7 @@ construct_ngrams <- function(target, seq, u, n_max) {
   #filter unigrams
   test_unigrams <- test_features(target, unigrams)
   signif_ngrams <- cut(test_unigrams, breaks = c(0, 0.05, 1))[[1]]
-  for(i in 1L:n_max) {
+  for(i in 2L:n_max) {
     signif_ngrams <- build_and_test(signif_ngrams, seq, i, 1L:5, 
                                     target)
   }
@@ -37,14 +37,13 @@ construct_ngrams <- function(target, seq, u, n_max) {
 }
 
 build_and_test <- function(signif_ngrams, seqs, n, u, target) {
-  nplusgrams <- unique(build_ngrams(signif_ngrams))
-  nplusgrams_table <- do.call(rbind, strsplit(nplusgrams, "_"))
-  colnames(nplusgrams_table) <- c("position", "ngram", "distance")
+  nplusgrams <- unique(add_1grams(signif_ngrams))
+  nplusgrams_table <- ngrams2df(nplusgrams)
   unique_dists <- unique(nplusgrams_table[, "distance"])
   new_counts <- do.call(cbind, lapply(unique_dists, function(unique_dist) {
-    nplusgrams_counts <- count_ngrams(seqs, n, u, 
+    nplusgrams_counts <- as.matrix(count_ngrams(seqs, n, u, 
                                       d = as.numeric(strsplit(unique_dist, ".", fixed = TRUE)[[1]]),
-                                      pos = TRUE)
+                                      pos = TRUE))
     nplusgrams_counts[, nplusgrams[nplusgrams_table[, "distance"] == unique_dist]]
   }))
   new_test <- test_features(target, new_counts)

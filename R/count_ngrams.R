@@ -116,6 +116,7 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE,
   }
   
   
+  
   if (pos) {
     #get positioned possible n-grams
     pos_possib_ngrams <- if(is.null(specified)) {
