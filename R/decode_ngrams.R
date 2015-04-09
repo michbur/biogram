@@ -52,12 +52,12 @@ decode_single_ngrams <- function(splitted_ngram) {
 
 ngrams2df <- function(ngrams) {
   sngrams <- strsplit(ngrams, "_")
-  df <- data.frame(do.call(rbind, strsplit(ngrams, "_")))
+  df <- data.frame(do.call(rbind, strsplit(ngrams, "_")), stringsAsFactors = FALSE)
   if(ncol(df) == 2) {
     colnames(df) <- c("ngram", "distance")
   } else {
     colnames(df) <- c("position", "ngram", "distance")
-    df[, "position"] <- as.numeric(as.character(df[, "position"]))
+    df[, "position"] <- as.numeric(df[, "position"])
   }
   df
 }

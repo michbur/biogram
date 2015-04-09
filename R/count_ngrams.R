@@ -13,10 +13,6 @@
 #' used only for n-grams without position information. See \code{Details}.
 #' @param threshold \code{integer}, if not equal to 0, data is binarized into
 #' two groups (larger or equal to threshold vs. smaller than threshold).
-#' @param specified if not \code{NULL}, must be a vector of n-grams that should 
-#' counted. \code{specified} n-grams must have size equal to \code{n}, contain 
-#' only unigrams specified in \code{u} and have distance equal to \code{d}. 
-#' Currently implemented only for positioned n-grams. NOT IMPLEMENTED
 #' 
 #' @details A \code{distance} vector should be always \code{n} - 1 in length.
 #' For example when \code{n} = 3, \code{d} = c(1,2) means A_A__A. For \code{n} = 4, 
@@ -67,8 +63,7 @@
 #' as.matrix(ngrams)
 
 count_ngrams <- function(seq, n, u, d = 0, pos = FALSE, 
-                         scale = FALSE, threshold = 0,
-                         specified = NULL) {
+                         scale = FALSE, threshold = 0) {
   
   #if sequence is not a matrix (single sequence), convert it to matrix with 1 row
   if (class(seq) != "matrix")
@@ -87,43 +82,21 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE,
   #number of sequences
   n_seqs <- nrow(seq)
   
-  if(!is.null(specified)) {
-    specified_table <- do.call(rbind, strsplit(specified, "_"))
-    colnames(specified_table) <- c("position", "ngram", "distance")
-    #add tests for n, distance and u
-  }
-  
-  
   #create list of n-grams for n
-  possib_ngrams <- if(is.null(specified)) {
-    create_ngrams(n, u)
-  } else {
-    specified_table[, "ngram"]
-  }
-  
+  possib_ngrams <- create_ngrams(n, u)  
   
   #look for n-gram indices for d
   ngram_ind <- get_ngrams_ind(len_seq, n, d)
-  
   max_grams <- calc_max_grams(len_seq, n, ngram_ind)
+  
   
   #extract n-grams from sequence
   grams <- vapply(1L:n_seqs, function(i)
     seq2ngrams_helper(seq[i, ], ind = ngram_ind, max_grams), rep("a", max_grams))
   
-  if(!is.null(specified)) {
-    grams <- grams[as.numeric(unique(specified_table[, "position"])), , drop = FALSE]
-  }
-  
-  
-  
-  if (pos) {
+  if (pos) {    
     #get positioned possible n-grams
-    pos_possib_ngrams <- if(is.null(specified)) {
-      create_ngrams(n, u, max_grams)
-    } else {
-      specified
-    }
+    pos_possib_ngrams <- create_ngrams(n, u, max_grams)
     
     res <- do.call(cbind, lapply(possib_ngrams, function(current_ngram)
       as.simple_triplet_matrix(t(vapply(1L:n_seqs, function(current_sequence)

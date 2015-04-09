@@ -38,14 +38,7 @@ construct_ngrams <- function(target, seq, u, n_max) {
 
 build_and_test <- function(signif_ngrams, seqs, n, u, target) {
   nplusgrams <- unique(add_1grams(signif_ngrams))
-  nplusgrams_table <- ngrams2df(nplusgrams)
-  unique_dists <- unique(nplusgrams_table[, "distance"])
-  new_counts <- do.call(cbind, lapply(unique_dists, function(unique_dist) {
-    nplusgrams_counts <- as.matrix(count_ngrams(seqs, n, u, 
-                                      d = as.numeric(strsplit(unique_dist, ".", fixed = TRUE)[[1]]),
-                                      pos = TRUE))
-    nplusgrams_counts[, nplusgrams[nplusgrams_table[, "distance"] == unique_dist]]
-  }))
+  new_counts <- count_specified(seqs, nplusgrams)
   new_test <- test_features(target, new_counts)
   cut(new_test, breaks = c(0, 0.05, 1))[[1]]
 }

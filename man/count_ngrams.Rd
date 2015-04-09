@@ -5,7 +5,7 @@
 \title{Count n-grams in sequences}
 \usage{
 count_ngrams(seq, n, u, d = 0, pos = FALSE, scale = FALSE,
-  threshold = 0, specified = NULL)
+  threshold = 0)
 }
 \arguments{
 \item{seq}{\code{integer} vector or matrix describing sequence(s).}
@@ -25,11 +25,6 @@ used only for n-grams without position information. See \code{Details}.}
 
 \item{threshold}{\code{integer}, if not equal to 0, data is binarized into
 two groups (larger or equal to threshold vs. smaller than threshold).}
-
-\item{specified}{if not \code{NULL}, must be a vector of n-grams that should
-counted. \code{specified} n-grams must have size equal to \code{n}, contain
-only unigrams specified in \code{u} and have distance equal to \code{d}.
-Currently implemented only for positioned n-grams. NOT IMPLEMENTED}
 }
 \value{
 a \code{\link[slam]{simple_triplet_matrix}} where columns represent
