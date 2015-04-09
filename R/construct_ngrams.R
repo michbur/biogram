@@ -29,11 +29,17 @@ construct_ngrams <- function(target, seq, u, n_max) {
   #filter unigrams
   test_unigrams <- test_features(target, unigrams)
   signif_ngrams <- cut(test_unigrams, breaks = c(0, 0.05, 1))[[1]]
+  
+  res <- list()
+  
+  res[[1]] <- signif_ngrams
+  
   for(i in 2L:n_max) {
     signif_ngrams <- build_and_test(signif_ngrams, seq, i, 1L:5, 
                                     target)
+    res[[i]] <- signif_ngrams
   }
-  signif_ngrams
+  res
 }
 
 build_and_test <- function(signif_ngrams, seqs, n, u, target) {
