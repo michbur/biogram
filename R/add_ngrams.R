@@ -66,8 +66,8 @@ add_1grams <- function(ngrams) {
                                   positioned_ugrams, n = n[1])
   res_left <- add_unigrams_left(position_data[position_data[["pend"]] > min(u_positions), ], 
                                 positioned_ugrams, n = n[1])
-  
-  res <-c(res_left, res_right)
+  #work with long n-grams (positions bigger than 9)
+  res <- c(res_left, res_right)
   
   names(res) <- NULL
   res
