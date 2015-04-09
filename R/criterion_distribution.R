@@ -68,10 +68,10 @@ plot.criterion_distribution <- function(x, ...) {
 #' Plots results of \code{\link{distr_crit}} function.with package ggplot2
 #'
 #' @param x object of class \code{\link{criterion_distribution}}.
-#' @param ... further arguments passed to \code{\link[graphics]{plot}}.
-#' @return nothing.
+#' @return ggplot object.
 #' @export
-ggplot2.criterion_distribution <- function(x, ...) {
+ggplot2.criterion_distribution <- function(x) {
+  #change name to ggplot, change x to data
   b <- data.frame(cbind(x=as.numeric(rownames(attr(x, "plot_data"))), attr(x, "plot_data")))
   d1 <- cbind(b[,c(1,2)], attr(x, "nice_name"))
   d2 <- cbind(b[,c(1,3)], "Probability")

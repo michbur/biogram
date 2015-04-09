@@ -8,7 +8,7 @@
 #' @return a vector of n-grams.
 #' @details \code{construct_ngrams} extracts unigrams from the sequences and filters 
 #' significant features. From filtered unigrams, the function builds all possible 
-#' bigrams using \code{\link{build_ngrams}} and so on, till the required size of 
+#' bigrams using \code{\link{add_1grams}} and so on, till the required size of 
 #' the n-gram is achieved. On each step, obtained n-grams are filtered using 
 #' \code{\link{test_features}}.
 #' @export

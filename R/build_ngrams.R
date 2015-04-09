@@ -1,6 +1,6 @@
-#' Build n-grams
+#' Add 1-grams
 #'
-#' Builds longer n-grams from shorter n-grams.
+#' Builds (n+1)-grams from n-grams.
 #'
 #' @inheritParams position_ngrams
 #' @return a vector of n-grams (where \code{n} is equal to the \code{n} of the input plus one) 
@@ -14,9 +14,9 @@
 #' @examples
 #' build_ngrams(c("1_1_0", "2_1_0", "5_1_0", "7_1_0", "4_2_0", 
 #' "5_2_0", "7_2_0", "8_5_0"))
-#' build_ngrams(c("1_2.3.4_0.0", "4_1.1.1_0.0"))
+#' add_1grams(c("1_2.3.4_0.0", "4_1.1.1_0.0"))
 
-build_ngrams <- function(ngrams) {
+add_1grams <- function(ngrams) {
   validated_ngram <- sapply(ngrams, is_ngram)
   if(!all(validated_ngram))
     stop("Improper n-grams: ", paste(names(which(!validated_ngram)), collapse = ", "))
