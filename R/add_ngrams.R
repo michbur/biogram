@@ -86,9 +86,9 @@ add_unigrams_right <- function(position_data, positioned_ugrams, n)
     #remaining distance - cut redundant 0 when n = 1
     remain_distance <- ifelse(n == 1, "", paste0(chosen_ngram[[2]], "."))
     apply(other_ugrams, 1, function(other_ugram)
-      paste0(single_row["pstart"], "_", #position 
+      paste0(as.numeric(single_row["pstart"]), "_", #position 
              chosen_ngram[[1]], ".", substr(other_ugram[1], 1, 1), #ngram 
-             "_", remain_distance, other_ugram[2]))})) #distance
+             "_", remain_distance, as.numeric(other_ugram[2])))})) #distance
 
 
 
@@ -105,7 +105,7 @@ add_unigrams_left <- function(position_data, positioned_ugrams, n)
     apply(other_ugrams, 1, function(other_ugram)
       paste0(as.numeric(single_row["pstart"]) - as.numeric(other_ugram[2]) - 1, "_", #position 
              substr(other_ugram[1], 1, 1), ".", chosen_ngram[[1]], #ngram 
-             "_", other_ugram[2], remain_distance)) #distance
+             "_", as.numeric(other_ugram[2]), remain_distance)) #distance
   }))
 
 
