@@ -35,9 +35,13 @@ construct_ngrams <- function(target, seq, u, n_max) {
   res[[1]] <- signif_ngrams
   
   for(i in 2L:n_max) {
-    signif_ngrams <- build_and_test(signif_ngrams, seq, i, 1L:5, 
-                                    target)
-    res[[i]] <- signif_ngrams
+    if(length(signif_ngrams) != 0) {
+      signif_ngrams <- build_and_test(signif_ngrams, seq, i, 1L:5, 
+                                      target)
+      res[[i]] <- signif_ngrams
+    } else {
+      NULL
+    }
   }
   res
 }
