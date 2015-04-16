@@ -10,7 +10,7 @@
 #' significant features. From filtered unigrams, the function builds all possible 
 #' bigrams using \code{\link{add_1grams}} and so on, till the required size of 
 #' the n-gram is achieved. On each step, obtained n-grams are filtered using 
-#' \code{\link{test_features}}.
+#' \code{\link[QuiPT]{test_features}}.
 #' @export
 #' @examples
 #' \donttest{

@@ -42,7 +42,7 @@ The \code{biogram} package deals with both of the abovementioned problems. It us
 innate properties of the n-gram data which usually can be represented by sparse
 matrices. Data storage is done using functionalities from the \code{slam} package. To ease
 the selection of significant features, \code{biogram} provides the user with QuiPT,
-a very fast permutation test for binary data (see \code{\link{test_features}}).
+a very fast permutation test for binary data (see \code{\link[QuiPT]{test_features}}).
 
 Another way of reducing dimensionality is the aggregation of sequence residues into more
 general groups. For example, all positively-charged amino acids may be aggregated into
