@@ -80,5 +80,7 @@ Extract n-grams from sequence(s): \code{\link{seq2ngrams}}.
 Get indices of n-grams: \code{\link{get_ngrams_ind}}.
 
 Count n-grams for multiple values of n: \code{\link{count_multigrams}}.
+
+Count only specified n-grams: \code{\link{count_specified}}.
 }
 

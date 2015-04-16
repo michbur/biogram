@@ -53,6 +53,8 @@
 #' Get indices of n-grams: \code{\link{get_ngrams_ind}}.
 #' 
 #' Count n-grams for multiple values of n: \code{\link{count_multigrams}}.
+#' 
+#' Count only specified n-grams: \code{\link{count_specified}}.
 #' @examples 
 #' #count trigrams without position information for nucleotides
 #' count_ngrams(sample(1L:4, 50, replace = TRUE), 3, 1L:4, pos = FALSE)
