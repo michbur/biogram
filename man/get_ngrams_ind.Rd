@@ -17,8 +17,9 @@ consecutive elements). See Details.}
 \value{
 A list with number of elements equal to \code{n}. Every element is a
 vector containing locations of given n-gram letter. For example, first element of
-list contain indices of first letter of all n-grams. The attribute \code{d} of output
-contains distances between letter used to compute locations (see Details).
+list contain indices of first letter of all n-grams. The attribute \code{d}
+of output contains distances between letter used to compute locations
+(see Details).
 }
 \description{
 Computes list of n-gram elements positions in sequence.

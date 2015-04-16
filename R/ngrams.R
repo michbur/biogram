@@ -17,8 +17,8 @@
 #' #bigrams for standard aminoacids with positions, 10 amino acid long sequence, so 
 #' #only 9 bigrams can be located in sequence
 #' create_ngrams(2, 1L:20, 9)
-#' #bigrams for DNA with positions, 10 nucleotide long sequence, distance 1, so only 8 bigrams
-#' #in sequence
+#' #bigrams for DNA with positions, 10 nucleotide long sequence, distance 1, so only 
+#' #8 bigrams in sequence
 #' #paste0 adds information about distance at the end of n-gram
 #' paste0(create_ngrams(2, 1L:4, 8), "_0")
 
@@ -41,8 +41,9 @@ create_ngrams <- function(n, u, possible_grams = NULL) {
 #' @inheritParams count_ngrams
 #' @return A list with number of elements equal to \code{n}. Every element is a 
 #' vector containing locations of given n-gram letter. For example, first element of
-#' list contain indices of first letter of all n-grams. The attribute \code{d} of output
-#' contains distances between letter used to compute locations (see Details).
+#' list contain indices of first letter of all n-grams. The attribute \code{d}
+#' of output contains distances between letter used to compute locations 
+#' (see Details).
 #' @details A format of \code{d} vector is discussed in Details of 
 #' \code{\link{count_ngrams}}.
 #' @export
@@ -101,6 +102,11 @@ get_ngrams_ind <- function(len_seq, n, d) {
 
 seq2ngrams <- function(seq, n, u, d = 0) {
   
+  validated_ngram <- sapply(ngrams, is_ngram)
+  if(!all(validated_ngram))
+    stop("Improper n-grams: ", paste(names(which(!validated_ngram)), collapse = ", "))
+  
+  
   #if sequence is not a matrix (single sequence), convert it to matrix with 1 row
   if (class(seq) != "matrix")
     seq <- matrix(seq, nrow = 1)
@@ -126,3 +132,35 @@ seq2ngrams <- function(seq, n, u, d = 0) {
   res
 }
 
+
+#' Gap N-Grams
+#'
+#' Introduces gaps in the n-grams.
+#'
+#' @inheritParams position_ngrams
+#' @return A \code{character} vector of (n-1)-grams ith introduced n-grams.
+#' @export
+#' @examples 
+#' gap_ngram(c("2_1.1.2_0.1", "3_1.1.2_0.0", "3_2.2.2_0.0"))
+
+gap_ngram <- function(ngrams) {
+  #check if unigrams are there 
+  
+  validated_ngram <- sapply(ngrams, is_ngram)
+  if(!all(validated_ngram))
+    stop("Improper n-grams: ", paste(names(which(!validated_ngram)), collapse = ", "))
+  
+  df <- ngrams2df(ngrams)
+  
+  #splitted ngrams
+  sn_grams <- strsplit(df[, "ngram"], ".", fixed = TRUE)
+  distances <- strsplit(df[, "distance"], ".", fixed = TRUE)
+  
+  sn_gram <- sn_grams[[1]]
+  distance <- as.numeric(distances[[1]])
+  pos_start <- df[1, "position"]
+  
+  #finish me
+  
+}
+                      

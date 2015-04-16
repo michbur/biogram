@@ -1,6 +1,6 @@
 #' Decode n-grams
 #'
-#' Tranforms a vector of n-grams into a human-friendly form.
+#' Transforms a vector of n-grams into a human-friendly form.
 #'
 #' @param ngrams a \code{character} vector of n-grams.
 #' @return a \code{character} vector of length equal to the number of n-grams. 
@@ -9,8 +9,10 @@
 #' Assign n-grams to positions: \code{\link{position_ngrams}}.
 #' 
 #' Validate n-gram structure: \code{\link{is_ngram}}.
+#' 
+#' Inverse function: \code{\link{code_ngrams}}.
 #' @examples
-#' decode_ngrams(c("2_1.1.2_0.0", "3_1.1.2_0.0", "3_2.2.2_0.0"))
+#' decode_ngrams(c("2_1.1.2_0.1", "3_1.1.2_2.0", "3_2.2.2_0.0"))
 decode_ngrams <- function(ngrams) {
   validated_ngram <- sapply(ngrams, is_ngram)
   if(!all(validated_ngram))
@@ -34,6 +36,32 @@ decode_single_ngrams <- function(splitted_ngram) {
     seq
   }
 }
+
+
+#' Code n-grams
+#'
+#' Code human-friendly representation of n-grams into a biogram format.
+#'
+#' @param decoded_ngrams a \code{character} vector of decoded n-grams.
+#' @return a \code{character} vector of n-grams. 
+#' @export
+#' @seealso Inverse function: \code{\link{decode_ngrams}}.
+#' @examples
+#' code_ngrams(c("11_2", "1__12", "222"))
+
+code_ngrams <- function(decoded_ngrams) 
+  as.vector(sapply(decoded_ngrams, function(decoded_ngram) {
+    sn <- strsplit(decoded_ngram, "")[[1]]
+    
+    #get indices of elements
+    id_elements <- which(sn != "_")
+    
+    #calculate distances between elements
+    dists <- sapply(2L:length(id_elements), function(id) 
+      id_elements[id] - id_elements[id - 1] - 1)
+    paste0(paste(sn[sn != "_"], collapse = "."), "_", 
+           paste(dists, collapse = "."))
+  }))
 
 
 
@@ -62,3 +90,4 @@ ngrams2df <- function(ngrams) {
   df
 }
 
+         
