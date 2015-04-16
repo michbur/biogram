@@ -2,7 +2,7 @@
 #'
 #' Step-by-step builds and selects important n-grams.
 #'
-#' @inheritParams test_features
+#' @param target \code{integer} vector with target information (e.g. class labels).
 #' @inheritParams count_ngrams
 #' @param n_max size of constructed n-grams.
 #' @return a vector of n-grams.

@@ -40,8 +40,7 @@
 #' one group. This action can be performed using the \code{\link{degenerate}} function.
 #' 
 #' @import slam
-#' @importFrom bit as.bit
-#' @importFrom entropy KL.plugin
+#' @import QuiPT
 #' @author Michal Burdukiewicz, Piotr Sobczyk, Chris Lauber
 #' @docType package
 #' @name biogram-package
