@@ -35,16 +35,19 @@ construct_ngrams <- function(target, seq, u, n_max) {
   res[[1]] <- signif_ngrams
   
   for(i in 2L:n_max) {
-    signif_ngrams <- build_and_test(signif_ngrams, seq, i, 1L:5, 
-                                    target)
-    res[[i]] <- signif_ngrams
+    if(length(signif_ngrams) != 0) {
+      signif_ngrams <- build_and_test(signif_ngrams, seq, i, u, target)
+      res[[i]] <- signif_ngrams
+    } else {
+      NULL
+    }
   }
   res
 }
 
-build_and_test <- function(signif_ngrams, seqs, n, u, target) {
+build_and_test <- function(signif_ngrams, seq, n, u, target) {
   nplusgrams <- unique(add_1grams(signif_ngrams))
-  new_counts <- count_specified(seqs, nplusgrams)
+  new_counts <- count_specified(seq, nplusgrams)
   new_test <- test_features(target, new_counts)
   cut(new_test, breaks = c(0, 0.05, 1))[[1]]
 }
