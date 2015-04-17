@@ -4,7 +4,7 @@
 \alias{construct_ngrams}
 \title{Construct and filter n-grams}
 \usage{
-construct_ngrams(target, seq, u, n_max)
+construct_ngrams(target, seq, u, n_max, conf_level = 0.95, gap = TRUE)
 }
 \arguments{
 \item{target}{\code{integer} vector with target information (e.g. class labels).}
@@ -15,6 +15,11 @@ construct_ngrams(target, seq, u, n_max)
 possible unigrams.}
 
 \item{n_max}{size of constructed n-grams.}
+
+\item{conf_level}{confidence level for discriminating between significant and
+non-significant features.}
+
+\item{gap}{\code{logical}, if \code{TRUE} gap are used IMPROVE ME.}
 }
 \value{
 a vector of n-grams.
@@ -24,10 +29,10 @@ Step-by-step builds and selects important n-grams.
 }
 \details{
 \code{construct_ngrams} extracts unigrams from the sequences and filters
-significant features. From filtered unigrams, the function builds all possible
-bigrams using \code{\link{add_1grams}} and so on, till the required size of
-the n-gram is achieved. On each step, obtained n-grams are filtered using
-\code{\link[QuiPT]{test_features}}.
+significant features (with p-value below \code{conf_level}). From filtered unigrams,
+the function builds all possible bigrams using \code{\link{add_1grams}} and so on,
+till the required size of the n-gram is achieved. On each step, obtained n-grams
+are filtered using \code{\link[QuiPT]{test_features}}.
 }
 \examples{
 \donttest{
