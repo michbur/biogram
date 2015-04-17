@@ -37,6 +37,9 @@ count_specified <- function(seq, ngrams) {
   
   df <- ngrams2df(ngrams)
   
+  if(ncol(df) != 3)
+    stop("The function works now only for positioned n-grams.")
+  
   #splitted ngrams
   sn_grams <- strsplit(df[, "ngram"], ".", fixed = TRUE)
   

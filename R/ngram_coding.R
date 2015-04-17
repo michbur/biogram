@@ -48,6 +48,7 @@ decode_single_ngrams <- function(splitted_ngram) {
 #' @seealso Inverse function: \code{\link{decode_ngrams}}.
 #' @examples
 #' code_ngrams(c("11_2", "1__12", "222"))
+#' code_ngrams(c("aaa_b", "d__aa", "abd")
 
 code_ngrams <- function(decoded_ngrams) 
   as.vector(sapply(decoded_ngrams, function(decoded_ngram) {
