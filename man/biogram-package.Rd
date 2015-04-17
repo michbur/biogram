@@ -85,6 +85,7 @@ coded <- c(paste0("3_", coded), paste0("4_", coded))
 bigrams <- count_specified(deg_seqs, coded)
 #test which of the features of the interest is significant
 test2 <- test_features(human_cleave[, "tar"], bigrams)
+cut(test2)
 }
 \author{
 Michal Burdukiewicz, Piotr Sobczyk, Chris Lauber

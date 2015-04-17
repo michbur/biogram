@@ -141,14 +141,13 @@ seq2ngrams <- function(seq, n, u, d = 0) {
 #' @return A \code{character} vector of (n-1)-grams ith introduced n-grams.
 #' @export
 #' @examples 
-#' gap_ngram(c("2_1.1.2_0.1", "3_1.1.2_0.0", "3_2.2.2_0.0"))
+#' gap_ngrams(c("2_1.1.2_0.1", "3_1.1.2_0.0", "3_2.2.2_0.0"))
 
-gap_ngram <- function(ngrams) {
+gap_ngrams <- function(ngrams) {
   #check if unigrams are there 
   
-  validated_ngram <- sapply(ngrams, is_ngram)
-  if(!all(validated_ngram))
-    stop("Improper n-grams: ", paste(names(which(!validated_ngram)), collapse = ", "))
+  #no need to validate n-grams, decode does it for us
+  decoded <- decode_ngrams(ngrams)
   
   df <- ngrams2df(ngrams)
   
@@ -156,11 +155,27 @@ gap_ngram <- function(ngrams) {
   sn_grams <- strsplit(df[, "ngram"], ".", fixed = TRUE)
   distances <- strsplit(df[, "distance"], ".", fixed = TRUE)
   
-  sn_gram <- sn_grams[[1]]
-  distance <- as.numeric(distances[[1]])
-  pos_start <- df[1, "position"]
-  
-  #finish me
-  
+  unlist(lapply(1L:length(ngrams), gap_single_ngram, sn_grams, distances, df, decoded))
 }
-                      
+      
+
+gap_single_ngram <- function(ngram_id, sn_grams, distances, df, decoded) {
+  sn_gram <- sn_grams[[ngram_id]]
+  distance <- as.numeric(distances[[ngram_id]])
+  pos_start <- df[ngram_id, "position"]
+  #single decoded
+  s_decoded <- strsplit(decoded[ngram_id], "")[[1]]
+  
+  ids <- which(s_decoded != "_")
+  res <- unlist(lapply(ids, function(id) {
+    s_decoded[id] <- "_"
+    code_ngrams(paste0(s_decoded, collapse = ""))
+  }))
+  
+  #positions of gapped n-grams
+  #first position is increased, because first element of the n-gram becomes a gap
+  res_positions <- c(pos_start + ids[2] - ids[1], rep(pos_start, length(res) - 1))
+  
+  unlist(lapply(1L:length(ids), function(i)
+    paste0(res_positions[i], "_", res[i])))
+}
