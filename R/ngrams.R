@@ -102,11 +102,6 @@ get_ngrams_ind <- function(len_seq, n, d) {
 
 seq2ngrams <- function(seq, n, u, d = 0) {
   
-  validated_ngram <- sapply(ngrams, is_ngram)
-  if(!all(validated_ngram))
-    stop("Improper n-grams: ", paste(names(which(!validated_ngram)), collapse = ", "))
-  
-  
   #if sequence is not a matrix (single sequence), convert it to matrix with 1 row
   if (class(seq) != "matrix")
     seq <- matrix(seq, nrow = 1)
