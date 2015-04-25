@@ -16,23 +16,22 @@ possible unigrams.}
 
 \item{n_max}{size of constructed n-grams.}
 
-\item{conf_level}{confidence level for discriminating between significant and
-non-significant features.}
+\item{conf_level}{confidence level.}
 
-\item{gap}{\code{logical}, if \code{TRUE} gap are used IMPROVE ME.}
+\item{gap}{\code{logical}, if \code{TRUE} gap are used. See Details.}
 }
 \value{
 a vector of n-grams.
 }
 \description{
-Step-by-step builds and selects important n-grams.
+Step-by-step builds and selects important n-grams. \code{construct_ngrams} extracts
+unigrams from the sequences and filters significant features (with p-value below
+\code{conf_level}).
 }
 \details{
-\code{construct_ngrams} extracts unigrams from the sequences and filters
-significant features (with p-value below \code{conf_level}). From filtered unigrams,
-the function builds all possible bigrams using \code{\link{add_1grams}} and so on,
-till the required size of the n-gram is achieved. On each step, obtained n-grams
-are filtered using \code{\link[QuiPT]{test_features}}.
+Gap parameter determines if \code{construct_ngrams} performs feature
+selection on exact n-grams (\code{gap} equal to FALSE) or on all features in the
+Hamming distance 1 from the n-gram (\code{gap} equal to TRUE).
 }
 \examples{
 \donttest{
@@ -44,5 +43,8 @@ list(`1` = c(1, 6, 8, 10, 11, 18),
      '5' = c(3, 4)))
 bigrams <- construct_ngrams(human_cleave[, "tar"], deg_seqs, 1L:5, 2)
 }
+}
+\seealso{
+Feature filtering method: \code{\link[QuiPT]{test_features}}.
 }
 
