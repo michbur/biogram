@@ -17,7 +17,7 @@ Code human-friendly representation of n-grams into a biogram format.
 }
 \examples{
 code_ngrams(c("11_2", "1__12", "222"))
-code_ngrams(c("aaa_b", "d__aa", "abd")
+code_ngrams(c("aaa_b", "d__aa", "abd"))
 }
 \seealso{
 Inverse function: \code{\link{decode_ngrams}}.
