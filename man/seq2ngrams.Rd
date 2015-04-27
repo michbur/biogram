@@ -4,7 +4,7 @@
 \alias{seq2ngrams}
 \title{Extract N-Grams From Sequence}
 \usage{
-seq2ngrams(seq, n, u, d = 0)
+seq2ngrams(seq, n, u, d = 0, pos = FALSE)
 }
 \arguments{
 \item{seq}{\code{integer} vector or matrix describing sequence(s).}
@@ -16,6 +16,8 @@ possible unigrams.}
 
 \item{d}{\code{integer} vector of distances between elements of n-gram (0 means
 consecutive elements). See Details.}
+
+\item{pos}{\code{logical}, if \code{TRUE} position-specific n_grams are counted.}
 }
 \value{
 A \code{character} matrix of n-grams, where every row corresponds to a

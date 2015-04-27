@@ -100,7 +100,7 @@ get_ngrams_ind <- function(len_seq, n, d) {
 #' seqs <- matrix(sample(1L:4, 600, replace = TRUE), ncol = 50)
 #' seq2ngrams(seqs, 3, 1L:4)
 
-seq2ngrams <- function(seq, n, u, d = 0) {
+seq2ngrams <- function(seq, n, u, d = 0, pos = FALSE) {
   
   #if sequence is not a matrix (single sequence), convert it to matrix with 1 row
   if (class(seq) != "matrix")
@@ -124,6 +124,12 @@ seq2ngrams <- function(seq, n, u, d = 0) {
   }, rep("a", max_grams)))
   if (max_grams == 1)
     res <- t(res)
+  
+  #add position information if requested
+  if(pos)
+    res <- do.call(cbind, lapply(1L:ncol(res), function(pos_id)
+      paste0(pos_id, "_", res[, pos_id])))
+  
   res
 }
 
