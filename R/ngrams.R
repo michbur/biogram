@@ -119,7 +119,7 @@ seq2ngrams <- function(seq, n, u, d = 0) {
   #extract n-grams from sequene
   res <- t(vapply(1L:n_seqs, function(i) {
     grams <- seq2ngrams_helper(seq[i, ], ind = ngram_ind, max_grams)
-    paste(grams, paste0(attr(ngram_ind, "d"), collapse = "_"), 
+    paste(grams, paste0(attr(ngram_ind, "d"), collapse = "."), 
           sep = "_")
   }, rep("a", max_grams)))
   if (max_grams == 1)

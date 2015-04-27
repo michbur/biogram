@@ -16,4 +16,12 @@ test_that("Extract ngrams for different distances",{
   expect_equal(seq2ngrams(seqs, 3, 1L:4, d = 1), 
                structure(c("4.4.1_1_1", "2.3.1_1_1"), .Dim = c(2L, 1L)))
   
+  #are all extracted n-gram names correct? 
+  expect_true(all(sapply(seq2ngrams(sample(1L:4, 20, replace = TRUE), 3, 1L:4), 
+                         is_ngram)))
+  
+  #are all extracted n-gram names correct? same as above, but for letters
+  expect_true(all(sapply(seq2ngrams(sample(c("a", "c", "g", "t"), 20, replace = TRUE), 3, c("a", "c", "g", "t")), 
+                         is_ngram)))
+  
 })
