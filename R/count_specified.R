@@ -2,7 +2,7 @@
 #'
 #' Counts specified n-grams in the input sequence(s).
 #'
-#' @param seq \code{integer} vector or matrix describing sequence(s). 
+#' @param seq a vector or matrix describing sequence(s). 
 #' @param ngrams a vector of n-grams. Must have the same \code{n}.
 #' @return a \code{\link[slam]{simple_triplet_matrix}} where columns represent
 #' n-grams and rows sequences.

@@ -14,7 +14,7 @@ count_multigrams(ns, ds = rep(0, length(ns)), seq, u, pos = FALSE,
 is a vector used as distance for the respective n-gram size given by the \code{ns}
 parameter.}
 
-\item{seq}{\code{integer} vector or matrix describing sequence(s).}
+\item{seq}{a vector or matrix describing sequence(s).}
 
 \item{u}{\code{integer}, \code{numeric} or \code{character} vector of all
 possible unigrams.}

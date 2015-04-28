@@ -9,7 +9,7 @@ construct_ngrams(target, seq, u, n_max, conf_level = 0.95, gap = TRUE)
 \arguments{
 \item{target}{\code{integer} vector with target information (e.g. class labels).}
 
-\item{seq}{\code{integer} vector or matrix describing sequence(s).}
+\item{seq}{a vector or matrix describing sequence(s).}
 
 \item{u}{\code{integer}, \code{numeric} or \code{character} vector of all
 possible unigrams.}

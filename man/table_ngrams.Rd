@@ -7,7 +7,7 @@
 table_ngrams(seq, ngrams, target)
 }
 \arguments{
-\item{seq}{\code{integer} vector or matrix describing sequence(s).}
+\item{seq}{matrix describing sequences.}
 
 \item{ngrams}{a vector of n-grams. Must have the same \code{n}.}
 
@@ -21,5 +21,12 @@ columns represents frequency of n-grams for respective value of the
 }
 \description{
 Builds a contingency table of the n-gram counts versus their class labels.
+}
+\examples{
+seqs_pos <- matrix(sample(c("a", "c", "g", "t"), 100, replace = TRUE, prob = c(0.2, 0.4, 0.35, 0.05)), ncol = 5)
+seqs_neg <- matrix(sample(c("a", "c", "g", "t"), 100, replace = TRUE), ncol = 5)
+table_ngrams(seq = rbind(seqs_pos, seqs_neg),
+             ngrams = c("1_c.t_0", "1_g.g_0", "2_t.c_0", "2_g.g_0", "3_c.c_0", "3_g.c_0"),
+             target = c(rep(1, 20), rep(0, 20)))
 }
 

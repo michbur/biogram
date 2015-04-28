@@ -2,7 +2,7 @@
 #'
 #' Counts all n-grams or position-specific n-grams present in the input sequence(s).
 #'
-#' @param seq \code{integer} vector or matrix describing sequence(s). 
+#' @param seq a vector or matrix describing sequence(s). 
 #' @param n \code{integer} size of n-gram.
 #' @param u \code{integer}, \code{numeric} or \code{character} vector of all
 #' possible unigrams.

@@ -7,7 +7,7 @@
 count_specified(seq, ngrams)
 }
 \arguments{
-\item{seq}{\code{integer} vector or matrix describing sequence(s).}
+\item{seq}{a vector or matrix describing sequence(s).}
 
 \item{ngrams}{a vector of n-grams. Must have the same \code{n}.}
 }

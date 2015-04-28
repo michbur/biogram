@@ -7,7 +7,7 @@
 seq2ngrams(seq, n, u, d = 0, pos = FALSE)
 }
 \arguments{
-\item{seq}{\code{integer} vector or matrix describing sequence(s).}
+\item{seq}{a vector or matrix describing sequence(s).}
 
 \item{n}{\code{integer} size of n-gram.}
 
