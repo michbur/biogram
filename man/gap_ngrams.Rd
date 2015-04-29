@@ -10,10 +10,16 @@ gap_ngrams(ngrams)
 \item{ngrams}{a vector of positioned n-grams (as created by \code{\link{count_ngrams}}).}
 }
 \value{
-A \code{character} vector of (n-1)-grams ith introduced n-grams.
+A \code{character} vector of (n-1)-grams with introduced gaps.
 }
 \description{
 Introduces gaps in the n-grams.
+}
+\details{
+A single element of the input n-gram at a time will be replaced
+by a gap. For example, introducing gaps in n-gram \code{2_1.1.2_0.1}
+will results in three n-grams: \code{3_1.2_1} (where the \code{2_1_0} unigram
+was replaced by a gap), \code{2_1.2_2} and \code{2_1.1_0}.
 }
 \examples{
 gap_ngrams(c("2_1.1.2_0.1", "3_1.1.2_0.0", "3_2.2.2_0.0"))
