@@ -110,7 +110,7 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE,
     
     res <- do.call(cbind, lapply(possib_ngrams, function(current_ngram)
       as.simple_triplet_matrix(vapply(1L:n_seqs, function(current_sequence)
-        sum(grams[, current_sequence] == current_ngram), 0))))
+        sum(grams[, current_sequence] == current_ngram, na.rm = TRUE), 0))))
     colnames(res) <- possib_ngrams
   }
   
