@@ -10,6 +10,9 @@
 #' containing aggregated elements.
 #' @note Both sequence and \code{element_groups} should contain lower-case letters.
 #' Upper-case will be automatically converted without a message.
+#' 
+#' Characters not present in the \code{element_groups} will be converted to NA with a 
+#' warning.
 #' @export
 #' @seealso \code{\link{l2n}} to easily convert information stored in biological sequences from 
 #' letters to numbers.
@@ -24,8 +27,11 @@
 
 degenerate <- function(seq, element_groups) {
   tmp_seq <- tolower(seq)
-  if (!all(unique(tmp_seq) %in% unlist(element_groups)))
-    stop("The sequence contains elements not present in any of groups.")
+  if (!all(unique(tmp_seq) %in% unlist(element_groups))) {
+    warning("'seq' contains elements not present in 'element_groups'. Such elements will be replaced by NA.")
+    tmp_seq[!(tmp_seq %in% unlist(element_groups))] <- NA
+  }
+  
   
   for (i in 1L:length(element_groups)) {
     tmp_seq[tmp_seq %in% element_groups[[i]]] <- names(element_groups)[i]
