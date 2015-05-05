@@ -101,6 +101,8 @@ get_ngrams_ind <- function(len_seq, n, d) {
 #' seq2ngrams(seqs, 3, 1L:4)
 
 seq2ngrams <- function(seq, n, u, d = 0, pos = FALSE) {
+  if (!(is.matrix(seq) || is.vector(seq)))
+    stop("'seq' must be vector or matrix.")
   
   #if sequence is not a matrix (single sequence), convert it to matrix with 1 row
   if (class(seq) != "matrix")
@@ -162,7 +164,7 @@ gap_ngrams <- function(ngrams) {
   
   unlist(lapply(1L:length(ngrams), gap_single_ngram, sn_grams, distances, df, decoded))
 }
-      
+
 
 gap_single_ngram <- function(ngram_id, sn_grams, distances, df, decoded) {
   sn_gram <- sn_grams[[ngram_id]]
