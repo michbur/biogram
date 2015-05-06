@@ -52,8 +52,10 @@ degenerate <- function(seq, element_groups) {
 #' @return a \code{numeric} vector containing converted elements.
 #' @export
 #' @keywords manip
-#' @seealso \code{l2n} is based on \code{\link{degenerate}} the opposite of
-#' \code{\link{n2l}}.
+#' @seealso 
+#' \code{l2n} is a wrapper around \code{\link{degenerate}}.
+#' 
+#' Inverse function: \code{\link{n2l}}.
 #' @examples
 #' sample_seq <- c("a", "d", "d", "g", "a", "g", "n", "a", "l")
 #' l2n(sample_seq, "prot")
@@ -82,8 +84,10 @@ l2n <- function(seq, seq_type) {
 #' @return a \code{numeric} vector containing converted elements.
 #' @export
 #' @keywords manip
-#' @seealso \code{n2l} is based on \code{\link{degenerate}} the opposite of
-#' \code{\link{l2n}}.
+#' @seealso 
+#' \code{n2l} is a wrapper around \code{\link{degenerate}}.
+#' 
+#' Inverse function: \code{\link{l2n}}.
 #' @examples
 #' sample_seq <- c(1, 3, 3, 6, 1, 6, 12, 1, 10)
 #' n2l(sample_seq, "prot")

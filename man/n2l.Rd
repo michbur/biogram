@@ -22,8 +22,9 @@ sample_seq <- c(1, 3, 3, 6, 1, 6, 12, 1, 10)
 n2l(sample_seq, "prot")
 }
 \seealso{
-\code{n2l} is based on \code{\link{degenerate}} the opposite of
-\code{\link{l2n}}.
+\code{n2l} is a wrapper around \code{\link{degenerate}}.
+
+Inverse function: \code{\link{l2n}}.
 }
 \keyword{manip}
 
