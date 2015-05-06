@@ -58,7 +58,7 @@ count_specified <- function(seq, ngrams) {
           #positions of the n-gram of interest
           single_ngram_pos <- sapply(all_ngram_pos, function(single_pos) 
             single_pos[dist_df[ngram_id, "position"]])
-          as.numeric(all(as.character(seq[single_seq, single_ngram_pos]) == sn_grams[[ngram_id]]))
+          as.numeric(all(as.character(seq[single_seq, single_ngram_pos]) == sn_grams[[ngram_id]], na.rm = TRUE))
         }, 0), rep(0, n_seqs))
     }))
   } else {
@@ -73,7 +73,7 @@ count_specified <- function(seq, ngrams) {
           #positions of the n-gram of interest
           all_ngram_pos <- do.call(rbind, all_ngram_pos)
           sum(apply(all_ngram_pos, 2, function(single_ngram_pos)
-            as.numeric(all(as.character(seq[single_seq, single_ngram_pos]) == sn_grams[[ngram_id]]))))
+            as.numeric(all(as.character(seq[single_seq, single_ngram_pos]) == sn_grams[[ngram_id]], na.rm = TRUE))))
         }, 0), rep(0, n_seqs))
     }))
   }
