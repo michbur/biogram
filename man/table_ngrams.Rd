@@ -16,7 +16,7 @@ table_ngrams(seq, ngrams, target)
 \value{
 a data frame with the number of columns equal to the length of the
 \code{target} plus 1. The first column contains names of the n-grams. Further
-columns represents frequency of n-grams for respective value of the
+columns represents counts of n-grams for respective value of the
 \code{target}.
 }
 \description{

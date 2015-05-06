@@ -6,7 +6,7 @@
 #' @param target \code{integer} vector with target information (e.g. class labels).
 #' @return a data frame with the number of columns equal to the length of the 
 #' \code{target} plus 1. The first column contains names of the n-grams. Further 
-#' columns represents frequency of n-grams for respective value of the
+#' columns represents counts of n-grams for respective value of the
 #' \code{target}.
 #' @export
 #' @examples
@@ -48,7 +48,7 @@ table_ngrams <- function(seq, ngrams, target) {
   val_tar <- sort(unique(target))
   
   res <- t(vapply(ngrams, function(ngram_name) 
-    vapply(val_tar, function(target_value) sum(all_ngrams[target == target_value, ngram_name]), 0)/n_tar, c(0, 0)))
+    vapply(val_tar, function(target_value) sum(all_ngrams[target == target_value, ngram_name]), 0), c(0, 0)))
   
   res_df <- data.frame(rownames(res), res)
   rownames(res_df) <- NULL
