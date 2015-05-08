@@ -16,7 +16,7 @@
 #' 
 #' @export
 #' @seealso
-#' Feature filtering method: \code{\link[QuiPT]{test_features}}.
+#' Feature filtering method: \code{\link{test_features}}.
 #' @examples
 #' \donttest{
 #' deg_seqs <- degenerate(human_cleave[, 1L:9],

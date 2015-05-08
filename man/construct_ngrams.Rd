@@ -45,6 +45,6 @@ bigrams <- construct_ngrams(human_cleave[, "tar"], deg_seqs, 1L:5, 2)
 }
 }
 \seealso{
-Feature filtering method: \code{\link[QuiPT]{test_features}}.
+Feature filtering method: \code{\link{test_features}}.
 }
 
