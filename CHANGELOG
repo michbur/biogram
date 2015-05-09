@@ -1,10 +1,10 @@
 Changes from Version 1.1 to 1.2.
-* Moved function related to Quick Permutation Test to QuiPT package.
 * Added add_1grams function.
 * Added construct_ngrams function.
 * Added criterion_distribution followed with new methods: plot, ggplot. 
 * Added ngrams2df function.
 * Added count_specified function.
+* Added table_ngrams function.
 * Improved position_ngrams output.
 
 Changes from Version 1.0 to 1.1
