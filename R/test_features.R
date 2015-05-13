@@ -6,12 +6,13 @@
 #' @param target \code{integer} vector with target information (e.g. class labels).
 #' @param features \code{integer} matrix of features with number of rows equal 
 #' to the length of the target vector.
-#' @param criterion criterion used in permutation test. See \code{\link{calc_criterion}} for the
-#' list of possible criterions.
+#' @param criterion criterion used in permutation test. See \code{\link{calc_criterion}} 
+#' for the list of possible criterions.
 #' @param adjust name of p-value adjustment method. See \code{\link[stats]{p.adjust}}
 #' for the list of possible values. If \code{NULL}, no adjustment is done.
 #' @param threshold \code{integer}. Features that occur less than \code{threshold}
-#' and more often than \code{nrow(features)-threshold} are discarded from the permutation test.
+#' and more often than \code{nrow(features)-threshold} are discarded from the permutation 
+#' test.
 #' @param quick \code{logical}, if \code{TRUE} Quick Permutation Test (QuiPT) is used.
 #' @param times number of times procedure should be repeated. Ignored if \code{quick} is 
 #' \code{TRUE}.
@@ -23,8 +24,8 @@
 #' @note Both \code{target} and \code{features} must be binary, i.e. contain only 0 
 #' and 1 values.
 #' 
-#' Features occuring too often and too rarely are considered not informative and may be removed 
-#' using the threshold parameter.
+#' Features occuring too often and too rarely are considered not informative and may be 
+#' removed using the threshold parameter.
 #' @export
 #' @keywords nonparametric
 #' @references 
@@ -48,7 +49,8 @@
 #' tar_feat2 <- create_feature_target(9, 391, 1, 599)
 #' #insignificant feature
 #' tar_feat3 <- create_feature_target(198, 202, 300, 300)
-#' test_res <- test_features(tar_feat1[, 1], cbind(tar_feat1[, 2], tar_feat2[, 2], tar_feat3[, 2]))
+#' test_res <- test_features(tar_feat1[, 1], cbind(tar_feat1[, 2], tar_feat2[, 2], 
+#'                           tar_feat3[, 2]))
 #' summary(test_res)
 #' cut(test_res)
 test_features <- function(target, features, criterion = "ig", adjust = "BH", 
@@ -81,7 +83,8 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
   }
   
   #eliminate non-infomative features
-  features <- features[, feature_size > threshold & feature_size < (nrow(features) - threshold)]
+  features <- features[, feature_size > threshold & feature_size < 
+                         (nrow(features) - threshold)]
   
   p_vals <- if(quick) {
     
@@ -89,7 +92,8 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
     feature_size <- unique(feature_size)
     
     dists <- lapply(feature_size, function(i){
-      t <- create_feature_target(i, abs(sum(target) - i), 0, abs(length(target) - sum(target))) 
+      t <- create_feature_target(i, abs(sum(target) - i), 0, 
+                                 abs(length(target) - sum(target))) 
       distr_crit(t[, 1], t[, 2], criterion = criterion)
     })
     

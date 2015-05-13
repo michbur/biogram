@@ -13,14 +13,15 @@ test_features(target, features, criterion = "ig", adjust = "BH",
 \item{features}{\code{integer} matrix of features with number of rows equal
 to the length of the target vector.}
 
-\item{criterion}{criterion used in permutation test. See \code{\link{calc_criterion}} for the
-list of possible criterions.}
+\item{criterion}{criterion used in permutation test. See \code{\link{calc_criterion}}
+for the list of possible criterions.}
 
 \item{adjust}{name of p-value adjustment method. See \code{\link[stats]{p.adjust}}
 for the list of possible values. If \code{NULL}, no adjustment is done.}
 
 \item{threshold}{\code{integer}. Features that occur less than \code{threshold}
-and more often than \code{nrow(features)-threshold} are discarded from the permutation test.}
+and more often than \code{nrow(features)-threshold} are discarded from the permutation
+test.}
 
 \item{quick}{\code{logical}, if \code{TRUE} Quick Permutation Test (QuiPT) is used.}
 
@@ -43,8 +44,8 @@ specifying the \code{adjust} parameter.
 Both \code{target} and \code{features} must be binary, i.e. contain only 0
 and 1 values.
 
-Features occuring too often and too rarely are considered not informative and may be removed
-using the threshold parameter.
+Features occuring too often and too rarely are considered not informative and may be
+removed using the threshold parameter.
 }
 \examples{
 #significant feature
@@ -53,7 +54,8 @@ tar_feat1 <- create_feature_target(10, 390, 0, 600)
 tar_feat2 <- create_feature_target(9, 391, 1, 599)
 #insignificant feature
 tar_feat3 <- create_feature_target(198, 202, 300, 300)
-test_res <- test_features(tar_feat1[, 1], cbind(tar_feat1[, 2], tar_feat2[, 2], tar_feat3[, 2]))
+test_res <- test_features(tar_feat1[, 1], cbind(tar_feat1[, 2], tar_feat2[, 2],
+                          tar_feat3[, 2]))
 summary(test_res)
 cut(test_res)
 }

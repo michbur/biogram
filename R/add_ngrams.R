@@ -19,7 +19,8 @@
 add_1grams <- function(ngrams) {
   validated_ngram <- sapply(ngrams, is_ngram)
   if(!all(validated_ngram))
-    stop("Improper n-grams: ", paste(names(which(!validated_ngram)), collapse = ", "))
+    stop("Improper n-grams: ", paste(names(which(!validated_ngram)), 
+                                     collapse = ", "))
   
   splitted_ngrams <- strsplit(ngrams, "_")
   if(unique(sapply(splitted_ngrams, length)) != 3)
@@ -29,7 +30,8 @@ add_1grams <- function(ngrams) {
   if(length(unique(n)) != 1)
     stop("Unequal n-gram size. Use n-grams with the same size (n).")
   
-  positioned_ngrams <- position_ngrams(ngrams, df = TRUE, unigrams_output = FALSE)
+  positioned_ngrams <- position_ngrams(ngrams, df = TRUE, 
+                                       unigrams_output = FALSE)
   
   #calculate end of the n-gram
   ngrams_ends <- if(n[1] == 1) {
@@ -45,7 +47,7 @@ add_1grams <- function(ngrams) {
         ngram_end
       })
   }
-
+  
   position_data <- cbind(positioned_ngrams, ngrams_ends)
   #ngram, start position of n-gram, end position of n-gram
   colnames(position_data) <- c("ngram", "pstart", "pend")
