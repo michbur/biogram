@@ -127,18 +127,6 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE,
   res
 }
 
-#helper function calculating maximum number of n-grams possible. Throws an
-#error if there is no possibility of extracting n-gram from a sequence 
-#(when result is negative)
-
-calc_max_grams <- function(len_seq, n, ngram_ind){
-  #use attr(ngram_ind, "d") instead of d because of distance recycling
-  max_grams <- len_seq - n - sum(attr(ngram_ind, "d")) + 1
-  if (max_grams < 1)
-    stop("n-gram too long.")
-  max_grams
-}
-
 count_ngrams_helper <- function(seq, feature_list, n, ind, pos) {
   #feature list(list of possible n-grams) is outside, because count_ngrams is meant to
   #be inside the loop
