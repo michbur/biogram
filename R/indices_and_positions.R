@@ -1,4 +1,4 @@
-#' Get Indices of N-Grams
+#' Get indices of n-grams
 #'
 #' Computes list of n-gram elements positions in sequence.
 #'
@@ -49,7 +49,7 @@ get_ngrams_ind <- function(len_seq, n, d) {
 }
 
 
-#' Count Total Number of N-grams
+#' Count total number of n-grams
 #'
 #' Computes total number of n-grams that can be extracted from sequences taking 
 #' into account their length (even or uneven).

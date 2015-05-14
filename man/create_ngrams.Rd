@@ -2,7 +2,7 @@
 % Please edit documentation in R/ngrams.R
 \name{create_ngrams}
 \alias{create_ngrams}
-\title{Get All Possible N-Grams}
+\title{Get all possible n-Grams}
 \usage{
 create_ngrams(n, u, possible_grams = NULL)
 }

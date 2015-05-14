@@ -1,4 +1,4 @@
-#' Get All Possible N-Grams
+#' Get all possible n-Grams
 #'
 #' Creates vector of all posible n_grams (for given \code{n}).
 #'
@@ -33,7 +33,7 @@ create_ngrams <- function(n, u, possible_grams = NULL) {
 }
 
 
-#' Extract N-Grams From Sequence
+#' Extract n-grams from sequence
 #'
 #' Extracts vector of n-grams present in sequence(s).
 #'
@@ -84,7 +84,7 @@ seq2ngrams <- function(seq, n, u, d = 0, pos = FALSE) {
 }
 
 
-#' Gap N-Grams
+#' Gap n-grams
 #'
 #' Introduces gaps in the n-grams.
 #'

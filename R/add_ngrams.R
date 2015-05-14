@@ -111,26 +111,3 @@ add_unigrams_left <- function(position_data, positioned_ugrams, n)
   }))
 
 
-
-#build bigrams from unigram - useless now
-build_bigrams <- function(ngrams) {
-  positioned_ngrams <- position_ngrams(ngrams, df = TRUE)
-  positions <- unique(positioned_ngrams[["position"]])
-  #remove last position, because there is nothing to paste it with
-  positions <- positions[-which.max(positions)]
-  
-  res <- unlist(lapply(positions, function(single_position) {
-    chosen_ugrams <- positioned_ngrams[positioned_ngrams[["position"]] == single_position, 
-                                       "ngram"]
-    other_ugrams <- positioned_ngrams[positioned_ngrams[["position"]] > single_position, ]
-    #position in other_ugrams is now distance between single_position and their position
-    other_ugrams[["position"]] <- other_ugrams[["position"]] - single_position - 1
-    lapply(chosen_ugrams, function(single_ugram)
-      apply(other_ugrams, 1, function(other_ugram)
-        paste0(single_position, "_", #position 
-               single_ugram, ".", other_ugram[1], #ngram 
-               "_", other_ugram[2]))) #distance
-  }))
-  names(res) <- NULL
-  res
-}

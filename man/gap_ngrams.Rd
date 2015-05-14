@@ -2,7 +2,7 @@
 % Please edit documentation in R/ngrams.R
 \name{gap_ngrams}
 \alias{gap_ngrams}
-\title{Gap N-Grams}
+\title{Gap n-grams}
 \usage{
 gap_ngrams(ngrams)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/indices_and_positions.R
 \name{count_total}
 \alias{count_total}
-\title{Count Total Number of N-grams}
+\title{Count total number of n-grams}
 \usage{
 count_total(seq, n, d)
 }

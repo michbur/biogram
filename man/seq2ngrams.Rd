@@ -2,7 +2,7 @@
 % Please edit documentation in R/ngrams.R
 \name{seq2ngrams}
 \alias{seq2ngrams}
-\title{Extract N-Grams From Sequence}
+\title{Extract n-grams from sequence}
 \usage{
 seq2ngrams(seq, n, u, d = 0, pos = FALSE)
 }

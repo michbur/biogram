@@ -2,7 +2,7 @@
 % Please edit documentation in R/indices_and_positions.R
 \name{get_ngrams_ind}
 \alias{get_ngrams_ind}
-\title{Get Indices of N-Grams}
+\title{Get indices of n-grams}
 \usage{
 get_ngrams_ind(len_seq, n, d)
 }
