@@ -82,6 +82,9 @@ count_specified <- function(seq, ngrams) {
   res <- res[, order(unlist(lapply(unique(df[, "distance"]), function(unique_dist) 
     which(df[, "distance"] == unique_dist, ))))]
   
+  if(class(res) == "numeric") {
+    res <- matrix(res, ncol = 1)
+  }
   #name columns
   colnames(res) <- ngrams
   
