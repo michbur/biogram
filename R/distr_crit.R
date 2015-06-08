@@ -38,7 +38,7 @@ distr_crit <- function(target, feature, criterion = "ig") {
   
   max_iter <- min(non_zero_target, non_zero_feat)
   cross_tab <- fast_crosstable(as.bit(target), length(target), sum(target), feature)
-  if(any(cross_tab[2L] == 0))
+  if(cross_tab[2L] == 0)
     max_iter <- sort(cross_tab)[3]
   
   #values of criterion for different contingency tables
