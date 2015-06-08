@@ -36,9 +36,13 @@ distr_crit <- function(target, feature, criterion = "ig") {
   p <- non_zero_target/n
   q <- non_zero_feat/n
   
+  max_iter <- min(non_zero_target, non_zero_feat)
+  cross_tab <- fast_crosstable(as.bit(target), length(target), sum(target), feature)
+  if(any(cross_tab[2L] == 0))
+    max_iter <- sort(cross_tab)[3]
   
   #values of criterion for different contingency tables
-  diff_conts <- sapply(0L:min(non_zero_target, non_zero_feat), function(i) {
+  diff_conts <- sapply(0L:max_iter, function(i) {
     #to do - check if other criterions also follow this distribution
     
     #if there are more 1 than 0
@@ -51,6 +55,12 @@ distr_crit <- function(target, feature, criterion = "ig") {
       c(i, n - non_zero_feat - i, n - non_zero_target - i, 
         - n + non_zero_target + non_zero_feat + i)
     }
+    
+    if(sum(k) != n) {
+      browser() 
+    } else {
+        print(i)
+      }
     
     prob_log <- dmultinom(x = k,
                           size = n,
