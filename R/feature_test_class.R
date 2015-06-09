@@ -108,6 +108,13 @@ cut.feature_test <- function(x, split = "significances",
                          positives = cut_function(attr(x, "occ")["pos", ]),
                          negatives = cut_function(attr(x, "occ")["neg", ]))
   
+  #situation when values are a tiny little bit bigger than upper border; cut assigns them as NA
+  if(any(is.na(split_factor))) {
+    #as.integer(x[is.na(split_factor)]) == breaks[length(breaks)]
+    split_factor[is.na(split_factor)] <- levels(split_factor)[length(levels(split_factor))]
+  }
+  
+  
   dat <- data.frame(ngram = names(x), 
                     split_factor = split_factor)
   
