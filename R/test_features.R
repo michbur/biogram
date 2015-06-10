@@ -112,6 +112,9 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
                replicate(times, crit_function(sample(target), features)))
   }
   
+  #p-values sometimes are a tiny little bit bigger than 1
+  p_vals[p_vals > 1] <- 1
+  
   if(!is.null(adjust))
     p_vals <- p.adjust(p_vals, method = adjust)
   
