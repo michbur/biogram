@@ -17,7 +17,7 @@ reg_exp_df <- function(x){
 #' @examples
 #' x1 <- list(c(1,2),3)
 #' x2 <- list(1,c(2,4)) 
-#' count_df(list(x1, x2))
+#' biogram:::count_df(list(x1, x2))
 count_df <- function(reg_exp){
   sum(sapply(reg_exp, reg_exp_df))
 }
@@ -32,7 +32,7 @@ count_df <- function(reg_exp){
 #' @examples 
 #' x1 <- list(c(1,2),3)
 #' x2 <- list(1,c(2,4)) 
-#' join_reg_exp(x1, x2)
+#' biogram:::join_reg_exp(x1, x2)
 join_reg_exp <- function(exp1, exp2){
   mapply(FUN = function(x,y) unique(c(x,y)), exp1, exp2, SIMPLIFY=FALSE)
 }

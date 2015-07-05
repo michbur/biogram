@@ -18,7 +18,7 @@ Compute degrees of freedom for a list of regular expressions
 \examples{
 x1 <- list(c(1,2),3)
 x2 <- list(1,c(2,4))
-count_df(list(x1, x2))
+biogram:::count_df(list(x1, x2))
 }
 \keyword{internal}
 

@@ -95,8 +95,7 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE,
   #extract n-grams from sequence
   grams <- vapply(1L:n_seqs, function(i)
     seq2ngrams_helper(seq[i, ], ind = ngram_ind, max_grams), rep("a", max_grams))
-
-  #if grams aren't a matrix, but a vector, t() is requires  
+  
   if(class(grams) == "character")
     grams <- t(grams)
   
@@ -104,9 +103,16 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE,
     #get positioned possible n-grams
     pos_possib_ngrams <- create_ngrams(n, u, max_grams)
     
-    res <- do.call(cbind, lapply(possib_ngrams, function(current_ngram)
-      as.simple_triplet_matrix(t(vapply(1L:n_seqs, function(current_sequence)
-        grams[, current_sequence] == current_ngram, rep(0, max_grams))))))
+    res <- if(length(ngram_ind[[1]]) == 1) {
+      do.call(abind_simple_sparse_array, c(lapply(possib_ngrams, function(current_ngram)
+        as.simple_triplet_matrix(t(vapply(1L:n_seqs, function(current_sequence)
+          grams[, current_sequence] == current_ngram, rep(0, max_grams))))), list(MARGIN = 1L)))
+    } else {
+      do.call(cbind, c(lapply(possib_ngrams, function(current_ngram)
+        as.simple_triplet_matrix(t(vapply(1L:n_seqs, function(current_sequence)
+          grams[, current_sequence] == current_ngram, rep(0, max_grams)))))))
+    }
+    
     
     colnames(res) <- pos_possib_ngrams
     

@@ -20,7 +20,7 @@ Join regular expressions
 \examples{
 x1 <- list(c(1,2),3)
 x2 <- list(1,c(2,4))
-join_reg_exp(x1, x2)
+biogram:::join_reg_exp(x1, x2)
 }
 \keyword{internal}
 
