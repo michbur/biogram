@@ -68,7 +68,7 @@ cluster_reg_exp <- function(ngrams){
       }
     }
     ind <- which(m == min(m, na.rm=T), arr.ind = TRUE)[1,]
-    regs[[i-1]] <- append(regs[[i]][-ind], list(joinRegExp(regs[[i]][[ind[1]]], regs[[i]][[ind[2]]])))
+    regs[[i-1]] <- append(regs[[i]][-ind], list(join_reg_exp(regs[[i]][[ind[1]]], regs[[i]][[ind[2]]])))
     indices[[i-1]] <- append(indices[[i]][-ind], list(unlist(indices[[i]][c(ind[1], ind[2])])))
     names(regs[[i-1]]) <- paste0("cluster_", 1:(i-1))
     names(indices[[i-1]]) <- paste0("cluster_", 1:(i-1))
