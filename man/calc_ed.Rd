@@ -12,12 +12,7 @@ calc_ed(a, b)
 \item{b}{list of groups to which \code{a} should be compared.}
 }
 \value{
-a list of three:
-#' \itemize{
-\item{ed: encoding distance.}
-\item{a: \code{a} parameter after comparing to \code{b}.}
-\item{b: \code{b} parameter.}
-}
+an encoding distance.
 }
 \description{
 Compares two encodings and calculates encoding distance between them.

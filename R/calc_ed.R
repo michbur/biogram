@@ -3,12 +3,7 @@
 #' Compares two encodings and calculates encoding distance between them.
 #' @param a list of groups to which elements of sequence should be aggregated.
 #' @param b list of groups to which \code{a} should be compared.
-#' @return a list of three:
-#' #' \itemize{
-#' \item{ed: encoding distance.}
-#' \item{a: \code{a} parameter after comparing to \code{b}.}
-#' \item{b: \code{b} parameter.}
-#' }
+#' @return an encoding distance.
 #' @export
 #' @examples
 #' aa1 = list(`1` = c("g", "a", "p", "v", "m", "l", "i"), 
@@ -38,16 +33,14 @@ calc_ed <- function(a, b) {
   
   names(ta) <- NULL
   names(tb) <- NULL
-  uneven <- length(ta) - length(tb)
-  
+
   #encoding distance - distance between encodings
   ed <- 0
   
   #rows b
   #columns a
-  comp_tab <- sapply(ta, function(single_subgroup_a)
-    sapply(tb, function(single_subgroup_b)
-      sum(single_subgroup_a %in% single_subgroup_b)/length(single_subgroup_a)))
+  comp_tab <- create_comp_tab(ta, tb)
+
   #loop for moving aa between groups
   #TRUE if groups are not similiar
   #diff <- comp_tab != 0 & comp_tab != 1
@@ -77,13 +70,10 @@ calc_ed <- function(a, b) {
     
     #remove empty sets
     if(any(lengths(ta) == 0)) {
-      uneven <- uneven - 1
       ta <- ta[!lengths(ta) == 0]
     }
     
-    comp_tab <- sapply(ta, function(single_subgroup_a)
-      sapply(tb, function(single_subgroup_b)
-        sum(single_subgroup_a %in% single_subgroup_b)/length(single_subgroup_a)))
+    comp_tab <- create_comp_tab(ta, tb)
   }
   
   if(any(rowSums(comp_tab) != 1)) {
@@ -95,9 +85,19 @@ calc_ed <- function(a, b) {
     ta <- c(ta[!as.logical(comp_tab[rowSums(comp_tab) != 1, ])],
             list(conc_group))
   }
-  
-  list(ed = ed,
-       a = sapply(ta, sort),
-       b = sapply(tb, sort))
+# very verbose output, good for debugging 
+#   list(ed = ed,
+#        a = sapply(ta, sort),
+#        b = sapply(tb, sort))
+  ed
 }
 
+create_comp_tab <- function(ta, tb) {
+  comp_tab <- sapply(ta, function(single_subgroup_a)
+    sapply(tb, function(single_subgroup_b)
+      sum(single_subgroup_a %in% single_subgroup_b)/length(single_subgroup_a)))
+  if(class(comp_tab) != "matrix") {
+    comp_tab <- matrix(comp_tab, nrow = length(tb), ncol = length(ta))
+  }
+  comp_tab
+}
