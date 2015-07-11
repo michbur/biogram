@@ -64,23 +64,22 @@ calc_ed <- function(a, b) {
     arrb <- which(comp_tab == max(comp_tab), arr.ind = TRUE)
     #case when both groups are 0.5 - use only the first row
     if(nrow(arrb) > 1) {
-      browser()
       arrb <- arrb[1, , drop = FALSE]
-      idb <- arrb[, "col"]
-      ida <- order(comp_tab[, arrb[, "col"]], decreasing = TRUE)[1]
-    } else{
-      #the biggest in column idb, second largest is ida
-      idb <- arrb[, "col"]
-      ida <- order(comp_tab[, arrb[, "col"]], decreasing = TRUE)[2]
     }
+    
+    idb <- arrb[, "row"]
+    ida_order <- order(comp_tab[, arrb[, "col"]][comp_tab[, arrb[, "col"]] != 0], 
+                       decreasing = TRUE)
+    ida_to <- ida_order[1]
+    ida_from <- ida_order[length(ida_order)]
 
     #id of the single amino acid
-    el_id <- which(ta[[idb]] %in% tb[[ida]])
+    el_id <- which(ta[[ida_from]] %in% tb[[idb]])
     #add amino acid to second group
-    ta[[ida]] <- c(ta[[ida]], ta[[idb]][el_id])
+    ta[[ida_to]] <- c(ta[[ida_to]], ta[[ida_from]][el_id])
     #remove amino acid from the first group
-    ta[[idb]] <-  ta[[idb]][-el_id]
-    ed <- ed + 1
+    ta[[ida_from]] <-  ta[[ida_from]][-el_id]
+    ed <- ed + length(el_id)
     print(ed)
     #remove empty sets
     if(any(lengths(ta) == 0)) {
