@@ -31,8 +31,8 @@ calc_ed <- function(a, b) {
   
   if(length(unlist(a)) != length(unlist(b)))
     stop("'a' and 'b' must contain the same number of elements.")
-    
-   if(!all(sort(unlist(a)) == sort(unlist(b))))
+  
+  if(!all(sort(unlist(a)) == sort(unlist(b))))
     stop("'a' and 'b' must contain the same elements.")
   
   if(length(a) < length(b)) {
@@ -43,14 +43,14 @@ calc_ed <- function(a, b) {
   
   names(ta) <- NULL
   names(tb) <- NULL
-
+  
   #encoding distance - distance between encodings
   ed <- 0
   
   #rows b
   #columns a
   comp_tab <- create_comp_tab(ta, tb)
-
+  
   #loop for moving aa between groups
   #TRUE if groups are not similiar
   #diff <- comp_tab != 0 & comp_tab != 1
@@ -65,22 +65,22 @@ calc_ed <- function(a, b) {
     #case when both groups are 0.5 - use only the first row
     if(nrow(arrb) > 1) {
       arrb <- arrb[1, , drop = FALSE]
+      idb <- arrb[, "col"]
+      ida <- order(comp_tab[, arrb[, "col"]], decreasing = TRUE)[1]
+    } else{
+      #the biggest in column idb, second largest is ida
+      idb <- arrb[, "col"]
+      ida <- order(comp_tab[, arrb[, "col"]], decreasing = TRUE)[2]
     }
     
-    idb <- arrb[, "row"]
-    ida_order <- order(comp_tab[, arrb[, "col"]][comp_tab[, arrb[, "col"]] != 0], 
-                       decreasing = TRUE)
-    ida_to <- ida_order[1]
-    ida_from <- ida_order[length(ida_order)]
-
     #id of the single amino acid
-    el_id <- which(ta[[ida_from]] %in% tb[[idb]])
+    el_id <- which(ta[[idb]] %in% tb[[ida]])
     #add amino acid to second group
-    ta[[ida_to]] <- c(ta[[ida_to]], ta[[ida_from]][el_id])
+    ta[[ida]] <- c(ta[[ida]], ta[[idb]][el_id])
     #remove amino acid from the first group
-    ta[[ida_from]] <-  ta[[ida_from]][-el_id]
-    ed <- ed + length(el_id)
-    print(ed)
+    ta[[idb]] <-  ta[[idb]][-el_id]
+    ed <- ed + 1
+
     #remove empty sets
     if(any(lengths(ta) == 0)) {
       ta <- ta[!lengths(ta) == 0]
@@ -88,7 +88,7 @@ calc_ed <- function(a, b) {
     
     comp_tab <- create_comp_tab(ta, tb)
   }
-
+  
   if(any(rowSums(comp_tab) != 1)) {
     #concatenate smaller groups into one big
     #check which row in comp_tab has two 1s 
@@ -100,7 +100,7 @@ calc_ed <- function(a, b) {
     ta <- c(ta[!as.logical(comp_tab[rowSums(comp_tab) != 1, ])],
             list(conc_group))
   }
-# very verbose output, good for debugging 
+  # very verbose output, good for debugging 
   list(ed = ed,
        a = sapply(ta, sort),
        b = sapply(tb, sort))
