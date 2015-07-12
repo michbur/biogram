@@ -43,6 +43,15 @@ calc_ed <- function(a, b) {
   
   names(ta) <- NULL
   names(tb) <- NULL
+
+  #exclude identical subgroups in a and b
+  ident_gr <- suppressWarnings(which(sapply(ta, function(single_subgroup_a)
+    sapply(tb, function(single_subgroup_b)
+      all(sort(single_subgroup_a) == single_subgroup_b))), arr.ind = TRUE))
+  if(dim(ident_gr)[1] != 0) {
+    ta <- ta[-ident_gr[, "col"]]
+    tb <- tb[-ident_gr[, "row"]]
+  }
   
   #encoding distance - distance between encodings
   ed <- 0
@@ -116,3 +125,5 @@ create_comp_tab <- function(ta, tb) {
   }
   comp_tab
 }
+
+
