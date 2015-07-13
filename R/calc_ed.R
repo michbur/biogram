@@ -44,7 +44,7 @@ calc_ed <- function(a, b) {
   names(ta) <- NULL
   names(tb) <- NULL
   
-  #exclude identical subgroups in a and b
+  #exclude identical subgroups in a and b, because hey do not affect ed.
   ident_gr <- which(sapply(ta, function(single_subgroup_a)
     sapply(tb, function(single_subgroup_b)
       identical(sort(single_subgroup_a), sort(single_subgroup_b)))), arr.ind = TRUE)
@@ -71,10 +71,11 @@ calc_ed <- function(a, b) {
     #cannot use which.max, it doesn't use arr.ind
     #choose groups to switch aa
     arrb <- which(comp_tab == max(comp_tab), arr.ind = TRUE)
-    #case when both groups are 0.5 - use only the first row
+    #case when both groups have equal dissimilarity - use only the first row
     if(nrow(arrb) > 1) {
       arrb <- arrb[1, , drop = FALSE]
       idb <- arrb[, "col"]
+      #establish index of groups to not move amino acids to the same group 
       ida_order <- order(comp_tab[, arrb[, "col"]], decreasing = TRUE)
       ida <- ida_order[which.min(idb == ida_order)]
     } else{
