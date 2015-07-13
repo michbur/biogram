@@ -63,7 +63,6 @@ calc_ed <- function(a, b) {
   #loop for moving aa between groups
   #TRUE if groups are not similiar
   #diff <- comp_tab != 0 & comp_tab != 1
-  
   while(any(!(comp_tab %in% c(0, 1)))) {
     #change 1 to -1 to use which
     comp_tab[comp_tab == 1] <- -1
@@ -75,7 +74,8 @@ calc_ed <- function(a, b) {
     if(nrow(arrb) > 1) {
       arrb <- arrb[1, , drop = FALSE]
       idb <- arrb[, "col"]
-      ida <- order(comp_tab[, arrb[, "col"]], decreasing = TRUE)[1]
+      ida_order <- order(comp_tab[, arrb[, "col"]], decreasing = TRUE)
+      ida <- ida_order[which.min(idb == ida_order)]
     } else{
       #the biggest in column idb, second largest is ida
       idb <- arrb[, "col"]
@@ -88,7 +88,7 @@ calc_ed <- function(a, b) {
     ta[[ida]] <- c(ta[[ida]], ta[[idb]][el_id])
     #remove amino acid from the first group
     ta[[idb]] <-  ta[[idb]][-el_id]
-    ed <- ed + 1
+    ed <- ed + length(el_id)
 
     #remove empty sets
     if(any(lengths(ta) == 0)) {
