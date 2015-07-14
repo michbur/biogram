@@ -81,22 +81,31 @@ calc_ed <- function(a, b) {
     #case when both groups have equal dissimilarity - use only the first row
     if(nrow(arrb) > 1) {
       arrb <- arrb[1, , drop = FALSE]
-      idb <- arrb[, "col"]
-      #establish index of groups to not move amino acids to the same group 
-      ida_order <- order(comp_tab[, arrb[, "col"]], decreasing = TRUE)
-      ida <- ida_order[which.min(idb == ida_order)]
-    } else{
-      #the biggest in column idb, second largest is ida
-      idb <- arrb[, "col"]
-      ida <- order(comp_tab[, arrb[, "col"]], decreasing = TRUE)[2]
+    }
+    
+    #establish index of groups
+    #firstly move amino acids between groups in row, secondly purify columns
+    if(sum(colSums(matrix(!(comp_tab %in% c(0, -1)), nrow = length(tb))) != 0) != 1) {
+      #idb is an index of group in B that shares the most elements with a group in A
+      #(aside from groups that share all elements)
+      idb <- arrb[, "row"]
+      ida_order <- order(comp_tab[idb, ], decreasing = TRUE)
+      ida_to <- ida_order[1]
+      ida_from <- ida_order[2]
+    } else {
+      #in this case, we are purifying groups removing from them elements belonging to other groups
+      idb <- which.min(comp_tab[, arrb[, "col"]])
+      ida_order <- order(comp_tab[idb, ], decreasing = TRUE)
+      ida_to <- ida_order[2]
+      ida_from <- ida_order[1]
     }
     
     #id of the single amino acid
-    el_id <- which(ta[[idb]] %in% tb[[ida]])
+    el_id <- which(ta[[ida_from]] %in% tb[[idb]])
     #add amino acid to second group
-    ta[[ida]] <- c(ta[[ida]], ta[[idb]][el_id])
+    ta[[ida_to]] <- c(ta[[ida_to]], ta[[ida_from]][el_id])
     #remove amino acid from the first group
-    ta[[idb]] <-  ta[[idb]][-el_id]
+    ta[[ida_from]] <-  ta[[ida_from]][-el_id]
     ed <- ed + length(el_id)
 
     #remove empty sets
