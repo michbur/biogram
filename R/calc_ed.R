@@ -2,7 +2,8 @@
 #' 
 #' Compares two encodings and calculates encoding distance between them.
 #' @param a list of groups to which elements of sequence should be aggregated.
-#' @param b list of groups to which \code{a} should be compared.
+#' @param b list of groups to which \code{a} should be compared. Must be shorter than \code{a} 
+#' or have equal length.
 #' @return an encoding distance.
 #' @export
 #' @examples
@@ -20,7 +21,7 @@
 calc_ed <- function(a, b) {
   #compare temporary a to temporary b
   if(length(a) < length(b)) {
-    warning("a cannot be shorter than b. Reverting a and b.") 
+    warning("'b' must be longer than 'a'. Reverting a and b.") 
     tb <- a
     ta <- b
   } else {

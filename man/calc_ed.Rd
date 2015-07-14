@@ -9,7 +9,8 @@ calc_ed(a, b)
 \arguments{
 \item{a}{list of groups to which elements of sequence should be aggregated.}
 
-\item{b}{list of groups to which \code{a} should be compared.}
+\item{b}{list of groups to which \code{a} should be compared. Must be shorter than \code{a}
+or have equal length.}
 }
 \value{
 an encoding distance.
