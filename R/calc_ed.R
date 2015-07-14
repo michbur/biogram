@@ -35,15 +35,10 @@ calc_ed <- function(a, b) {
     tb <- tb[lengths(tb) != 0]
   
   if(length(unlist(a)) != length(unlist(b)))
-    stop("'a' and 'b' must contain the same number of elements.")
+    stop("Encodings ('a' and 'b') must contain the same number of elements.")
   
   if(!all(sort(unlist(a)) == sort(unlist(b))))
-    stop("'a' and 'b' must contain the same elements.")
-  
-  
-  
-  names(ta) <- NULL
-  names(tb) <- NULL
+    stop("Encodings ('a' and 'b') must contain the same elements.")
   
   #encoding distance - distance between encodings
   ed <- 0
