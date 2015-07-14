@@ -18,10 +18,15 @@
 #'     
 
 calc_ed <- function(a, b) {
-  #I'm comparing a to b
-  #temporary b and temporary a
-  ta <- a
-  tb <- b
+  #compare temporary a to temporary b
+  if(length(a) < length(b)) {
+    warning("a cannot be shorter than b. Reverting a and b.") 
+    tb <- a
+    ta <- b
+  } else {
+    ta <- a
+    tb <- b
+  }
   
   if(any(lengths(ta) == 0))
     ta <- ta[lengths(ta) != 0]
@@ -35,14 +40,13 @@ calc_ed <- function(a, b) {
   if(!all(sort(unlist(a)) == sort(unlist(b))))
     stop("'a' and 'b' must contain the same elements.")
   
-  if(length(a) < length(b)) {
-    warning("a cannot be shorter than b. Reverting a and b.") 
-    tb <- a
-    ta <- b
-  }
+  
   
   names(ta) <- NULL
   names(tb) <- NULL
+  
+  #encoding distance - distance between encodings
+  ed <- 0
   
   #exclude identical subgroups in a and b, because hey do not affect ed.
   ident_gr <- which(sapply(ta, function(single_subgroup_a)
@@ -54,8 +58,11 @@ calc_ed <- function(a, b) {
     tb <- tb[-ident_gr[, "row"]]
   }
   
-  #encoding distance - distance between encodings
-  ed <- 0
+  #if encodings are identical, ta and tb are 0
+  if(length(ta) == 0 && length(tb) == 0)
+    return(ed)
+  
+  
   
   #rows b
   #columns a
@@ -112,10 +119,10 @@ calc_ed <- function(a, b) {
             list(conc_group))
   }
   # very verbose output, good for debugging 
-  list(ed = ed,
-       a = sapply(ta, sort),
-       b = sapply(tb, sort))
-  #ed
+#   list(ed = ed,
+#        a = sapply(ta, sort),
+#        b = sapply(tb, sort))
+  ed
 }
 
 create_comp_tab <- function(ta, tb) {
