@@ -74,30 +74,40 @@ calc_ed <- function(a, b) {
     #cannot use which.max, it doesn't use arr.ind
     #choose groups to switch aa
     arrb <- which(comp_tab == max(comp_tab), arr.ind = TRUE)
-    #case when both groups have equal dissimilarity - use only the first row
+    #case when both groups have equal dissimilarity - use the purest row
     if(nrow(arrb) > 1) {
-      arrb <- arrb[1, , drop = FALSE]
+      arrb <- arrb[which.max(rowSums(comp_tab == 0)), , drop = FALSE]
+    }
+    
+    idb <- arrb[, "row"]
+    ida_from <- arrb[, "col"]
+    ida_to <- which.max(comp_tab[order(comp_tab[, ida_from], decreasing = TRUE)[2], ])
+    
+    if(ida_from == ida_to) {
+      ida_to <- which.min(comp_tab[order(comp_tab[, ida_from], decreasing = TRUE)[2], ])
     }
     
     #establish index of groups
-    #firstly move amino acids between groups in row, secondly purify columns
-    if(sum(colSums(matrix(!(comp_tab %in% c(0, -1)), nrow = length(tb))) != 0) != 1) {
-      #idb is an index of group in B that shares the most elements with a group in A
-      #(aside from groups that share all elements)
-      idb <- arrb[, "row"]
-      ida_order <- order(comp_tab[idb, ], decreasing = TRUE)
-      ida_to <- ida_order[1]
-      ida_from <- ida_order[2]
-    } else {
-      #in this case, we are purifying groups removing from them elements belonging to other groups
-      idb <- which.min(comp_tab[, arrb[, "col"]])
-      ida_order <- order(comp_tab[idb, ], decreasing = TRUE)
-      ida_to <- ida_order[2]
-      ida_from <- ida_order[1]
-    }
+    #firstly move amino acids into a group (from groups in the same row), secondly purify in column
+#     if(sum(comp_tab[arrb[, "row"], ] != 0) > 1) {
+#       #idb is an index of group in B that shares the most elements with a group in A
+#       #(aside from groups that share all elements)
+#       idb <- arrb[, "row"]
+#       ida_order <- order(comp_tab[idb, ], decreasing = TRUE)
+#       ida_to <- ida_order[1]
+#       ida_from <- ida_order[2]
+#     } else {
+#       #in this case, we are purifying groups removing from them elements belonging to other groups
+#       #order[2], because when the purification is needed, the second highest element is always non-0
+#       idb <- order(comp_tab[, arrb[, "col"]])[2]
+#       ida_order <- order(comp_tab[idb, ], decreasing = TRUE)
+#       ida_to <- ida_order[2]
+#       ida_from <- ida_order[1]
+#     }
     
     #id of the single amino acid
-    el_id <- which(ta[[ida_from]] %in% tb[[idb]])
+    el_id <- which(!(ta[[ida_from]] %in% tb[[idb]]))
+    
     #add amino acid to second group
     ta[[ida_to]] <- c(ta[[ida_to]], ta[[ida_from]][el_id])
     #remove amino acid from the first group
