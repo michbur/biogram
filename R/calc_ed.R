@@ -84,7 +84,9 @@ calc_ed <- function(a, b) {
     ida_to <- which.max(comp_tab[order(comp_tab[, ida_from], decreasing = TRUE)[2], ])
     
     if(ida_from == ida_to) {
-      ida_to <- which.min(comp_tab[order(comp_tab[, ida_from], decreasing = TRUE)[2], ])
+      #empty row to make it work, when all other values are 0
+      empty_row <- comp_tab[order(comp_tab[, ida_from], decreasing = TRUE)[2], ]
+      ida_to <- which(empty_row == min(empty_row[empty_row != 0]))
     }
     
     #establish index of groups
