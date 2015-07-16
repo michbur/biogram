@@ -58,7 +58,20 @@ calc_ed <- function(a, b) {
   if(length(ta) == 0 && length(tb) == 0)
     return(ed)
   
+  len_a <- length(ta)
+  len_b <- length(tb)
   
+  len_a != len_b
+  
+  #indices of groups to merge
+  merges <- combn(1L:len_a, 2)
+  
+  #list of merged
+  reduced_size <- lapply(1L:ncol(merges), function(single_merge)
+    list(enc = c(list(unname(unlist(ta[merges[, single_merge]]))), ta[-merges[, single_merge]]),
+         ed = c(min(lengths(ta[merges[, single_merge]])))))
+  
+
   
   #rows b
   #columns a
@@ -67,61 +80,31 @@ calc_ed <- function(a, b) {
   #loop for moving aa between groups
   #TRUE if groups are not similiar
   #diff <- comp_tab != 0 & comp_tab != 1
-  while(any(!(comp_tab %in% c(0, 1)))) {
-    #change 1 to -1 to use which
-    comp_tab[comp_tab == 1] <- -1
+  if(any(!(comp_tab %in% c(0, 1)))) {
+    #ids of groups in ta that are the closest to groups in tb
+    ta_gr <- apply(comp_tab, 1, which.max)
     
-    #cannot use which.max, it doesn't use arr.ind
-    #choose groups to switch aa
-    arrb <- which(comp_tab == max(comp_tab), arr.ind = TRUE)
-    #case when both groups have equal dissimilarity - use the purest row
-    if(nrow(arrb) > 1) {
-      arrb <- arrb[which.max(rowSums(comp_tab == 0)), , drop = FALSE]
+    gr_id <- 1
+    
+    for(i in 1L:length(tb)) {
+      tb_group <- tb[[gr_id]]
+      ida_to <- ta_gr[gr_id]
+      ta_ids <- (1L:length(ta))[-ida_to]
+      for (ida_from in ta_ids) {
+        #id of the single amino acid
+        el_id <- which(ta[[ida_from]] %in% tb_group)
+        #add amino acid to second group
+        ta[[ida_to]] <- c(ta[[ida_to]], ta[[ida_from]][el_id])
+        #remove amino acid from the first group
+        ta[[ida_from]] <-  ta[[ida_from]][-el_id]
+        ed <- ed + length(el_id)
+      }
     }
-    
-    idb <- arrb[, "row"]
-    ida_from <- arrb[, "col"]
-    ida_to <- which.max(comp_tab[order(comp_tab[, ida_from], decreasing = TRUE)[2], ])
-    
-    if(ida_from == ida_to) {
-      #empty row to make it work, when all other values are 0
-      empty_row <- comp_tab[order(comp_tab[, ida_from], decreasing = TRUE)[2], ]
-      ida_to <- which(empty_row == min(empty_row[empty_row != 0]))
-    }
-    
-    #establish index of groups
-    #firstly move amino acids into a group (from groups in the same row), secondly purify in column
-#     if(sum(comp_tab[arrb[, "row"], ] != 0) > 1) {
-#       #idb is an index of group in B that shares the most elements with a group in A
-#       #(aside from groups that share all elements)
-#       idb <- arrb[, "row"]
-#       ida_order <- order(comp_tab[idb, ], decreasing = TRUE)
-#       ida_to <- ida_order[1]
-#       ida_from <- ida_order[2]
-#     } else {
-#       #in this case, we are purifying groups removing from them elements belonging to other groups
-#       #order[2], because when the purification is needed, the second highest element is always non-0
-#       idb <- order(comp_tab[, arrb[, "col"]])[2]
-#       ida_order <- order(comp_tab[idb, ], decreasing = TRUE)
-#       ida_to <- ida_order[2]
-#       ida_from <- ida_order[1]
-#     }
-    
-    #id of the single amino acid
-    el_id <- which(!(ta[[ida_from]] %in% tb[[idb]]))
-    
-    #add amino acid to second group
-    ta[[ida_to]] <- c(ta[[ida_to]], ta[[ida_from]][el_id])
-    #remove amino acid from the first group
-    ta[[ida_from]] <-  ta[[ida_from]][-el_id]
-    ed <- ed + length(el_id)
-
     #remove empty sets
     if(any(lengths(ta) == 0)) {
       ta <- ta[!lengths(ta) == 0]
     }
     
-    comp_tab <- create_comp_tab(ta, tb)
   }
   
   if(any(rowSums(comp_tab) != 1)) {
@@ -145,11 +128,42 @@ calc_ed <- function(a, b) {
 create_comp_tab <- function(ta, tb) {
   comp_tab <- sapply(ta, function(single_subgroup_a)
     sapply(tb, function(single_subgroup_b)
-      sum(single_subgroup_a %in% single_subgroup_b)/length(single_subgroup_a)))
+      sum(single_subgroup_a %in% single_subgroup_b)))
   if(class(comp_tab) != "matrix") {
     comp_tab <- matrix(comp_tab, nrow = length(tb), ncol = length(ta))
   }
   comp_tab
+}
+
+calc_ed_single <- function(ta, tb, ed = 0) {
+  comp_tab <- create_comp_tab(reduced_size[[1]][["enc"]], tb)
+  ta_order <- apply(comp_tab, 1, order, decreasing = TRUE)
+  ta_gr <- rep(NA, length(tb))
+  gr_id <- 1
+  
+  #occurence matrix
+  data.frame(b = rep(1L:length(b), length(b)),
+             position = sort(rep(1L:length(b), length(b))))
+  
+  #reasign a to match position
+  data.frame(a = sort(rep(1L:length(b), length(b))),
+             count = as.vector(comp_tab))
+  
+  
+  for(i in 1L:length(tb)) {
+    tb_group <- tb[[gr_id]]
+    ida_to <- ta_gr[gr_id]
+    ta_ids <- (1L:length(ta))[-ida_to]
+    for (ida_from in ta_ids) {
+      #id of the single amino acid
+      el_id <- which(ta[[ida_from]] %in% tb_group)
+      #add amino acid to second group
+      ta[[ida_to]] <- c(ta[[ida_to]], ta[[ida_from]][el_id])
+      #remove amino acid from the first group
+      ta[[ida_from]] <-  ta[[ida_from]][-el_id]
+      ed <- ed + length(el_id)
+    }
+  }
 }
 
 
