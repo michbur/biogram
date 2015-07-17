@@ -136,18 +136,22 @@ create_comp_tab <- function(ta, tb) {
 }
 
 calc_ed_single <- function(ta, tb, ed = 0) {
-  comp_tab <- create_comp_tab(reduced_size[[1]][["enc"]], tb)
-  ta_order <- apply(comp_tab, 1, order, decreasing = TRUE)
+  comp_mat <- create_comp_tab(reduced_size[[1]][["enc"]], tb)
+  ta_order <- apply(comp_mat, 1, order, decreasing = TRUE)
   ta_gr <- rep(NA, length(tb))
   gr_id <- 1
   
+  count_dat <- data.frame(a = sort(rep(1L:length(b), length(b))),
+                          b = rep(1L:length(b), length(b)),
+                          count = as.vector(comp_mat))
+  
   #occurence matrix
-  data.frame(b = rep(1L:length(b), length(b)),
-             position = sort(rep(1L:length(b), length(b))))
+  dat <- data.frame(b = rep(1L:length(b), length(b)),
+             a = sort(rep(1L:length(b), length(b))),
+             order = as.vector(ta_order))
   
   #reasign a to match position
-  data.frame(a = sort(rep(1L:length(b), length(b))),
-             count = as.vector(comp_tab))
+  
   
   
   for(i in 1L:length(tb)) {
