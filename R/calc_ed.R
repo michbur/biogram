@@ -71,93 +71,34 @@ calc_ed <- function(a, b) {
     list(enc = c(list(unname(unlist(ta[merges[, single_merge]]))), ta[-merges[, single_merge]]),
          ed = c(min(lengths(ta[merges[, single_merge]])))))
   
-
-  
-  #rows b
-  #columns a
-  comp_tab <- create_comp_tab(ta, tb)
-  
-  #loop for moving aa between groups
-  #TRUE if groups are not similiar
-  #diff <- comp_tab != 0 & comp_tab != 1
-  if(any(!(comp_tab %in% c(0, 1)))) {
-    #ids of groups in ta that are the closest to groups in tb
-    ta_gr <- apply(comp_tab, 1, which.max)
-    
-    gr_id <- 1
-    
-    for(i in 1L:length(tb)) {
-      tb_group <- tb[[gr_id]]
-      ida_to <- ta_gr[gr_id]
-      ta_ids <- (1L:length(ta))[-ida_to]
-      for (ida_from in ta_ids) {
-        #id of the single amino acid
-        el_id <- which(ta[[ida_from]] %in% tb_group)
-        #add amino acid to second group
-        ta[[ida_to]] <- c(ta[[ida_to]], ta[[ida_from]][el_id])
-        #remove amino acid from the first group
-        ta[[ida_from]] <-  ta[[ida_from]][-el_id]
-        ed <- ed + length(el_id)
-      }
-    }
-    #remove empty sets
-    if(any(lengths(ta) == 0)) {
-      ta <- ta[!lengths(ta) == 0]
-    }
-    
-  }
-  
-  if(any(rowSums(comp_tab) != 1)) {
-    #concatenate smaller groups into one big
-    #check which row in comp_tab has two 1s 
-    conc_group <- unname(do.call(c, ta[as.logical(comp_tab[rowSums(comp_tab) != 1, ])]))
-    #get lengths of groups
-    gr_len <- lengths(ta[as.logical(comp_tab[rowSums(comp_tab) != 1, ])])
-    #choose number of elements in smaller group(s) as ed
-    ed <- ed + sum(gr_len[-which.max(gr_len)])
-    ta <- c(ta[!as.logical(comp_tab[rowSums(comp_tab) != 1, ])],
-            list(conc_group))
-  }
-  # very verbose output, good for debugging 
-#   list(ed = ed,
-#        a = sapply(ta, sort),
-#        b = sapply(tb, sort))
-  ed
-}
-
-create_comp_tab <- function(ta, tb) {
-  comp_tab <- sapply(ta, function(single_subgroup_a)
-    sapply(tb, function(single_subgroup_b)
-      sum(single_subgroup_a %in% single_subgroup_b)))
-  if(class(comp_tab) != "matrix") {
-    comp_tab <- matrix(comp_tab, nrow = length(tb), ncol = length(ta))
-  }
-  comp_tab
+  min(sapply(reduced_size, function(single_ta) calc_ed_single(single_ta[["enc"]], tb,
+                                                          single_ta[["ed"]])))
 }
 
 calc_ed_single <- function(ta, tb, ed = 0) {
-  comp_mat <- create_comp_tab(reduced_size[[1]][["enc"]], tb)
-  ta_order <- apply(comp_mat, 1, order, decreasing = TRUE)
-  ta_gr <- rep(NA, length(tb))
-  gr_id <- 1
   
-  count_dat <- data.frame(a = sort(rep(1L:length(b), length(b))),
-                          b = rep(1L:length(b), length(b)),
-                          count = as.vector(comp_mat))
+  comp_tab <- cbind(bgr = sort(rep(1L:length(ta), length(tb))),
+                    do.call(rbind, lapply(tb, function(single_subgroup_b) {
+                      counts <- do.call(rbind, lapply(ta, function(single_subgroup_a)
+                        data.frame(counts = sum(single_subgroup_a %in% single_subgroup_b))))
+                      
+                      #order matrix
+                      #first row - sequence of groups
+                      #second row - groups' order
+                      ordmat <- matrix(c(1L:length(tb),order(counts[, "counts"], decreasing = TRUE)), 
+                                       nrow = 2, byrow = TRUE)
+                      cbind(agr = 1L:length(tb), position = ordmat[1, order(ordmat[2, ])],
+                            counts)
+                    })
+                    ))
   
-  #occurence matrix
-  dat <- data.frame(b = rep(1L:length(b), length(b)),
-             a = sort(rep(1L:length(b), length(b))),
-             order = as.vector(ta_order))
+  agr <- comp_tab[comp_tab[, "position"] == 1, "agr"]
+  bgr <- comp_tab[comp_tab[, "position"] == 1, "bgr"]
   
-  #reasign a to match position
-  
-  
-  
-  for(i in 1L:length(tb)) {
-    tb_group <- tb[[gr_id]]
-    ida_to <- ta_gr[gr_id]
-    ta_ids <- (1L:length(ta))[-ida_to]
+  for(gr_id in 1L:length(tb)) {
+    tb_group <- tb[[bgr[[gr_id]]]]
+    ida_to <- agr[gr_id]
+    ta_ids <- sort(agr[-gr_id])
     for (ida_from in ta_ids) {
       #id of the single amino acid
       el_id <- which(ta[[ida_from]] %in% tb_group)
@@ -168,6 +109,11 @@ calc_ed_single <- function(ta, tb, ed = 0) {
       ed <- ed + length(el_id)
     }
   }
+  
+  #list(ed, ta, tb)
+  ed
 }
+
+
 
 
