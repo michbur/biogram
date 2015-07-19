@@ -35,9 +35,6 @@ calc_ed <- function(a, b) {
   if(any(lengths(tb) == 0))
     tb <- tb[lengths(tb) != 0]
   
-  if(length(a) < 2 || length(b) < 2)
-    stop("Each of encodings ('a' and 'b') must contain at least two groups.")
-  
   if(length(unlist(a)) != length(unlist(b)))
     stop("Encodings ('a' and 'b') must contain the same number of elements.")
   
@@ -65,21 +62,25 @@ calc_ed <- function(a, b) {
   len_b <- length(tb)
   
   ed <- if(len_a != len_b) {
-    #indices of groups to merge
-    merges <- combn(1L:len_a, 2)
-    
-    #list of merged
-    reduced_size <- lapply(1L:ncol(merges), function(single_merge)
-      list(enc = c(list(unname(unlist(ta[merges[, single_merge]]))), ta[-merges[, single_merge]]),
-           ed = c(min(lengths(ta[merges[, single_merge]])))))
-    
-    min(sapply(reduced_size, function(single_ta) calc_ed_single(single_ta[["enc"]], tb,
-                                                                single_ta[["ed"]])))
+    if(len_b == 1) {
+      sum(lengths(ta)[lengths(ta) != max(lengths(ta))])
+    } else {
+      #indices of groups to merge
+      merges <- combn(1L:len_a, 2)
+      
+      #list of merged
+      reduced_size <- lapply(1L:ncol(merges), function(single_merge)
+        list(enc = c(list(unname(unlist(ta[merges[, single_merge]]))), ta[-merges[, single_merge]]),
+             ed = c(min(lengths(ta[merges[, single_merge]])))))
+      
+      min(sapply(reduced_size, function(single_ta) calc_ed_single(single_ta[["enc"]], tb,
+                                                                  single_ta[["ed"]])))
+    }
   } else {
     calc_ed_single(ta, tb)
   }
   
-  ed
+  unname(ed)
 }
 
 calc_ed_single <- function(ta, tb, ed = 0) {

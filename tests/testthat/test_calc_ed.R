@@ -26,13 +26,13 @@ test_that("Distance 1, including empty groups",{
   
   expect_equal(calc_ed(l1, l2), 1)
   
-#   l3 <- list('1' = c("a", "b", "c", "d"),
-#              '2' = c("e"))
-#   l4 <- list('1' = c("a", "b", "d", "e", "c"))
-#   expect_equal(calc_ed(l3, l4), 1)
-#   
-#   l5 <- list('1' = c("a", "b", "d", "e", "c"),
-#              '2' = c())
-#   expect_equal(calc_ed(l3, l5), 1)
+  l3 <- list('1' = c("a", "b", "c", "d"),
+             '2' = c("e"))
+  l4 <- list('1' = c("a", "b", "d", "e", "c"))
+  expect_equal(calc_ed(l3, l4), 1)
+  
+  l5 <- list('1' = c("a", "b", "d", "e", "c"),
+             '2' = c())
+  expect_equal(calc_ed(l3, l5), 1)
 })
 
