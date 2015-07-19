@@ -95,23 +95,14 @@ calc_ed_single <- function(ta, tb, ed = 0) {
   agr <- comp_tab[comp_tab[, "position"] == 1, "agr"]
   bgr <- comp_tab[comp_tab[, "position"] == 1, "bgr"]
   
-  for(gr_id in 1L:length(tb)) {
+  ed + sum(lengths(lapply(1L:length(tb), function(gr_id) {
     tb_group <- tb[[bgr[[gr_id]]]]
-    ida_to <- agr[gr_id]
-    ta_ids <- sort(agr[-gr_id])
-    for (ida_from in ta_ids) {
+    #added amino acids from other groups
+    unlist(lapply(agr[-gr_id], function(ida_from) {
       #id of the single amino acid
-      el_id <- which(ta[[ida_from]] %in% tb_group)
-      #add amino acid to second group
-      ta[[ida_to]] <- c(ta[[ida_to]], ta[[ida_from]][el_id])
-      #remove amino acid from the first group
-      ta[[ida_from]] <-  ta[[ida_from]][-el_id]
-      ed <- ed + length(el_id)
-    }
-  }
-  
-  #list(ed, ta, tb)
-  ed
+      ta[[ida_from]][which(ta[[ida_from]] %in% tb_group)]
+    }))
+  })))
 }
 
 
