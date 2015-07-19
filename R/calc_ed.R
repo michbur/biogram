@@ -48,7 +48,7 @@ calc_ed <- function(a, b) {
   ident_gr <- which(sapply(ta, function(single_subgroup_a)
     sapply(tb, function(single_subgroup_b)
       identical(sort(single_subgroup_a), sort(single_subgroup_b)))), arr.ind = TRUE)
-
+  
   if(length(ident_gr) != 0) {
     ta <- ta[-ident_gr[, "col"]]
     tb <- tb[-ident_gr[, "row"]]
@@ -61,48 +61,65 @@ calc_ed <- function(a, b) {
   len_a <- length(ta)
   len_b <- length(tb)
   
-  len_a != len_b
+  ed <- if(len_a != len_b) {
+    
+    #indices of groups to merge
+    merges <- combn(1L:len_a, 2)
+    
+    #list of merged
+    reduced_size <- lapply(1L:ncol(merges), function(single_merge)
+      list(enc = c(list(unname(unlist(ta[merges[, single_merge]]))), ta[-merges[, single_merge]]),
+           ed = c(min(lengths(ta[merges[, single_merge]])))))
+    
+    min(sapply(reduced_size, function(single_ta) calc_ed_single(single_ta[["enc"]], tb,
+                                                                single_ta[["ed"]])))
+  } else {
+    calc_ed_single(ta, tb)
+  }
   
-  #indices of groups to merge
-  merges <- combn(1L:len_a, 2)
-  
-  #list of merged
-  reduced_size <- lapply(1L:ncol(merges), function(single_merge)
-    list(enc = c(list(unname(unlist(ta[merges[, single_merge]]))), ta[-merges[, single_merge]]),
-         ed = c(min(lengths(ta[merges[, single_merge]])))))
-  
-  min(sapply(reduced_size, function(single_ta) calc_ed_single(single_ta[["enc"]], tb,
-                                                          single_ta[["ed"]])))
+  ed
 }
 
 calc_ed_single <- function(ta, tb, ed = 0) {
   
-  comp_tab <- cbind(bgr = sort(rep(1L:length(ta), length(tb))),
-                    do.call(rbind, lapply(tb, function(single_subgroup_b) {
-                      counts <- do.call(rbind, lapply(ta, function(single_subgroup_a)
-                        data.frame(counts = sum(single_subgroup_a %in% single_subgroup_b))))
-                      
-                      #order matrix
-                      #first row - sequence of groups
-                      #second row - groups' order
-                      ordmat <- matrix(c(1L:length(tb),order(counts[, "counts"], decreasing = TRUE)), 
-                                       nrow = 2, byrow = TRUE)
-                      cbind(agr = 1L:length(tb), position = ordmat[1, order(ordmat[2, ])],
-                            counts)
-                    })
-                    ))
+  # comparision table, for case when I have enough time to write something 
+  # smart, not all permutations 
+  #   comp_tab <- cbind(bgr = sort(rep(1L:length(ta), length(tb))),
+  #                     do.call(rbind, lapply(tb, function(single_subgroup_b) {
+  #                       counts <- do.call(rbind, lapply(ta, function(single_subgroup_a)
+  #                         data.frame(counts = sum(single_subgroup_a %in% single_subgroup_b))))
+  #                       
+  #                       #order matrix
+  #                       #first row - sequence of groups
+  #                       #second row - groups' order
+  #                       ordmat <- matrix(c(1L:length(tb),order(counts[, "counts"], decreasing = TRUE)), 
+  #                                        nrow = 2, byrow = TRUE)
+  #                       cbind(agr = 1L:length(tb), position = ordmat[1, order(ordmat[2, ])],
+  #                             counts)
+  #                     })
+  #                     ))
+  #   
+  #   agr <- comp_tab[comp_tab[, "position"] == 1, "agr"]
+  #   bgr <- comp_tab[comp_tab[, "position"] == 1, "bgr"]
   
-  agr <- comp_tab[comp_tab[, "position"] == 1, "agr"]
-  bgr <- comp_tab[comp_tab[, "position"] == 1, "bgr"]
   
-  ed + sum(lengths(lapply(1L:length(tb), function(gr_id) {
-    tb_group <- tb[[bgr[[gr_id]]]]
-    #added amino acids from other groups
-    unlist(lapply(agr[-gr_id], function(ida_from) {
-      #id of the single amino acid
-      ta[[ida_from]][which(ta[[ida_from]] %in% tb_group)]
-    }))
-  })))
+  len_b <- length(tb)
+  perms <- expand.grid(lapply(1L:len_b, function(dummy) 1L:len_b))
+  perms <- perms[apply(perms, 1, function(single_permutation) 
+    length(unique(single_permutation))) == len_b, ]
+  bgr <- 1L:len_b
+  
+  
+  ed + min(apply(perms, 1, function(agr) {
+    sum(lengths(lapply(1L:len_b, function(gr_id) {
+      tb_group <- tb[[bgr[[gr_id]]]]
+      #added amino acids from other groups
+      unlist(lapply(agr[-gr_id], function(ida_from) {
+        #id of the single amino acid
+        ta[[ida_from]][which(ta[[ida_from]] %in% tb_group)]
+      }))
+    })))
+  }))
 }
 
 
