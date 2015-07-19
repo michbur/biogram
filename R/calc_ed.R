@@ -35,6 +35,9 @@ calc_ed <- function(a, b) {
   if(any(lengths(tb) == 0))
     tb <- tb[lengths(tb) != 0]
   
+  if(length(a) < 2 || length(b) < 2)
+    stop("Each of encodings ('a' and 'b') must contain at least two groups.")
+  
   if(length(unlist(a)) != length(unlist(b)))
     stop("Encodings ('a' and 'b') must contain the same number of elements.")
   
@@ -62,7 +65,6 @@ calc_ed <- function(a, b) {
   len_b <- length(tb)
   
   ed <- if(len_a != len_b) {
-    
     #indices of groups to merge
     merges <- combn(1L:len_a, 2)
     
