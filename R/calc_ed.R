@@ -66,7 +66,11 @@ calc_ed <- function(a, b) {
   
   ed <- if(len_a != len_b) {
     if(len_b == 1) {
-      sum(lengths(ta)[lengths(ta) != max(lengths(ta))])
+      if(all(lengths(ta) == max(lengths(ta)))) {
+        sum(lengths(ta)[-1])
+      } else {
+        sum(lengths(ta)[lengths(ta) != max(lengths(ta))])
+      }
     } else {
       #indices of groups to merge
       merges <- combn(1L:len_a, 2)
