@@ -16,7 +16,12 @@ or have equal length.}
 an encoding distance.
 }
 \description{
-Compares two encodings and calculates encoding distance between them.
+Compares two encodings and computes encoding distance between them.
+}
+\details{
+The encoding distance between \code{a} and \code{b} is defined as the minimum number
+of amino acids that have to be moved between subgroups of encoding to make \code{a} identical to
+\code{b} (order of subgroups in the encoding and amino acids in a group is unimportant).
 }
 \examples{
 aa1 = list(`1` = c("g", "a", "p", "v", "m", "l", "i"),

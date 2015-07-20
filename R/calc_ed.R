@@ -1,9 +1,12 @@
 #' Calculate encoding distance
 #' 
-#' Compares two encodings and calculates encoding distance between them.
+#' Compares two encodings and computes encoding distance between them.
 #' @param a list of groups to which elements of sequence should be aggregated.
 #' @param b list of groups to which \code{a} should be compared. Must be shorter than \code{a} 
 #' or have equal length.
+#' @details The encoding distance between \code{a} and \code{b} is defined as the minimum number 
+#' of amino acids that have to be moved between subgroups of encoding to make \code{a} identical to
+#' \code{b} (order of subgroups in the encoding and amino acids in a group is unimportant).
 #' @return an encoding distance.
 #' @export
 #' @examples
@@ -85,8 +88,8 @@ calc_ed <- function(a, b) {
 
 calc_ed_single <- function(ta, tb, ed = 0) {
   
-  # comparision table, for case when I have enough time to write something 
-  # smart, not all permutations 
+  # comparision table, for the so called 'future' when I have enough time to write something 
+  # smarter
   #   comp_tab <- cbind(bgr = sort(rep(1L:length(ta), length(tb))),
   #                     do.call(rbind, lapply(tb, function(single_subgroup_b) {
   #                       counts <- do.call(rbind, lapply(ta, function(single_subgroup_a)
@@ -107,12 +110,13 @@ calc_ed_single <- function(ta, tb, ed = 0) {
   
   
   len_b <- length(tb)
+  #all permutations of assigning subgroups from encoding 'a' to subgroups of 'b'
   perms <- expand.grid(lapply(1L:len_b, function(dummy) 1L:len_b))
   perms <- perms[apply(perms, 1, function(single_permutation) 
     length(unique(single_permutation))) == len_b, ]
   bgr <- 1L:len_b
   
-  
+  #compute the ed for all permutations and get the minimum
   ed + min(apply(perms, 1, function(agr) {
     sum(lengths(lapply(1L:len_b, function(gr_id) {
       tb_group <- tb[[bgr[[gr_id]]]]
