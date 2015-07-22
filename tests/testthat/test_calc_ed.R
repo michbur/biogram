@@ -36,3 +36,59 @@ test_that("Distance 1, including empty groups",{
   expect_equal(calc_ed(l3, l5), 1)
 })
 
+
+test_that("Distance 2, including empty groups",{
+  
+  l1 <- list('1' = c("a", "b", "c"),
+             '2' = c("d", "e"))
+  l2 <- list('1' = c("a", "e"),
+             '2' = c("d", "c", "b"))
+  calc_ed(l1, l2)
+  
+  expect_equal(calc_ed(l1, l2), 2)
+  
+  l3 <- list('1' = c("a", "b", "c"),
+             '2' = c("d", "e"),
+             '3' = c())
+  expect_equal(calc_ed(l3, l2), 2)
+})
+
+test_that("Distance 2, including empty groups",{
+  
+  l1 <- list('1' = c("a", "b", "c"),
+             '2' = c("d", "e"))
+  l2 <- list('1' = c("a", "e"),
+             '2' = c("d", "c", "b"))
+  calc_ed(l1, l2)
+  
+  expect_equal(calc_ed(l1, l2), 2)
+  
+  l3 <- list('1' = c("a", "b", "c"),
+             '2' = c("d", "e"),
+             '3' = c())
+  expect_equal(calc_ed(l3, l2), 2)
+})
+
+test_that("Long identical groups",{
+  
+  aa1 = list(`1` = c("g", "a", "p", "v", "h", "l", "i"), 
+             `2` = c("k", "m"), 
+             `3` = c("d", "r"), 
+             `4` = c("f", "e", "w", "y", "s", "t", "c", "n", "q"))
+  
+  aa2 = list(`1` = c("g", "a", "p", "v", "h", "l", "i"), 
+             `2` = c("k"), 
+             `3` = c("d", "r", "m"), 
+             `4` = c("f", "e", "w", "y", "s", "t", "c", "n", "q"))
+  expect_equal(calc_ed(aa1, aa2), 1)  
+})
+
+test_that("Half-half case",{
+  aa1 = list(`1` = c("g", "a", "p", "v", "h", "l", "i","k", "m"), 
+             `2` = c("d", "r", "f", "e", "w", "y", "s", "t", "c", "n", "q"))
+  
+  aa2 = list(`1` = c("g", "a", "p", "v", "m", "l", "q"), 
+             `2` = c("k", "h", "d", "e", "i"), 
+             `3` = c("f", "r", "w", "y", "s", "t", "c", "n"))
+  expect_equal(calc_ed(aa2, aa1), 8)
+})
