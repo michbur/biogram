@@ -1,3 +1,7 @@
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/biogram)](http://cran.r-project.org/web/packages/biogram)
+[![Downloads](http://cranlogs.r-pkg.org/badges/biogram)](http://cran.rstudio.com/package=biogram)
+[![Build Status](https://api.travis-ci.org/michbur/biogram.png)](https://travis-ci.org/michbur/biogram)
+
 biogram package
 ------------
 
