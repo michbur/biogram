@@ -2,7 +2,8 @@ language: r
 sudo: required
 warnings_are_errors: true
 r_github_packages:
+  - hadley/testthat
   - jimhester/covr
   - jimhester/lintr
 after_success:
-  - Rscript -e 'covr::coveralls()'
+  - Rscript -e 'covr::codecov()'
