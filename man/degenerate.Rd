@@ -9,7 +9,8 @@ degenerate(seq, element_groups)
 \arguments{
 \item{seq}{\code{character} vector or matrix representing single sequence.}
 
-\item{element_groups}{list of groups to which elements of sequence should be aggregated.}
+\item{element_groups}{an encoding of elements: list of groups to which elements
+of sequence should be aggregated.}
 }
 \value{
 a \code{character} vector or matrix (if input is a matrix)
@@ -37,6 +38,7 @@ table(deg_seq)
 \seealso{
 \code{\link{l2n}} to easily convert information stored in biological sequences from
 letters to numbers.
+\code{\link{calc_ed}} to calculate distance between encodings.
 }
 \keyword{manip}
 

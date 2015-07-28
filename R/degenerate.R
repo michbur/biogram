@@ -4,7 +4,8 @@
 #' elements to bigger groups.
 #' 
 #' @param seq \code{character} vector or matrix representing single sequence.
-#' @param element_groups list of groups to which elements of sequence should be aggregated.
+#' @param element_groups an encoding of elements: list of groups to which elements 
+#' of sequence should be aggregated.
 #' @keywords manip
 #' @return a \code{character} vector or matrix (if input is a matrix) 
 #' containing aggregated elements.
@@ -16,6 +17,7 @@
 #' @export
 #' @seealso \code{\link{l2n}} to easily convert information stored in biological sequences from 
 #' letters to numbers.
+#' \code{\link{calc_ed}} to calculate distance between encodings.
 #' @keywords manip
 #' @examples
 #' sample_seq <- c(1, 3, 1, 3, 4, 4, 3, 1, 2)
