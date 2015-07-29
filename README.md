@@ -1,7 +1,8 @@
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/biogram)](http://cran.r-project.org/web/packages/biogram)
 [![Downloads](http://cranlogs.r-pkg.org/badges/biogram)](http://cran.rstudio.com/package=biogram)
 [![Build Status](https://api.travis-ci.org/michbur/biogram.png)](https://travis-ci.org/michbur/biogram)
-[![Coverage Status](http://coveralls.io/repos/michbur/biogram/badge.svg?branch=master&service=github)](http://coveralls.io/github/michbur/biogram?branch=master)
+[![codecov.io](https://codecov.io/github/michbur/biogram/coverage.svg?branch=master)](https://codecov.io/github/michbur/biogram?branch=master) 
+
 
 biogram package
 ------------
