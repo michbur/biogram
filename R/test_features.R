@@ -101,7 +101,6 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
     
     apply(features, 2, function(feature) {
       feature <- as.matrix(feature, ncol = 1)
-      n <- length(target)
       estm <- crit_function(target, feature)
       dist <- dists[[paste(sum(feature))]]
       1 - dist[which.max(dist[, "criterion"] >= estm - 1e-15), "cdf"]

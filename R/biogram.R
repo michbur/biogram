@@ -39,7 +39,7 @@
 #' general groups. For example, all positively-charged amino acids may be aggregated into
 #' one group. This action can be performed using the \code{\link{degenerate}} function.
 #' 
-#' Encoding of amino acids has drastic effect on the sequence analysis, but multidimensional 
+#' Encoding of amino acids can easu sequence analysis, but multidimensional 
 #' objects as the aggregations of amino acids are not easily comparable. We introduced the 
 #' encoding distance, a measure defining the distance between encodings. It can be computed 
 #' using the \code{\link{calc_ed}} function.
