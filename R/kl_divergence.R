@@ -11,7 +11,8 @@
 #' 
 #' Kullback-Leibler divergence is calculated using \code{\link[entropy]{KL.plugin}}.
 #' @export
-#' @references STH here
+#' @references Kullback S, Leibler RA \emph{On information and sufficiency}. 
+#' Annals of Mathematical Statistics 22 (1): 79–86, 1951.
 #' @examples tar <- sample(0L:1, 100, replace = TRUE)
 #' feat <- sample(0L:1, 100, replace = TRUE)
 #' prop <- c(100 - sum(tar), sum(tar))/100

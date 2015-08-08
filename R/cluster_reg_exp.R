@@ -5,7 +5,7 @@
 #' @keywords internal
 #' @return numeric, degrees of freedom
 reg_exp_df <- function(x){
-  prod(sapply(x,  length))
+  prod(sapply(x, length))
 }
 
 
