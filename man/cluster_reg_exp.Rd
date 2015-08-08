@@ -14,7 +14,7 @@ List of four
 \itemize{
  \item{"regExps"}{regular expression in best clustering}
  \item{"seqClustering"}{clustering of sequences in best clustering}
- \item{"allRegExps"=regs"}{all regular expressions}
+ \item{"allRegExps"}{all regular expressions.}
  \item{"allIndices"}{all clusterings}
 }
 }
@@ -22,5 +22,11 @@ List of four
 Clusters sequences hierarchically with regular expressions.
 At each step we minimize number of degrees of freedom for all regular
 expressions needed to describe the data
+}
+\details{
+Regular expression is a list of the length equal to the length
+of the input sequences. Each element of the list represents a position in
+the sequence and contains amino acid, that are likely to occure on this
+position.
 }
 

@@ -6,7 +6,7 @@
 \alias{biogram-package}
 \title{biogram - analysis of biological sequences using n-grams}
 \description{
-\code{biogram} package for the analysis of
+\code{biogram} package is a toolbox for the analysis of
 nucleic acid and protein sequences using n-grams. Possible applications include
 motif discovery, feature selection, clustering, and classification.
 }

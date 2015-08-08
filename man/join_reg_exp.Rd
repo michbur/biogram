@@ -12,7 +12,7 @@ join_reg_exp(exp1, exp2)
 \item{e2}{list of vectors, second regular expression}
 }
 \value{
-list of vectors, samllest regular expression that contains e1 and e2
+list of vectors, smallest regular expression that contains e1 and e2
 }
 \description{
 Join regular expressions

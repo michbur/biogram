@@ -28,7 +28,7 @@ count_df <- function(reg_exp){
 #' @param e1 list of vectors, first regular expression
 #' @param e2 list of vectors, second regular expression
 #' @keywords internal
-#' @return list of vectors, samllest regular expression that contains e1 and e2 
+#' @return list of vectors, smallest regular expression that contains e1 and e2 
 #' @examples 
 #' x1 <- list(c(1,2),3)
 #' x2 <- list(1,c(2,4)) 
@@ -45,11 +45,15 @@ join_reg_exp <- function(exp1, exp2){
 #' 
 #' @param ngrams list of elements
 #' @export
+#' @details Regular expression is a list of the length equal to the length
+#' of the input sequences. Each element of the list represents a position in 
+#' the sequence and contains amino acid, that are likely to occure on this
+#' position.
 #' @return List of four
 ##' \itemize{
 ##'  \item{"regExps"}{regular expression in best clustering}
 ##'  \item{"seqClustering"}{clustering of sequences in best clustering}
-##'  \item{"allRegExps"=regs"}{all regular expressions}
+##'  \item{"allRegExps"}{all regular expressions.}
 ##'  \item{"allIndices"}{all clusterings}
 ##' }
 cluster_reg_exp <- function(ngrams){
@@ -70,8 +74,8 @@ cluster_reg_exp <- function(ngrams){
     ind <- which(m == min(m, na.rm=T), arr.ind = TRUE)[1,]
     regs[[i-1]] <- append(regs[[i]][-ind], list(join_reg_exp(regs[[i]][[ind[1]]], regs[[i]][[ind[2]]])))
     indices[[i-1]] <- append(indices[[i]][-ind], list(unlist(indices[[i]][c(ind[1], ind[2])])))
-    names(regs[[i-1]]) <- paste0("cluster_", 1:(i-1))
-    names(indices[[i-1]]) <- paste0("cluster_", 1:(i-1))
+    names(regs[[i-1]]) <- paste0("cluster_", 1L:(i-1))
+    names(indices[[i-1]]) <- paste0("cluster_", 1L:(i-1))
     setTxtProgressBar(pb, n-i+1)
   }
   close(pb)
