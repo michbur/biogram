@@ -37,8 +37,8 @@ library(bit) #used to code vector as bit
 calc_kl(feat, as.bit(tar), 100, sum(tar), entr)
 }
 \references{
-Kullback S, Leibler RA \emph{On information and sufficiency}.
-Annals of Mathematical Statistics 22 (1): 79–86, 1951.
+Kullback S, Leibler RA \emph{On information and sufficiency}. Annals
+of Mathematical Statistics 22 (1):79-86, 1951.
 }
 \seealso{
 \code{\link{test_features}}.
