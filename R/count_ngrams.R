@@ -95,7 +95,9 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE,
   #extract n-grams from sequence
   grams <- vapply(1L:n_seqs, function(i)
     seq2ngrams_helper(seq[i, ], ind = ngram_ind, max_grams), rep("a", max_grams))
-  
+  #if only one n-gram per sequence is extracted, the result must be converted to matrix
+  if(!is.matrix(grams))
+    grams <- matrix(grams, nrow = n_seqs)
   
   if (pos) {    
     #get positioned possible n-grams
