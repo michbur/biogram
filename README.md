@@ -15,7 +15,7 @@ biogram uses Quick Permutation Test (QuiPT) for fast feature filtering.
 Installation
 ------------
 
-biogram is available [on CRAN](http://cran.r-project.org/web/packages/biogram/), so installation is as simple as:
+biogram is available [on CRAN](http://cran.r-project.org/package=biogram), so installation is as simple as:
 
 ```
 install.packages("biogram")
