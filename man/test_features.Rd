@@ -17,13 +17,14 @@ to the length of the target vector.}
 for the list of possible criterions.}
 
 \item{adjust}{name of p-value adjustment method. See \code{\link[stats]{p.adjust}}
-for the list of possible values. If \code{NULL}, no adjustment is done.}
+for the list of possible values. If \code{NULL}, p-values are not adjusted.}
 
 \item{threshold}{\code{integer}. Features that occur less than \code{threshold}
 and more often than \code{nrow(features)-threshold} are discarded from the permutation
 test.}
 
-\item{quick}{\code{logical}, if \code{TRUE} Quick Permutation Test (QuiPT) is used.}
+\item{quick}{\code{logical}, if \code{TRUE} Quick Permutation Test (QuiPT) is used. If
+\code{FALSE}, normal permutation test is performed.}
 
 \item{times}{number of times procedure should be repeated. Ignored if \code{quick} is
 \code{TRUE}.}
