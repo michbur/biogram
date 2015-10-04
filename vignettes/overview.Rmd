@@ -1,0 +1,90 @@
+---
+title: "biogram package"
+author: "Micha&#322; Burdukiewicz, Piotr Sobczyk"
+date: "17.10.2015"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{dpcR package - an overview}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Quick Permutation Test (QuiPT)
+
+QuiPT is fast solution for filtering a large number of binary features provided 
+that target vector is also binary. It is typical case for positioned n-gram data. 
+Moreover, even considering unpositioned n-grams, if the $n$ is sufficiently high, 
+the matrix of counts is almost sparse and little to no information is lost after 
+data is artifically binarized.
+
+The simplest use case of QuiPT is a case of two Bernoulli random variables. One of 
+them is feature the other is target. We are interested in deciding whether feature brings
+some important information about target. The **biogram** package employs several measures 
+of such a dependance (see `?calc_criterion`). We shall consider in detail only information 
+gain, but similar conlusions can be done for other measures.
+
+#### Definition - entropy
+For a discrete random variable we define entropy by:
+$$ H(X) = - \sum^m p_j log p_j$$
+For a Bernoulli r.v. we get a simplified expression
+$$ H(X) = -p \cdot log(p) - (1-p) \cdot log(1-p)$$
+
+#### Definition -  conditional entropy
+For two discrete r.v. X, Y we define average conditional entropy by:
+$$H(Y|X) = \sum_j P(X=v_j) H(Y|X=v_j)$$
+If X and Y are Bernoulli's then:
+$$H(Y|X) = q \cdot H(Y|X=1) + (1-q) \cdot H(Y|X=0)$$
+
+#### Definition - Information gain
+$$IG(Y|X) = H(Y) - H(Y|X)$$
+
+The intuition is that:
+> IG tells you how interesting a 2-d contingency table is going to be
+
+In our application, analysis of n-grams, we are interested in Bernoulli r.v.
+Let us consider the contingency table we get:
+
+| target\\feature | 1 | 0 |
+|:---:|:---:|:---:|
+| 1 | $n_{1,1}$ | $n_{1,0}$ |
+| 0 | $n_{0,1}$ | $n_{0,0}$ |
+
+
+### Computing IG distribution under null hypothesis
+As can be seen above we have 4 possible outcomes.
+If probability that target equals 1 is $p$ and probability that feature equals
+1 is $q$ and feature and target are independant then each of them has the 
+following probabilities 
+$$P((Target, Feature) = (1,1)) = p \cdot q$$
+$$P((Target, Feature) = (1,0)) = p \cdot (1-q)$$
+$$P((Target, Feature) = (0,1)) = (1-p) \cdot q$$
+$$P((Target, Feature) = (0,0)) = (1-p) \cdot (1-q)$$
+
+This means that a target-feature can be described as multinomial distribution.
+
+$$ {n \choose n_{1,1}} (p\cdot q)^{n_{1,1}} 
+{n - n_{1,1} \choose n_{1,0}} (p\cdot (1-q))^{n_{1,0}}
+{n - n_{1,1} - n_{1,0} \choose n_{0,1}} ((1-p)\cdot q)^{n_{0,1}} 
+{n - n_{1,1} - n_{1,0} -n_{0,1}\choose n_{0,0}} ((1-p)\cdot (1-q))^{n_{0,0}}$$
+
+However we have important restriction that $n_{1,\cdot} = n_{1,1} + n_{1,0}$ and
+$n_{\cdot, 1} = n_{1,1} + n_{0,1}$ are known and fixed as they describe the number 
+of ,,ones" for target and feature respectively.
+
+This might look very complicated but this restrictions in fact simplifies
+our computation significantly.
+
+Observe that $n_{1,1}$ is from range $[0,min(n_{\cdot, 1}, n_{1, \cdot})]$.
+So we get probability of certain contingency table as conditional distribution,
+as impose restrictions on two parameters $n_{\cdot, 1} $ and $n_{1, \cdot}$
+We can compute IG for each possible value of $n_{1,1}$ and finally we get
+distribution of Information Gain under hypothesis that target and feature
+are independant.
+
+Having exact distribution lets us perform permutation test much quicker as we 
+no longer need to perform a large number of replications. Furthermore, by using
+exact test we will get precise values of tails which was not guaranteed with
+random permutations.
+
