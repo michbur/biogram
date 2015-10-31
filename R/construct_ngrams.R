@@ -8,10 +8,10 @@
 #' @inheritParams count_ngrams
 #' @param n_max size of constructed n-grams.
 #' @param conf_level confidence level.
-#' @param gap \code{logical}, if \code{TRUE} gap are used. See Details.
+#' @param gap \code{logical}, if \code{TRUE} gaps are used. See Details.
 #' @return a vector of n-grams.
-#' @details Gap parameter determines if \code{construct_ngrams} performs feature 
-#' selection on exact n-grams (\code{gap} equal to FALSE) or on all features in the 
+#' @details The \code{gap} parameter determines if \code{construct_ngrams} performs the
+#' feature selection on exact n-grams (\code{gap} equal to FALSE) or on all features in the 
 #' Hamming distance 1 from the n-gram (\code{gap} equal to TRUE).
 #' 
 #' @export

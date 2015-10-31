@@ -1,6 +1,6 @@
 #' Calculate encoding distance
 #' 
-#' Computes encoding distance between two encodings.
+#' Computes the encoding distance between two encodings.
 #' @param a an encoding (see Note)
 #' @param b an encoding to which \code{a} should be compared. Must be have less groups than 
 #' \code{a} or have equal length.
