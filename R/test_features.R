@@ -85,7 +85,7 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
   
   #eliminate non-infomative features
   features <- features[, feature_size > threshold & feature_size < 
-                         (nrow(features) - threshold)]
+                         (nrow(features) - threshold), drop = FALSE]
   
   p_vals <- if(quick) {
     

@@ -105,7 +105,8 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE,
     
     res <- do.call(cbind, c(lapply(possib_ngrams, function(current_ngram)
       as.simple_triplet_matrix(t(vapply(1L:n_seqs, function(current_sequence)
-        grams[, current_sequence] == current_ngram, rep(0, max_grams)))))))
+        grams[, current_sequence] == current_ngram, rep(0, max_grams))))
+      )))
     
     
     colnames(res) <- pos_possib_ngrams
@@ -120,7 +121,7 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE,
   
   if (threshold > 0) {
     ind_sums <- rowSums(res)
-    res <- res[ind_sums >= threshold, ]
+    res <- res[ind_sums >= threshold, , drop = FALSE]
   }
   
   if (scale)
