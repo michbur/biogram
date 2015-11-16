@@ -12,9 +12,9 @@ Authors@R: c(
     role = "aut"),
     person("Chris", "Lauber",
     role = "aut"))
-Description: Tools for extraction and analysis of various 
-    n-grams (k-mers) derived from biological sequences (proteins 
-    or nucleic acids). Contains QuiPT (quick permutation test) for fast 
+Description: Tools for extraction and analysis of various
+    n-grams (k-mers) derived from biological sequences (proteins
+    or nucleic acids). Contains QuiPT (quick permutation test) for fast
     feature-filtering of the n-gram data.
 License: GPL-3
 URL: https://github.com/michbur/biogram
@@ -32,3 +32,4 @@ Suggests:
     testthat
 NeedsCompilation: no
 Repository: CRAN
+RoxygenNote: 5.0.1
