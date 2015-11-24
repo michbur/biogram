@@ -32,21 +32,22 @@ check_criterion <- function(input_criterion, criterion_names = c("ig", "kl")) {
   c(crit_name = valid_name, criterion_data)
 }
 
-#' Calculate criterion
+#' Calculate value of criterion
 #'
-#' Calculates independently chosen statistical criterion for each feature versus target vector.
+#' Computes a chosen statistical criterion for each feature versus target vector.
 #'
-#' @details Permutation test implemented in \code{biogram} uses several criterions to filter 
-#' important features. Each can be used by \code{\link{test_features}} by specifying
+#' @details The permutation test implemented in \code{biogram} uses several criterions to filter 
+#' important features. Each can be used by \code{\link{test_features}} by specifying the 
 #' \code{criterion} parameter.
 #' 
-#' Possible criterions are:
+#' Available criterions:
 #' \describe{
 #'   \item{ig}{Information Gain. Calculated using \code{\link{calc_ig}}.}
 #'   \item{kl}{Kullback-Leibler divergence. Calculated using \code{\link{calc_kl}}.}
 #' }
 #' @inheritParams test_features
-#' @param criterion_function a function calculating criterion. For a full list, see See also.
+#' @param criterion_function a function calculating criterion. For a full list, see 
+#' \code{\link{test_features}}.
 #' @return a \code{integer} vector of length equal to the number of features 
 #' containing computed information gain values.
 #' @note Both \code{target} and \code{features} must be binary, i.e. contain only 0 

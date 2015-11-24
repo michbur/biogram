@@ -16,7 +16,7 @@ calc_ed(a, b)
 an encoding distance.
 }
 \description{
-Computes encoding distance between two encodings.
+Computes the encoding distance between two encodings.
 }
 \details{
 The encoding distance between \code{a} and \code{b} is defined as the minimum number 

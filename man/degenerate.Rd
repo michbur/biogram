@@ -21,9 +21,6 @@ containing aggregated elements.
 elements to bigger groups.
 }
 \note{
-Both sequence and \code{element_groups} should contain lower-case letters.
-Upper-case will be automatically converted without a message.
-
 Characters not present in the \code{element_groups} will be converted to NA with a 
 warning.
 }

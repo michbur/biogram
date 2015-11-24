@@ -18,7 +18,7 @@ possible unigrams.}
 
 \item{conf_level}{confidence level.}
 
-\item{gap}{\code{logical}, if \code{TRUE} gap are used. See Details.}
+\item{gap}{\code{logical}, if \code{TRUE} gaps are used. See Details.}
 }
 \value{
 a vector of n-grams.
@@ -29,8 +29,8 @@ unigrams from the sequences and filters significant features (with p-value below
 \code{conf_level}).
 }
 \details{
-Gap parameter determines if \code{construct_ngrams} performs feature 
-selection on exact n-grams (\code{gap} equal to FALSE) or on all features in the 
+The \code{gap} parameter determines if \code{construct_ngrams} performs the
+feature selection on exact n-grams (\code{gap} equal to FALSE) or on all features in the 
 Hamming distance 1 from the n-gram (\code{gap} equal to TRUE).
 }
 \examples{

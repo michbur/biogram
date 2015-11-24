@@ -9,9 +9,7 @@
 #' @keywords manip
 #' @return a \code{character} vector or matrix (if input is a matrix) 
 #' containing aggregated elements.
-#' @note Both sequence and \code{element_groups} should contain lower-case letters.
-#' Upper-case will be automatically converted without a message.
-#' 
+#' @note  
 #' Characters not present in the \code{element_groups} will be converted to NA with a 
 #' warning.
 #' @export
@@ -28,12 +26,12 @@
 #' table(deg_seq)
 
 degenerate <- function(seq, element_groups) {
-  tmp_seq <- tolower(seq)
+  tmp_seq <- seq
   if (!all(unique(tmp_seq) %in% unlist(element_groups))) {
     warning("'seq' contains elements not present in 'element_groups'. Such elements will be replaced by NA.")
     tmp_seq[!(tmp_seq %in% unlist(element_groups))] <- NA
   }
-  
+
   if(is.null(names(element_groups))) {
     warning("'element_groups' is unnamed. Assumed names of groups are their ordinal numbers.")
     names(element_groups) <- 1L:length(element_groups)
@@ -77,6 +75,7 @@ l2n <- function(seq, seq_type) {
                                    "m", "n", "p", "q", "r", 
                                    "s", "t", "v", "w", "y"))
   names(elements_list) <- 1L:length(elements_list)
+  seq <- tolower(seq)
   as.numeric(degenerate(seq, elements_list))
 }
 
