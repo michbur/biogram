@@ -34,7 +34,11 @@ degenerate <- function(seq, element_groups) {
     tmp_seq[!(tmp_seq %in% unlist(element_groups))] <- NA
   }
   
-  
+  if(is.null(names(element_groups))) {
+    warning("'element_groups' is unnamed. Assumed names of groups are their ordinal numbers.")
+    names(element_groups) <- 1L:length(element_groups)
+  }
+    
   for (i in 1L:length(element_groups)) {
     tmp_seq[tmp_seq %in% element_groups[[i]]] <- names(element_groups)[i]
   }
