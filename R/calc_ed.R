@@ -28,7 +28,7 @@
 
 calc_ed <- function(a, b) {
   #compare temporary a to temporary b
-  if(length(a) < length(b)) {
+  if(length(a) > length(b)) {
     warning("'b' must be longer than 'a'. Reverting a and b.") 
     tb <- a
     ta <- b
