@@ -9,8 +9,8 @@ calc_ed(a, b)
 \arguments{
 \item{a}{an encoding (see Note)}
 
-\item{b}{an encoding to which \code{a} should be compared. Must be have less groups than 
-\code{a} or have equal length.}
+\item{b}{an encoding to which \code{a} should be compared. Must have equal number 
+groups or less than \code{a}.}
 }
 \value{
 an encoding distance.
@@ -19,12 +19,14 @@ an encoding distance.
 Computes the encoding distance between two encodings.
 }
 \details{
-The encoding distance between \code{a} and \code{b} is defined as the minimum number 
-of amino acids that have to be moved between subgroups of encoding to make \code{a} identical to
-\code{b} (order of subgroups in the encoding and amino acids in a group is unimportant).
+The encoding distance between \code{a} and \code{b} is defined as the 
+minimum number of amino acids that have to be moved between subgroups of encoding 
+to make \code{a} identical to \code{b} (order of subgroups in the encoding and amino 
+acids in a group is unimportant).
 }
 \note{
-The encoding is a list of groups to which elements of sequence should be aggregated.
+The encoding is a list of groups to which elements of sequence should be 
+aggregated.
 }
 \examples{
 #calculate encoding distance between two encodings of amino acids

@@ -2,12 +2,14 @@
 #' 
 #' Computes the encoding distance between two encodings.
 #' @param a an encoding (see Note)
-#' @param b an encoding to which \code{a} should be compared. Must be have less groups than 
-#' \code{a} or have equal length.
-#' @details The encoding distance between \code{a} and \code{b} is defined as the minimum number 
-#' of amino acids that have to be moved between subgroups of encoding to make \code{a} identical to
-#' \code{b} (order of subgroups in the encoding and amino acids in a group is unimportant).
-#' @note The encoding is a list of groups to which elements of sequence should be aggregated.
+#' @param b an encoding to which \code{a} should be compared. Must have equal number 
+#' groups or less than \code{a}.
+#' @details The encoding distance between \code{a} and \code{b} is defined as the 
+#' minimum number of amino acids that have to be moved between subgroups of encoding 
+#' to make \code{a} identical to \code{b} (order of subgroups in the encoding and amino 
+#' acids in a group is unimportant).
+#' @note The encoding is a list of groups to which elements of sequence should be 
+#' aggregated.
 #' @return an encoding distance.
 #' @export
 #' @examples
@@ -28,8 +30,8 @@
 
 calc_ed <- function(a, b) {
   #compare temporary a to temporary b
-  if(length(a) > length(b)) {
-    warning("'b' must be longer than 'a'. Reverting a and b.") 
+  if(length(a) < length(b)) {
+    warning("'a' must be longer than 'b'. Reverting a and b.") 
     tb <- a
     ta <- b
   } else {
