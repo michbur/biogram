@@ -1,10 +1,19 @@
 citHeader("To cite biogram in publications, please use:")
 
+if(!exists("meta") || is.null(meta)) meta <- packageDescription("biogram") 
+year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date) 
+vers <- paste("R package version", meta$Version)
+
 citEntry(entry = "Manual",
   author = "Michal Burdukiewicz and Piotr Sobczyk and Chris Lauber",
   title = "biogram: analysis of biological sequences using n-grams",
-  year = "2015",
-  note = "R package version 1.3",
+  year = year, 
+  note = vers,
   url = "http://CRAN.R-project.org/package=biogram",
-  textVersion = "Burdukiewicz M, Sobczyk P and Lauber C (2015). biogram: analysis of biological sequences using n-grams. R package version 1.3, <URL: http://CRAN.R-project.org/package=biogram>."
+  textVersion = paste("Burdukiewicz M, Sobczyk P and Lauber C (", 
+           year, 
+           "). biogram: analysis of biological sequences using n-grams. ", 
+           vers, 
+           ". http://CRAN.R-project.org/package=biogram",
+           ".", sep="")
 )
