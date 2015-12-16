@@ -10,6 +10,7 @@ before_install:
   - ./pkg-build.sh bootstrap
 
 install:
+  - ./pkg-build.sh install_github jimhester/covr
   - ./pkg-build.sh install_deps
 
 script:
@@ -17,6 +18,9 @@ script:
 
 after_failure:
   - ./pkg-build.sh dump_logs
+
+after_success:
+  - Rscript -e 'library(covr);codecov()'
 
 notifications:
   email:
@@ -28,9 +32,3 @@ env:
     - RVERSION=oldrel
     - RVERSION=release
     - RVERSION=devel
-
-r_github_packages:
-  - jimhester/covr
-
-after_success:
-  - Rscript -e 'library(covr);codecov()'
