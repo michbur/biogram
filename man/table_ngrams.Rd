@@ -11,7 +11,8 @@ table_ngrams(seq, ngrams, target)
 
 \item{ngrams}{a vector of n-grams. Must have the same \code{n}.}
 
-\item{target}{\code{integer} vector with target information (e.g. class labels).}
+\item{target}{\code{integer} vector with target information (e.g. class labels). 
+Must have at least two values.}
 }
 \value{
 a data frame with the number of columns equal to the length of the 
