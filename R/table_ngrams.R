@@ -1,8 +1,7 @@
 #' Tabulate n-grams
 #' 
 #' Builds a contingency table of the n-gram counts versus their class labels.
-#' @param seq a matrix describing sequences.
-#' @param ngrams a vector of n-grams. Must have the same \code{n}.
+#' @inheritParams count_specified
 #' @param target \code{integer} vector with target information (e.g. class labels). 
 #' Must have at least two values.
 #' @return a data frame with the number of columns equal to the length of the 
