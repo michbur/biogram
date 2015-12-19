@@ -3,7 +3,7 @@
 #' Builds (n+1)-grams from n-grams.
 #'
 #' @inheritParams position_ngrams
-#' @return a vector of n-grams (where \code{n} is equal to the \code{n} of the input plus one) 
+#' @return vector of n-grams (where \code{n} is equal to the \code{n} of the input plus one) 
 #' with position information.
 #' @details n-grams are built by pasting existing n-grams with unigrams extracted 
 #' from them.

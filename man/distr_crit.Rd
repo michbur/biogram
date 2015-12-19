@@ -11,8 +11,8 @@ distr_crit(target, feature, criterion = "ig")
 
 \item{feature}{\{0,1\}-valued feature vector. See Details.}
 
-\item{criterion}{the criterion used for calculations of distribution. 
-See \code{\link{calc_criterion}}.}
+\item{criterion}{criterion used for calculations of distribution. 
+See \code{\link{calc_criterion}} for the list of avaible criteria.}
 }
 \value{
 An object of class \code{\link{criterion_distribution}}.

@@ -4,10 +4,10 @@
 #' elements to bigger groups.
 #' 
 #' @param seq \code{character} vector or matrix representing single sequence.
-#' @param element_groups an encoding of elements: list of groups to which elements 
+#' @param element_groups encoding of elements: list of groups to which elements 
 #' of sequence should be aggregated.
 #' @keywords manip
-#' @return a \code{character} vector or matrix (if input is a matrix) 
+#' @return A \code{character} vector or matrix (if input is a matrix) 
 #' containing aggregated elements.
 #' @note  
 #' Characters not present in the \code{element_groups} will be converted to NA with a 

@@ -9,11 +9,11 @@ degenerate(seq, element_groups)
 \arguments{
 \item{seq}{\code{character} vector or matrix representing single sequence.}
 
-\item{element_groups}{an encoding of elements: list of groups to which elements 
+\item{element_groups}{encoding of elements: list of groups to which elements 
 of sequence should be aggregated.}
 }
 \value{
-a \code{character} vector or matrix (if input is a matrix) 
+A \code{character} vector or matrix (if input is a matrix) 
 containing aggregated elements.
 }
 \description{

@@ -10,7 +10,7 @@ add_1grams(ngrams)
 \item{ngrams}{a vector of positioned n-grams (as created by \code{\link{count_ngrams}}).}
 }
 \value{
-a vector of n-grams (where \code{n} is equal to the \code{n} of the input plus one) 
+vector of n-grams (where \code{n} is equal to the \code{n} of the input plus one) 
 with position information.
 }
 \description{

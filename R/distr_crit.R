@@ -4,8 +4,8 @@
 #' 
 #' @param target \{0,1\}-valued target vector. See Details.
 #' @param feature \{0,1\}-valued feature vector. See Details.
-#' @param criterion the criterion used for calculations of distribution. 
-#' See \code{\link{calc_criterion}}.
+#' @param criterion criterion used for calculations of distribution. 
+#' See \code{\link{calc_criterion}} for the list of avaible criteria.
 #' @export
 #' @details both \code{target} and \code{feature} vectors may contain only 0 and 1.
 #' @return An object of class \code{\link{criterion_distribution}}.

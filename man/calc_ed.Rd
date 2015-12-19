@@ -7,10 +7,10 @@
 calc_ed(a, b)
 }
 \arguments{
-\item{a}{an encoding (see Note)}
+\item{a}{encoding (see Note)}
 
-\item{b}{an encoding to which \code{a} should be compared. Must have equal number 
-groups or less than \code{a}.}
+\item{b}{encoding to which \code{a} should be compared. Must have equal number 
+of groups or less than \code{a}.}
 }
 \value{
 an encoding distance.
