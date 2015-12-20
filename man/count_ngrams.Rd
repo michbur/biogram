@@ -20,8 +20,8 @@ consecutive elements). See Details.}
 
 \item{pos}{\code{logical}, if \code{TRUE} position-specific n_grams are counted.}
 
-\item{scale}{\code{logical}, if \code{TRUE} output data is normalized. Should be
-used only for n-grams without position information. See \code{Details}.}
+\item{scale}{\code{logical}, if \code{TRUE} output data is normalized. May be
+applied only to the counts of n-grams without position information. See \code{Details}.}
 
 \item{threshold}{\code{integer}, if not equal to 0, data is binarized into
 two groups (larger or equal to threshold vs. smaller than threshold).}

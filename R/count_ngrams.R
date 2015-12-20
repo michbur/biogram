@@ -9,8 +9,8 @@
 #' @param d \code{integer} vector of distances between elements of n-gram (0 means 
 #' consecutive elements). See Details.
 #' @param pos \code{logical}, if \code{TRUE} position-specific n_grams are counted.
-#' @param scale \code{logical}, if \code{TRUE} output data is normalized. Should be
-#' used only for n-grams without position information. See \code{Details}.
+#' @param scale \code{logical}, if \code{TRUE} output data is normalized. May be
+#' applied only to the counts of n-grams without position information. See \code{Details}.
 #' @param threshold \code{integer}, if not equal to 0, data is binarized into
 #' two groups (larger or equal to threshold vs. smaller than threshold).
 #' 
