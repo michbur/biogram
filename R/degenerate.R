@@ -5,7 +5,7 @@
 #' 
 #' @param seq \code{character} vector or matrix representing single sequence.
 #' @param element_groups encoding of elements: list of groups to which elements 
-#' of sequence should be aggregated.
+#' of sequence should be aggregated. Must have unique names.
 #' @keywords manip
 #' @return A \code{character} vector or matrix (if input is a matrix) 
 #' containing aggregated elements.
@@ -35,6 +35,10 @@ degenerate <- function(seq, element_groups) {
   if(is.null(names(element_groups))) {
     warning("'element_groups' is unnamed. Assumed names of groups are their ordinal numbers.")
     names(element_groups) <- 1L:length(element_groups)
+  }
+  
+  if(length(unique(names(element_groups))) != length(names(element_groups))) {
+    stop("'element_groups' must have unique names.")
   }
     
   for (i in 1L:length(element_groups)) {

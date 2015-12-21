@@ -10,7 +10,7 @@ degenerate(seq, element_groups)
 \item{seq}{\code{character} vector or matrix representing single sequence.}
 
 \item{element_groups}{encoding of elements: list of groups to which elements 
-of sequence should be aggregated.}
+of sequence should be aggregated. Must have unique names.}
 }
 \value{
 A \code{character} vector or matrix (if input is a matrix) 
