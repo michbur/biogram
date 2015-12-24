@@ -4,10 +4,16 @@
 #' @param a encoding (see Note)
 #' @param b encoding to which \code{a} should be compared. Must have equal number 
 #' of groups or less than \code{a}.
+#' @param prop \code{matrix} of physicochemical properties to normalise the 
+#' encoding distance.  Must have either four or 20 columns and each column should 
+#' represent properties of the single amino acid/nucleotide. If \code{NULL},
+#' encoding distance is not normalised.
 #' @details The encoding distance between \code{a} and \code{b} is defined as the 
 #' minimum number of amino acids that have to be moved between subgroups of encoding 
 #' to make \code{a} identical to \code{b} (order of subgroups in the encoding and amino 
 #' acids in a group is unimportant).
+#' 
+#' If
 #' @note The encoding is a list of groups to which elements of sequence should be 
 #' aggregated.
 #' @return an encoding distance.
@@ -28,7 +34,7 @@
 #' calc_ed(aa1, aa1) 
 #'  
 
-calc_ed <- function(a, b) {
+calc_ed <- function(a, b, prop = NULL) {
   #compare temporary a to temporary b
   if(length(a) < length(b)) {
     warning("'a' must be longer than 'b'. Reverting a and b.") 
@@ -51,6 +57,13 @@ calc_ed <- function(a, b) {
   if(!all(sort(unlist(a)) == sort(unlist(b))))
     stop("Encodings ('a' and 'b') must contain the same elements.")
   
+  if(!is.null(prop)) {
+    if(!is.matrix(prop))
+      stop("'prop' must have 'matrix' class.")
+    
+    if(!(ncol(prop) %in% c(4, 20)))
+      stop("'prop' must have 4 or 20 columns.")
+  }
   #encoding distance - distance between encodings
   ed <- 0
   
@@ -93,6 +106,23 @@ calc_ed <- function(a, b) {
   } else {
     calc_ed_single(ta, tb)
   }
+  
+  if(!is.null(prop)) {
+    coords_a <- lapply(a, function(single_subgroup) rowMeans(prop[, single_subgroup, drop = FALSE]))
+    coords_b <- lapply(b, function(single_subgroup) rowMeans(prop[, single_subgroup, drop = FALSE]))
+    
+    norm_factor <- sum(sapply(coords_a, function(single_coords_a) {
+      distances <- sapply(coords_b, function(single_coords_b) 
+        #vector of distances between groups
+        sqrt(sum((single_coords_a - single_coords_b)^2))
+      )
+      #c(dist = min(distances), id = unname(which.min(distances)))
+      min(distances)
+    }))
+    
+    ed <- ed * norm_factor
+  }
+  
   
   unname(ed)
 }

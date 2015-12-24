@@ -4,13 +4,18 @@
 \alias{calc_ed}
 \title{Calculate encoding distance}
 \usage{
-calc_ed(a, b)
+calc_ed(a, b, prop = NULL)
 }
 \arguments{
 \item{a}{encoding (see Note)}
 
 \item{b}{encoding to which \code{a} should be compared. Must have equal number 
 of groups or less than \code{a}.}
+
+\item{prop}{\code{matrix} of physicochemical properties to normalise the 
+encoding distance.  Must have either four or 20 columns and each column should 
+represent properties of the single amino acid/nucleotide. If \code{NULL},
+encoding distance is not normalised.}
 }
 \value{
 an encoding distance.
@@ -23,6 +28,8 @@ The encoding distance between \code{a} and \code{b} is defined as the
 minimum number of amino acids that have to be moved between subgroups of encoding 
 to make \code{a} identical to \code{b} (order of subgroups in the encoding and amino 
 acids in a group is unimportant).
+
+If
 }
 \note{
 The encoding is a list of groups to which elements of sequence should be 
