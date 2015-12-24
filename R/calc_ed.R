@@ -13,7 +13,10 @@
 #' to make \code{a} identical to \code{b} (order of subgroups in the encoding and amino 
 #' acids in a group is unimportant).
 #' 
-#' If
+#' If the parameter \code{prop} is supplied, the encoding distance is normalized by the 
+#' factor equal to the sum of distances for each group in \code{a} and the closest group in 
+#' \code{b}. The position of a group is defined as the mean value of properties of amino 
+#' acids or nucleotides belonging the group.
 #' @note The encoding is a list of groups to which elements of sequence should be 
 #' aggregated.
 #' @return an encoding distance.
@@ -122,7 +125,6 @@ calc_ed <- function(a, b, prop = NULL) {
     
     ed <- ed * norm_factor
   }
-  
   
   unname(ed)
 }
