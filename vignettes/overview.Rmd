@@ -71,20 +71,8 @@ kable(group2df(b), caption = "Encoding B")
 The encoding distance between both groups is `r calc_ed(a, b)`.  
 
 ```{r, echo = FALSE, message = FALSE, results='asis'}
-a_prop <- structure(c(0.112469437652812, 0.405737704918033, 0.711491442542787, 
-                      0.332991803278688, 0.327628361858191, 0.156762295081967, 0.256723716381418, 
-                      0.00614754098360652, 0.312958435207824, 0.905737704918033, 0.440097799511002, 
-                      0.145491803278689, 0.36919315403423, 0.055327868852459, 0, 0.262295081967213, 
-                      0.562347188264059, 0.559426229508197, 0.454767726161369, 1, 0.454767726161369, 
-                      0.941598360655738, 0.535452322738386, 0, 0.540342298288509, 0.787909836065574, 
-                      0.709046454767726, 0.968237704918033, 0.320293398533007, 0.117827868852459, 
-                      0.15158924205379, 0.137295081967213, 0.264058679706601, 0.305327868852459, 
-                      1, 0.961065573770492, 0.728606356968215, 0.648565573770492, 0.342298288508558, 
-                      0.88422131147541), .Dim = c(2L, 20L), 
-                    .Dimnames = list(c("CHAM820101", "NISK860101"), 
-                                     c("A", "R", "N", "D", "C", "Q", "E", "G", "H", "I", "L", "K", "M", "F", "P", "S", "T", "W", "Y", "V")))
-
-colnames(a_prop) <- tolower(colnames(a_prop))
+data(aaprop)
+a_prop <- aaprop[c(22, 211), ]
 
 #b_prop <- aa_nprop[na.omit(traits_table[ao, ]), , drop = FALSE]
 
@@ -137,6 +125,31 @@ For each group in encoding **a**, we choose the minimum distance $d_i$ between t
 $$
 n_f = \sum_{i \in 1, 2, 3} \min \left( d_i \right) 
 $$
+
+In the case depicted above, $n_f$ is equal to the sum of `r paste0(round(apply(tmp, 2, min), 4), collapse = ", ")`: `r round(sum(apply(tmp, 2, min)), 4)`.
+
+## biogram implementation
+
+The sole function responsible for computing an encoding distance is *calc_ed*.
+
+```{r, echo = TRUE}
+
+# define two encodings
+a <- list(`1` = "p", 
+          `2` = c("f", "i", "w", "y"), 
+          `3` = c("a", "c", "d", "e", "g", "h", "k", "l", "m", "n", "q", "r", "s", "t", "v"))
+
+b <- list(`1` = c("f", "r", "w", "y"), 
+          `2` = c("c", "i", "l", "t", "v"), 
+          `3` = c("a", "d", "e", "g", "h", "k", "m", "n", "p", "q", "s"))
+
+# calculate encoding distance
+calc_ed(a = a, b = b)
+
+# get properties from aaprop dataset and calculate normalised encoding distance
+data(aaprop)
+calc_ed(a = a, b = b, prop = aaprop[c(22, 211), ])
+```
 
 
 
