@@ -146,7 +146,7 @@ b <- list(`1` = c("f", "r", "w", "y"),
 # calculate encoding distance
 calc_ed(a = a, b = b)
 
-# get properties from aaprop dataset and calculate normalised encoding distance
+# get properties from aaprop dataset and calculate normalized encoding distance
 data(aaprop)
 calc_ed(a = a, b = b, prop = aaprop[c(22, 211), ])
 ```

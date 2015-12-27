@@ -4,16 +4,16 @@
 #' @param a encoding (see Note)
 #' @param b encoding to which \code{a} should be compared. Must have equal number 
 #' of groups or less than \code{a}.
-#' @param prop \code{matrix} of physicochemical properties to normalise the 
+#' @param prop \code{matrix} of physicochemical properties to normalize the 
 #' encoding distance.  Must have either four or 20 columns and each column should 
 #' represent properties of the single amino acid/nucleotide. If \code{NULL},
-#' encoding distance is not normalised.
+#' encoding distance is not normalized.
 #' @details The encoding distance between \code{a} and \code{b} is defined as the 
 #' minimum number of amino acids that have to be moved between subgroups of encoding 
 #' to make \code{a} identical to \code{b} (order of subgroups in the encoding and amino 
 #' acids in a group is unimportant).
 #' 
-#' If the parameter \code{prop} is supplied, the encoding distance is normalised by the 
+#' If the parameter \code{prop} is supplied, the encoding distance is normalized by the 
 #' factor equal to the sum of distances for each group in \code{a} and the closest group in 
 #' \code{b}. The position of a group is defined as the mean value of properties of amino 
 #' acids or nucleotides belonging the group.
