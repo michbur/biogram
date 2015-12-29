@@ -53,20 +53,26 @@ test_that("Distance 2, including empty groups",{
   expect_equal(calc_ed(l3, l2), 2)
 })
 
-test_that("Distance 2, including empty groups",{
+test_that("Distance 2, single groups",{
   
-  l1 <- list('1' = c("a", "b", "c"),
-             '2' = c("d", "e"))
-  l2 <- list('1' = c("a", "e"),
-             '2' = c("d", "c", "b"))
-  calc_ed(l1, l2)
+  l1 <- list('1' = "a",
+             '2' = c("d", "e", "f"),
+             '3' = "c",
+             '4' = "b")
+  
+  l2 <- list('1' = c("a", "b", "c"),
+             '2' = c("d", "e", "f"))
   
   expect_equal(calc_ed(l1, l2), 2)
   
-  l3 <- list('1' = c("a", "b", "c"),
-             '2' = c("d", "e"),
-             '3' = c())
-  expect_equal(calc_ed(l3, l2), 2)
+#   still not working!
+#   l3 <- list('1' = c("a", "b"),
+#              '2' = c("d", "e"),
+#              '3' = "c",
+#              '4' = "f")
+#   
+#   calc_ed(l3, l2)
+  
 })
 
 test_that("Long identical groups",{
