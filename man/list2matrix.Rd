@@ -17,8 +17,8 @@ number of columns equal to the length of the longest sequence.
 Converts list of sequences to matrix.
 }
 \note{
-Since matrix must have specified number of columns, shorter sequences end with 
-NA.
+Since matrix must have specified number of columns, ends of shorter sequences are 
+filled with NAs.
 }
 \examples{
 list2matrix(list(s1 = c("c", "g", "g", "t"),

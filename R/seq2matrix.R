@@ -6,8 +6,8 @@
 #' @return A matrix with the number of rows equal to the number of sequences and the 
 #' number of columns equal to the length of the longest sequence.
 #' @note  
-#' Since matrix must have specified number of columns, shorter sequences end with 
-#' NA.
+#' Since matrix must have specified number of columns, ends of shorter sequences are 
+#' filled with NAs.
 #' @export
 #' @keywords manip
 #' @examples
