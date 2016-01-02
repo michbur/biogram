@@ -16,8 +16,8 @@
 
 list2matrix <- function(seq_list) {
   max_len <- max(lengths(seq_list))
-  t(sapply(seq_list, function(i)
-    c(i, rep(NA, max_len) - length(i))
+  do.call(rbind, lapply(seq_list, function(i)
+    c(i, rep(NA, max_len - length(i)))
   ))
 }
 
