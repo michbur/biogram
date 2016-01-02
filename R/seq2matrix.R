@@ -7,12 +7,13 @@
 #' number of columns equal to the length of the longest sequence.
 #' @note  
 #' Since matrix must have specified number of columns, ends of shorter sequences are 
-#' filled with NAs.
+#' completed with NAs.
 #' @export
 #' @keywords manip
 #' @examples
 #' list2matrix(list(s1 = c("c", "g", "g", "t"),
-#'                  s2 = c("g", "t", "c", "t", "t", "g")))
+#'                  s2 = c("g", "t", "c", "t", "t", "g"),
+#'                  s3 = c("a", "a", "t")))
 
 list2matrix <- function(seq_list) {
   max_len <- max(lengths(seq_list))
