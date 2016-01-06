@@ -13,3 +13,10 @@ test_that("Real n-grams",{
   #n-gram with position information but no distance
   expect_false(is_ngram("1_1.1.1"))
 })
+
+test_that("Totally wrong n-grams",{
+  
+  expect_false(is_ngram("a"))
+  
+  expect_false(is_ngram(list("a")))
+})

@@ -11,6 +11,9 @@
 
 
 is_ngram <- function(x) {
+  if(!is.character(x))
+    return(FALSE)
+  
   sngram <- strsplit(x, "_")[[1]]
   
   if(!(length(sngram) %in% c(2, 3)))
