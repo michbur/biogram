@@ -1,5 +1,4 @@
-## Sample .travis.yml file for use with metacran/r-builder
-## See https://github.com/metacran/r-builder for details.
+## travis for R-devel taken from sinhrks/ggfortify
 
 language: r
 warnings_are_errors: true
@@ -19,7 +18,7 @@ r_github_packages:
 before_install:
   - if [[ "$RVER" == "DEV" ]]; then
       sh install_rdevel.sh;
-    fi
+    fi;
   - echo "options(repos = c(CRAN='http://cran.rstudio.com'))" >> ~/.Rprofile
 
 after_success:

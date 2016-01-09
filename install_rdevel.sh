@@ -12,17 +12,6 @@ sudo make install;
 cd ../
   rm -rf zlib-1.2.8;
 rm zlib-1.2.8.tar.gz;
-# PCRE
-# ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz;
-# tar zxf pcre-8.38.tar.gz;
-# cd pcre-8.38;
-# ./configure;
-# make;
-# sudo make install;
-# cd ../;
-# rm pcre-8.38.tar.gz;
-# rm -rf pcre-8.38;
-# R-devel
 wget --no-check-certificate https://stat.ethz.ch/R/daily/R-devel.tar.gz;
 tar zxf R-devel.tar.gz;
 cd R-devel;
