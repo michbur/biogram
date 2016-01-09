@@ -1,25 +1,41 @@
-## travis for R-devel taken from sinhrks/ggfortify
+## Sample .travis.yml file for use with metacran/r-builder
+## See https://github.com/metacran/r-builder for details.
 
-language: r
-warnings_are_errors: true
+language: c
 sudo: required
 
-matrix:
-  include:
-    - env: RVER=STD
-    - env: RVER=DEV
+env:
+  global:
+    - RENV="./pkg-build.sh"
 
-r_binary_packages:
-  - rmarkdown
-
-r_github_packages:
-  - jimhester/covr
 
 before_install:
-  - if [[ "$RVER" == "DEV" ]]; then
-      sh install_rdevel.sh;
-    fi
-  - echo "options(repos = c(CRAN='http://cran.rstudio.com'))" >> ~/.Rprofile
+  - curl -OL https://raw.githubusercontent.com/metacran/r-builder/master/pkg-build.sh
+  - chmod 755 pkg-build.sh
+  - ./pkg-build.sh bootstrap
+
+install:
+  - ./pkg-build.sh install_deps
+
+script:
+  - ./pkg-build.sh run_tests
 
 after_success:
-  - Rscript -e 'library(covr);coveralls()'
+  - $RENV dump_logs_by_extension out
+  - $RENV install_github HenrikBengtsson/covr
+  - curl -OL https://raw.githubusercontent.com/HenrikBengtsson/covr-utils/master/covr-utils.R;
+  - $RENV run_script .coveralls.R
+
+after_failure:
+  - ./pkg-build.sh dump_logs
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
+
+env:
+  matrix:
+    - RVERSION=oldrel
+    - RVERSION=release
+    - RVERSION=devel
