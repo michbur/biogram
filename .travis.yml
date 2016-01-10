@@ -21,10 +21,9 @@ script:
   - ./pkg-build.sh run_tests
 
 after_success:
-  - $RENV dump_logs_by_extension out
-  - $RENV install_github HenrikBengtsson/covr
-  - curl -OL https://raw.githubusercontent.com/HenrikBengtsson/covr-utils/master/covr-utils.R;
-  - $RENV run_script .coveralls.R
+  - Rscript -e 'install.packages(devtools)'
+  - Rscript -e 'devtools::install_github("jimhester/covr")'
+  - Rscript -e 'covr::coveralls()'
 
 after_failure:
   - ./pkg-build.sh dump_logs
