@@ -19,7 +19,7 @@ contain information about position}
 a character vector. Elements of n-gram are separated by dot.
 }
 \description{
-Creates vector of all posible n_grams (for given \code{n}).
+Creates the vector of all possible n_grams (for given \code{n}).
 }
 \details{
 See Details section of \code{\link{count_ngrams}} for more 

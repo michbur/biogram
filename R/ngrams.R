@@ -1,6 +1,6 @@
 #' Get all possible n-Grams
 #'
-#' Creates vector of all posible n_grams (for given \code{n}).
+#' Creates the vector of all possible n_grams (for given \code{n}).
 #'
 #' @inheritParams count_ngrams
 #' @param possible_grams number of possible n-grams. If not \code{NULL} n-grams do not
