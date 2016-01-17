@@ -24,11 +24,15 @@ possible unigrams.}
 a vector of n-grams.
 }
 \description{
-Step-by-step builds and selects important n-grams. \code{construct_ngrams} extracts 
-unigrams from the sequences and filters significant features (with p-value below 
-\code{conf_level}).
+Builds and selects important n-grams stepwise.
 }
 \details{
+\code{construct_ngrams} starts by 
+extracting unigrams from the sequences, pasting them together in all combination and 
+choosing from them significant features (with p-value below \code{conf_level}). The 
+chosen n-grams are further extended to the specified by \code{n_max} size by pasting 
+unigrams at both ends.
+
 The \code{gap} parameter determines if \code{construct_ngrams} performs the
 feature selection on exact n-grams (\code{gap} equal to FALSE) or on all features in the 
 Hamming distance 1 from the n-gram (\code{gap} equal to TRUE).
