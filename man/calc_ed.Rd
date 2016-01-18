@@ -7,7 +7,8 @@
 calc_ed(a, b, prop = NULL)
 }
 \arguments{
-\item{a}{encoding (see Note)}
+\item{a}{encoding (see \code{\link{validate_encoding}} for more information 
+about the required structure of encoding).}
 
 \item{b}{encoding to which \code{a} should be compared. Must have equal number 
 of groups or less than \code{a}.}
@@ -34,11 +35,6 @@ factor equal to the sum of distances for each group in \code{a} and the closest 
 in \code{b}. The position of a group is defined as the mean value of properties of 
 amino acids or nucleotides belonging the group.
 }
-\note{
-The encoding is a list of groups to which elements of sequence should be 
-aggregated. All elements of the alphabet (all amino acids or all nucleotides) should 
-appear in the encoding.
-}
 \examples{
 #calculate encoding distance between two encodings of amino acids
 aa1 = list(`1` = c("g", "a", "p", "v", "m", "l", "i"), 
@@ -54,5 +50,8 @@ calc_ed(aa1, aa2)
 #the encoding distance between two identical encodings is 0
 calc_ed(aa1, aa1) 
  
+}
+\seealso{
+\code{\link{validate_encoding}}.
 }
 

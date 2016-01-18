@@ -1,7 +1,8 @@
 #' Calculate encoding distance
 #' 
 #' Computes the encoding distance between two encodings.
-#' @param a encoding (see Note)
+#' @param a encoding (see \code{\link{validate_encoding}} for more information 
+#' about the required structure of encoding).
 #' @param b encoding to which \code{a} should be compared. Must have equal number 
 #' of groups or less than \code{a}.
 #' @param prop \code{matrix} of physicochemical properties to normalize the 
@@ -17,9 +18,7 @@
 #' factor equal to the sum of distances for each group in \code{a} and the closest group 
 #' in \code{b}. The position of a group is defined as the mean value of properties of 
 #' amino acids or nucleotides belonging the group.
-#' @note The encoding is a list of groups to which elements of sequence should be 
-#' aggregated. All elements of the alphabet (all amino acids or all nucleotides) should 
-#' appear in the encoding.
+#' @seealso \code{\link{validate_encoding}}.
 #' @return an encoding distance.
 #' @export
 #' @examples
@@ -55,10 +54,7 @@ calc_ed <- function(a, b, prop = NULL) {
   if(any(lengths(tb) == 0))
     tb <- tb[lengths(tb) != 0]
   
-  if(length(unlist(a)) != length(unlist(b)))
-    stop("Encodings ('a' and 'b') must contain the same number of elements.")
-  
-  if(!all(sort(unlist(a)) == sort(unlist(b))))
+  if(!validate_encoding(ta, unlist(tb)))
     stop("Encodings ('a' and 'b') must contain the same elements.")
   
   if(!is.null(prop)) {
@@ -176,23 +172,38 @@ calc_ed_single <- function(ta, tb, ed = 0) {
 }
 
 
+#' Validate encoding
+#'
+#' Checks if an encoding has the proper structure 
+#' @param x encoding.
+#' @param u \code{integer}, \code{numeric} or \code{character} vector of all
+#' elements belonging to the encoding. See Details.
+#' @keywords manip
+#' @return \code{TRUE} if the \code{x} is a correctly reduced \code{u}, 
+#' \code{FALSE} in any other cases.
+#' @details The encoding is a reduced alphabet, the list of groups to which 
+#' elements of sequence should be aggregated. All elements of the alphabet (all 
+#' amino acids or all nucleotides) should appear in the encoding.
+#' @export
+#' @keywords manip
+#' @seealso 
+#' \code{\link{calc_ed}}: calculate the encoding distance between two encodings.
+#' @examples
+#' enc1 = list(`1` = c("a", "t"), 
+#'             `2` = c("g", "c"))
+#' # see if enc1 is the correctly reduced nucleotide (DNA) alphabet
+#' validate_encoding(enc1, c("a", "c", "g", "t"))
+#' 
+#' # enc1 is not the RNA alphabet, so the results is FALSE
+#' validate_encoding(enc1, c("a", "c", "g", "u"))
+#' 
+#' # validate_encoding works also on other notations
+#' enc2 = list(a = c(1, 4),
+#'             b = c(2, 3))
+#' validate_encoding(enc2, 1L:4)
 
-
-is_encoding <- function(x) {
+validate_encoding <- function(x, u) {
   if(!is.list(x))
-    return(FALSE)
-  un_x <- tolower(unlist(x))
-  if(length(un_x) == 20) 
-    #what with extended alphabet?
-    if(all(un_x %in% c("a", "c", "d", "e", "f", 
-                   "g", "h",  "i", "k", "l", 
-                   "m", "n", "p", "q", "r", 
-                   "s", "t", "v", "w", "y"))) 
-      return(TRUE)
-  
-  if(length(un_x == 4))
-    if(all(un_x) %in% c("a", "c", "g", "u", "t"))
-      return(TRUE)
-  
-  return(FALSE)
+    stop("'x' must have 'list' class.")
+  all(sort(unlist(x)) == sort(u))
 }
