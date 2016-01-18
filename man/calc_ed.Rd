@@ -30,13 +30,14 @@ to make \code{a} identical to \code{b} (order of subgroups in the encoding and a
 acids in a group is unimportant).
 
 If the parameter \code{prop} is supplied, the encoding distance is normalized by the 
-factor equal to the sum of distances for each group in \code{a} and the closest group in 
-\code{b}. The position of a group is defined as the mean value of properties of amino 
-acids or nucleotides belonging the group.
+factor equal to the sum of distances for each group in \code{a} and the closest group 
+in \code{b}. The position of a group is defined as the mean value of properties of 
+amino acids or nucleotides belonging the group.
 }
 \note{
 The encoding is a list of groups to which elements of sequence should be 
-aggregated.
+aggregated. All elements of the alphabet (all amino acids or all nucleotides) should 
+appear in the encoding.
 }
 \examples{
 #calculate encoding distance between two encodings of amino acids

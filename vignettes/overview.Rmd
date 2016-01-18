@@ -52,18 +52,18 @@ group2df <- function(group_list, caption = NULL, label = NULL) {
     paste0(toupper(sort(i)), collapse = ", ")))
 }
 
-a <- structure(list(`1` = "p", `2` = c("f", "i", "w", "y"), 
-                    `3` = c("a", "c", "d", "e", "g", "h", "k", "l", "m", "n", "q", "r", "s", "t", "v")), 
-               .Names = c("1", "2", "3"))
+a <- list(`1` = "p", 
+          `2` = c("f", "i", "w", "y"), 
+          `3` = c("a", "c", "d", "e", "g", "h", "k", "l", "m", "n", "q", "r", "s", "t", "v"))
 
 kable(group2df(a), caption = "Encoding A")
 ```
 
 
 ```{r, echo = FALSE, message = FALSE, results='asis'}
-b <- structure(list(`1` = c("f", "r", "w", "y"), `2` = c("c", "i", "l", "t", "v"), 
-                    `3` = c("a", "d", "e", "g", "h", "k", "m", "n", "p", "q", "s")), 
-               .Names = c("1", "2", "3"))
+b <- list(`1` = c("f", "r", "w", "y"), 
+          `2` = c("c", "i", "l", "t", "v"), 
+          `3` = c("a", "d", "e", "g", "h", "k", "m", "n", "p", "q", "s"))
 
 kable(group2df(b), caption = "Encoding B")
 ```

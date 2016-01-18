@@ -14,11 +14,12 @@
 #' acids in a group is unimportant).
 #' 
 #' If the parameter \code{prop} is supplied, the encoding distance is normalized by the 
-#' factor equal to the sum of distances for each group in \code{a} and the closest group in 
-#' \code{b}. The position of a group is defined as the mean value of properties of amino 
-#' acids or nucleotides belonging the group.
+#' factor equal to the sum of distances for each group in \code{a} and the closest group 
+#' in \code{b}. The position of a group is defined as the mean value of properties of 
+#' amino acids or nucleotides belonging the group.
 #' @note The encoding is a list of groups to which elements of sequence should be 
-#' aggregated.
+#' aggregated. All elements of the alphabet (all amino acids or all nucleotides) should 
+#' appear in the encoding.
 #' @return an encoding distance.
 #' @export
 #' @examples
@@ -177,3 +178,21 @@ calc_ed_single <- function(ta, tb, ed = 0) {
 
 
 
+is_encoding <- function(x) {
+  if(!is.list(x))
+    return(FALSE)
+  un_x <- tolower(unlist(x))
+  if(length(un_x) == 20) 
+    #what with extended alphabet?
+    if(all(un_x %in% c("a", "c", "d", "e", "f", 
+                   "g", "h",  "i", "k", "l", 
+                   "m", "n", "p", "q", "r", 
+                   "s", "t", "v", "w", "y"))) 
+      return(TRUE)
+  
+  if(length(un_x == 4))
+    if(all(un_x) %in% c("a", "c", "g", "u", "t"))
+      return(TRUE)
+  
+  return(FALSE)
+}
