@@ -93,17 +93,19 @@ calc_ed <- function(a, b, prop = NULL) {
       }
     } else {
       #indices of groups to merge
-      merges <- combn(1L:len_a, len_a - len_b + 1)
-      
+      merges <- combn(1L:len_a, len_a - len_b + 1, simplify = FALSE)
+
       #list of merged
-      reduced_size <- lapply(1L:ncol(merges), function(single_merge) {
-        all_lengths <- lengths(ta[merges[, single_merge]])
-        list(enc = c(list(unname(unlist(ta[merges[, single_merge]]))), ta[-merges[, single_merge]]),
+      reduced_size <- lapply(merges, function(single_merge) {
+        all_lengths <- lengths(ta[single_merge])
+        list(enc = c(list(unname(unlist(ta[single_merge]))), ta[-single_merge]),
              ed = sum(all_lengths[-which.max(all_lengths)]))
         })
 
-      min(sapply(reduced_size, function(single_ta) calc_ed_single(single_ta[["enc"]], tb,
-                                                                  single_ta[["ed"]])))
+      
+      all_eds <- sapply(reduced_size, function(single_ta) calc_ed_single(single_ta[["enc"]], tb,
+                                                                         single_ta[["ed"]]))
+      min(all_eds)
     }
   } else {
     calc_ed_single(ta, tb)
