@@ -43,8 +43,7 @@ test_that("Distance 2, including empty groups",{
              '2' = c("d", "e"))
   l2 <- list('1' = c("a", "e"),
              '2' = c("d", "c", "b"))
-  calc_ed(l1, l2)
-  
+
   expect_equal(calc_ed(l1, l2), 2)
   
   l3 <- list('1' = c("a", "b", "c"),
@@ -65,14 +64,13 @@ test_that("Distance 2, single groups",{
   
   expect_equal(calc_ed(l1, l2), 2)
   
-#   still not working!
+#not working
 #   l3 <- list('1' = c("a", "b"),
 #              '2' = c("d", "e"),
 #              '3' = "c",
 #              '4' = "f")
 #   
-#   calc_ed(l3, l2)
-  
+#   expect_equal(calc_ed(l3, l2), 2)
 })
 
 # doesn't work too

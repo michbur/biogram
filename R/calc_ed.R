@@ -30,7 +30,7 @@
 #' 
 #' aa2 = list(`1` = c("g", "a", "p", "v", "m", "l", "q"), 
 #'            `2` = c("k", "h", "d", "e", "i"), 
-#'            `4` = c("f", "r", "w", "y", "s", "t", "c", "n"))
+#'            `3` = c("f", "r", "w", "y", "s", "t", "c", "n"))
 #' calc_ed(aa1, aa2) 
 #'     
 #' #the encoding distance between two identical encodings is 0
@@ -92,16 +92,33 @@ calc_ed <- function(a, b, prop = NULL) {
         sum(lengths(ta)[lengths(ta) != max(lengths(ta))])
       }
     } else {
-      #indices of groups to merge
+#       #indices of groups to merge
+#       merges <- unlist(lapply(1L:(len_a - len_b + 1), function(n_subgroups) {
+#         combn(1L:len_a, n_subgroups, simplify = FALSE)
+#       }), recursive = FALSE)
+# 
+#       #list of merged
+#       reduced_size <- lapply(merges, function(single_merge) {
+#         
+#         all_lengths <- list(lengths(ta[single_merge], use.names = FALSE),
+#                             lengths(ta[-single_merge], use.names = FALSE))
+# 
+#         list(enc = list(unlist(ta[single_merge], use.names = FALSE), 
+#                         unlist(ta[-single_merge], use.names = FALSE)), #groups after merge
+#              ed = sum(sapply(all_lengths, function(single_length) {
+#                sum(single_length[-which.max(single_length)])
+#              })))
+#       })
+      
       merges <- combn(1L:len_a, len_a - len_b + 1, simplify = FALSE)
-
+      
       #list of merged
       reduced_size <- lapply(merges, function(single_merge) {
         all_lengths <- lengths(ta[single_merge])
         list(enc = c(list(unname(unlist(ta[single_merge]))), ta[-single_merge]),
              ed = sum(all_lengths[-which.max(all_lengths)]))
-        })
-
+      })
+      
       
       all_eds <- sapply(reduced_size, function(single_ta) calc_ed_single(single_ta[["enc"]], tb,
                                                                          single_ta[["ed"]]))
