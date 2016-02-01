@@ -92,17 +92,18 @@ calc_ed <- function(a, b, prop = NULL) {
         sum(lengths(ta)[lengths(ta) != max(lengths(ta))])
       }
     } else {
+      
 #       #indices of groups to merge
 #       merges <- unlist(lapply(1L:(len_a - len_b + 1), function(n_subgroups) {
 #         combn(1L:len_a, n_subgroups, simplify = FALSE)
 #       }), recursive = FALSE)
-# 
+#       
 #       #list of merged
 #       reduced_size <- lapply(merges, function(single_merge) {
 #         
 #         all_lengths <- list(lengths(ta[single_merge], use.names = FALSE),
 #                             lengths(ta[-single_merge], use.names = FALSE))
-# 
+#         
 #         list(enc = list(unlist(ta[single_merge], use.names = FALSE), 
 #                         unlist(ta[-single_merge], use.names = FALSE)), #groups after merge
 #              ed = sum(sapply(all_lengths, function(single_length) {
@@ -123,6 +124,7 @@ calc_ed <- function(a, b, prop = NULL) {
       all_eds <- sapply(reduced_size, function(single_ta) calc_ed_single(single_ta[["enc"]], tb,
                                                                          single_ta[["ed"]]))
       min(all_eds)
+      
     }
   } else {
     calc_ed_single(ta, tb)
@@ -226,3 +228,27 @@ validate_encoding <- function(x, u) {
     stop("'x' must have 'list' class.")
   all(sort(unlist(x)) == sort(u))
 }
+
+
+
+#' @param min_size minimum number of elements in the first group
+#' @param c_groups list of groups that should be added to the result
+create_merges <- function(x, min_size, c_groups = NULL) {
+  if(length(x) < 2) {
+    NULL
+  } else {
+    res <- unlist(lapply(min_size:(length(x) - 1), function(n_subgroups) {
+      lapply(combn(x, n_subgroups, simplify = FALSE), function(single_split) {
+        list(single_split, x[-single_split])
+      })
+    }), recursive = FALSE)
+    
+    if(is.null(c_groups)) {
+      res
+    } else {
+      lapply(1L:length(res), function(i) c(res[[i]], c_groups))
+    }
+  }
+}
+
+#create_merges(1L:3, 2, list(4))
