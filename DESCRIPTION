@@ -25,7 +25,9 @@ Depends:
     slam
 Imports:
     bit,
-    entropy
+    combinat,
+    entropy,
+    partitions
 Suggests:
     ggplot2,
     knitr,

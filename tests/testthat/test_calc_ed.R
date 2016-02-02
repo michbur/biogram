@@ -64,30 +64,30 @@ test_that("Distance 2, single groups",{
   
   expect_equal(calc_ed(l1, l2), 2)
   
-#not working
-#   l3 <- list('1' = c("a", "b"),
-#              '2' = c("d", "e"),
-#              '3' = "c",
-#              '4' = "f")
-#   
-#   expect_equal(calc_ed(l3, l2), 2)
+
+  l3 <- list('1' = c("a", "b"),
+             '2' = c("d", "e"),
+             '3' = "c",
+             '4' = "f")
+  
+  expect_equal(calc_ed(l3, l2), 2)
 })
 
-# doesn't work too
-# test_that("Distance 3",{
-#   l1 <- list('1' = c("a", "b"),
-#              '2' = c("d", "e"),
-#              '3' = c("g", "h"),
-#              '4' = "i",
-#              '5' = "f",
-#              '6' = "c")
-#   
-#   l2 <- list('1' = c("a", "b", "c"),
-#              '2' = c("d", "e", "f"),
-#              '3' = c("g", "h", "i"))
-#   
-#   expect_equal(calc_ed(l1, l2), 3)
-# })
+
+test_that("Distance 3",{
+  l1 <- list('1' = c("a", "b"),
+             '2' = c("d", "e"),
+             '3' = c("g", "h"),
+             '4' = "i",
+             '5' = "f",
+             '6' = "c")
+  
+  l2 <- list('1' = c("a", "b", "c"),
+             '2' = c("d", "e", "f"),
+             '3' = c("g", "h", "i"))
+  
+  expect_equal(calc_ed(l1, l2), 3)
+ })
 
 
 test_that("Long identical groups",{

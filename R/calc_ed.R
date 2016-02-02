@@ -21,6 +21,7 @@
 #' @seealso \code{\link{validate_encoding}}.
 #' @return an encoding distance.
 #' @importFrom partitions listParts
+#' @importFrom combinat permn
 #' @export
 #' @examples
 #' #calculate encoding distance between two encodings of amino acids
@@ -112,18 +113,26 @@ calc_ed <- function(a, b, prop = NULL) {
 #              })))
 #       })
       
-      merges <- combn(1L:len_a, len_a - len_b + 1, simplify = FALSE)
-      
+      merges <- create_merges(len_a, len_b)
+
       #list of merged
       reduced_size <- lapply(merges, function(single_merge) {
-        all_lengths <- lengths(ta[single_merge])
-        list(enc = c(list(unname(unlist(ta[single_merge]))), ta[-single_merge]),
-             ed = sum(all_lengths[-which.max(all_lengths)]))
+        ed <- sum(sapply(single_merge, function(i) {
+          all_lengths <- lengths(ta[i])
+          sum(all_lengths[-which.max(all_lengths)])
+        }))
+        
+        enc <- lapply(single_merge, function(i) {
+          unlist(ta[i], use.names = FALSE)
+        })
+        
+        list(enc = enc,
+             ed = ed)
       })
       
+      all_eds <- sapply(reduced_size, function(single_ta) 
+        calc_ed_single(single_ta[["enc"]], tb, single_ta[["ed"]]))
       
-      all_eds <- sapply(reduced_size, function(single_ta) calc_ed_single(single_ta[["enc"]], tb,
-                                                                         single_ta[["ed"]]))
       min(all_eds)
       
     }
@@ -230,26 +239,19 @@ validate_encoding <- function(x, u) {
   all(sort(unlist(x)) == sort(u))
 }
 
-permutations <- function(x){
-  if(n==1){
-    return(matrix(1))
-  } else {
-    sp <- permutations(n-1)
-    p <- nrow(sp)
-    A <- matrix(nrow=n*p,ncol=n)
-    for(i in 1:n){
-      A[(i-1)*p+1:p,] <- cbind(i,sp+(sp>=i))
-    }
-    return(A)
-  }
-}
 
-# @param min_size minimum number of elements in the first group
-# @param c_groups list of groups that should be added to the result
+
 create_merges <- function(x, n_groups) {
-  all_merges <- partitions::listParts(x)
+  all_merges <- listParts(x)
+  #all partitions of x of the proper length
   chosen_merges <- all_merges[lengths(all_merges) == n_groups]
-  #combinat::permn(1L:2)
-  chosen_merges
+
+  #all permutations of a single partition
+  perms <- permn(n_groups)
+  
+  unlist(lapply(chosen_merges, function(single_merge) {
+      lapply(perms, function(single_perm) 
+        unname(single_merge)[single_perm])
+    }), recursive = FALSE)
 }
 
