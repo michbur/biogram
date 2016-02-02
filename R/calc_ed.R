@@ -20,6 +20,7 @@
 #' amino acids or nucleotides belonging the group.
 #' @seealso \code{\link{validate_encoding}}.
 #' @return an encoding distance.
+#' @importFrom partitions listParts
 #' @export
 #' @examples
 #' #calculate encoding distance between two encodings of amino acids
@@ -229,26 +230,26 @@ validate_encoding <- function(x, u) {
   all(sort(unlist(x)) == sort(u))
 }
 
-
-
-#' @param min_size minimum number of elements in the first group
-#' @param c_groups list of groups that should be added to the result
-create_merges <- function(x, min_size, c_groups = NULL) {
-  if(length(x) < 2) {
-    NULL
+permutations <- function(x){
+  if(n==1){
+    return(matrix(1))
   } else {
-    res <- unlist(lapply(min_size:(length(x) - 1), function(n_subgroups) {
-      lapply(combn(x, n_subgroups, simplify = FALSE), function(single_split) {
-        list(single_split, x[-single_split])
-      })
-    }), recursive = FALSE)
-    
-    if(is.null(c_groups)) {
-      res
-    } else {
-      lapply(1L:length(res), function(i) c(res[[i]], c_groups))
+    sp <- permutations(n-1)
+    p <- nrow(sp)
+    A <- matrix(nrow=n*p,ncol=n)
+    for(i in 1:n){
+      A[(i-1)*p+1:p,] <- cbind(i,sp+(sp>=i))
     }
+    return(A)
   }
 }
 
-#create_merges(1L:3, 2, list(4))
+# @param min_size minimum number of elements in the first group
+# @param c_groups list of groups that should be added to the result
+create_merges <- function(x, n_groups) {
+  all_merges <- partitions::listParts(x)
+  chosen_merges <- all_merges[lengths(all_merges) == n_groups]
+  #combinat::permn(1L:2)
+  chosen_merges
+}
+
