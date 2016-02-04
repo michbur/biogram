@@ -24,19 +24,18 @@ a single numeric value - information gain in nats.
 Computes information gain of single feature and target vector.
 }
 \details{
-The information gain term is used here (improperly) as a synonym of mutual information. 
-It is defined as:
+The information gain term is used here (improperly) as a synonym of mutual 
+information. It is defined as:
 \deqn{IG(X; Y) = \sum_{y \in Y} \sum_{x \in X} p(x, y) \log \left(\frac{p(x, y)}{p(x) p(y)}  \right)}
 
 In biogram package information gain is calculated using following relationship: 
 \eqn{IG = E(S) - E(S|F)}
 }
 \note{
-During calculations \eqn{0 \log 0  = 0}. For justification see References. 
+During calculations \eqn{0 \log 0  = 0}. For a justification see References. 
 
-Input looks strange, but the function was designed to be as fast 
-as possible subroutine of \code{\link{calc_ig}} and generally should not be directly
-called by user.
+The function was designed to be as fast as possible subroutine of 
+\code{\link{calc_criterion}} and might be cumbersome if directly called by a user.
 }
 \examples{
 tar <- sample(0L:1, 100, replace = TRUE)

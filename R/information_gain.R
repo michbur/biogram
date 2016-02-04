@@ -8,17 +8,16 @@
 #' @param pos_target number of positive cases in target vector.
 #' @param ES numeric value of target entropy.
 #' @return a single numeric value - information gain in nats.
-#' @details The information gain term is used here (improperly) as a synonym of mutual information. 
-#' It is defined as:
+#' @details The information gain term is used here (improperly) as a synonym of mutual 
+#' information. It is defined as:
 #' \deqn{IG(X; Y) = \sum_{y \in Y} \sum_{x \in X} p(x, y) \log \left(\frac{p(x, y)}{p(x) p(y)}  \right)}
 #' 
 #' In biogram package information gain is calculated using following relationship: 
 #' \eqn{IG = E(S) - E(S|F)}
-#' @note During calculations \eqn{0 \log 0  = 0}. For justification see References. 
+#' @note During calculations \eqn{0 \log 0  = 0}. For a justification see References. 
 #' 
-#' Input looks strange, but the function was designed to be as fast 
-#' as possible subroutine of \code{\link{calc_ig}} and generally should not be directly
-#' called by user.
+#' The function was designed to be as fast as possible subroutine of 
+#' \code{\link{calc_criterion}} and might be cumbersome if directly called by a user.
 #' @references Cover TM, Thomas JA \emph{Elements of Information Theory, 2nd Edition}
 #' Wiley, 2006.
 #' @export
