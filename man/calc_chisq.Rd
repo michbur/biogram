@@ -4,7 +4,7 @@
 \alias{calc_chisq}
 \title{Calculate Chi-squared-based measure}
 \usage{
-calc_chisq(feature, target_b, len_target, pos_target, ES)
+calc_chisq(feature, target_b, len_target, pos_target)
 }
 \arguments{
 \item{feature}{feature vector.}
@@ -14,8 +14,6 @@ calc_chisq(feature, target_b, len_target, pos_target, ES)
 \item{len_target}{length of target vector.}
 
 \item{pos_target}{number of positive cases in target vector.}
-
-\item{ES}{numeric value of target entropy.}
 }
 \value{
 a \code{integer} vector of length equal to the number of features 
@@ -35,9 +33,8 @@ The function was designed to be as fast as possible subroutine of
 tar <- sample(0L:1, 100, replace = TRUE)
 feat <- sample(0L:1, 100, replace = TRUE)
 prop <- c(100 - sum(tar), sum(tar))/100
-entr <- - sum(prop*log(prop))
 library(bit) #used to code vector as bit
-calc_chisq(feat, as.bit(tar), 100, sum(tar), entr)
+calc_chisq(feat, as.bit(tar), 100, sum(tar))
 }
 \seealso{
 \code{\link{test_features}}.
