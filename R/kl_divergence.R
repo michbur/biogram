@@ -18,7 +18,6 @@
 #' of Mathematical Statistics 22 (1):79-86, 1951.
 #' @examples tar <- sample(0L:1, 100, replace = TRUE)
 #' feat <- sample(0L:1, 100, replace = TRUE)
-#' prop <- c(100 - sum(tar), sum(tar))/100
 #' library(bit) #used to code vector as bit
 #' calc_kl(feat, as.bit(tar), 100, sum(tar))
 calc_kl <- function(feature, target_b, len_target, pos_target) {

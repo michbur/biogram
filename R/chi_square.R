@@ -6,6 +6,8 @@
 #' @return a \code{integer} vector of length equal to the number of features 
 #' containing computed Chi-square values.
 #' @seealso \code{\link{test_features}}.
+#' 
+#' \code{\link[stats]{chisq.test}} - Pearson's chi-squared test for count data.
 #' @note Both \code{target} and \code{features} must be binary, i.e. contain only 0 
 #' and 1 values.
 #' 
@@ -14,11 +16,15 @@
 #' @export
 #' @examples tar <- sample(0L:1, 100, replace = TRUE)
 #' feat <- sample(0L:1, 100, replace = TRUE)
-#' prop <- c(100 - sum(tar), sum(tar))/100
 #' library(bit) #used to code vector as bit
 #' calc_chisq(feat, as.bit(tar), 100, sum(tar))
 calc_chisq <- function(feature, target_b, len_target, pos_target) {
-  crosstable <- fast_crosstable(target_b, len_target, pos_target, feature)
-  counts_feature <- c(crosstable[2] + crosstable[4], crosstable[1] + crosstable[3])
-  
+  crosstable_m <- matrix(fast_crosstable(target_b, len_target, pos_target, feature), nrow = 2, byrow = TRUE)
+
+  # copied from original chisq.test in stats package
+  sr <- rowSums(crosstable_m)
+  sc <- colSums(crosstable_m)
+  n <- sum(crosstable_m)
+  E <- outer(sr, sc, "*")/n
+  sum((crosstable_m - E)^2/E)
 }
