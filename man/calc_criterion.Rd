@@ -26,12 +26,6 @@ Computes a chosen statistical criterion for each feature versus target vector.
 The permutation test implemented in \code{biogram} uses several criterions to filter 
 important features. Each can be used by \code{\link{test_features}} by specifying the 
 \code{criterion} parameter.
-
-Available criterions:
-\describe{
-  \item{ig}{Information Gain. Calculated using \code{\link{calc_ig}}.}
-  \item{kl}{Kullback-Leibler divergence. Calculated using \code{\link{calc_kl}}.}
-}
 }
 \note{
 Both \code{target} and \code{features} must be binary, i.e. contain only 0 

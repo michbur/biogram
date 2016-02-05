@@ -6,7 +6,6 @@
 #' @param target_b target in bits (as per \code{\link[bit]{as.bit}}).
 #' @param len_target length of target vector.
 #' @param pos_target number of positive cases in target vector.
-#' @param ES numeric value of target entropy.
 #' @return a single numeric value - information gain in nats.
 #' @details The information gain term is used here (improperly) as a synonym of mutual 
 #' information. It is defined as:
@@ -23,13 +22,15 @@
 #' @export
 #' @examples tar <- sample(0L:1, 100, replace = TRUE)
 #' feat <- sample(0L:1, 100, replace = TRUE)
-#' prop <- c(100 - sum(tar), sum(tar))/100
-#' entr <- - sum(prop*log(prop))
 #' library(bit) #used to code vector as bit
-#' calc_ig(feat, as.bit(tar), 100, sum(tar), entr)
-calc_ig <- function(feature, target_b, len_target, pos_target, ES) {
+#' calc_ig(feat, as.bit(tar), 100, sum(tar))
+calc_ig <- function(feature, target_b, len_target, pos_target) {
   crosstable <- fast_crosstable(target_b, len_target, pos_target, feature)
   counts_feature <- c(crosstable[2] + crosstable[4], crosstable[1] + crosstable[3])
+  
+  props_tar <- c(len_target - pos_target, pos_target)/len_target
+  #entropy
+  ES <- - sum(props_tar * entlog(props_tar))
   
   log_crosstable <- c(entlog(crosstable[1] %/e% counts_feature[2]),
                       entlog(crosstable[3] %/e% counts_feature[2]),

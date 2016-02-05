@@ -13,7 +13,7 @@ test_features(target, features, criterion = "ig", adjust = "BH",
 \item{features}{\code{integer} matrix of features with number of rows equal 
 to the length of the target vector.}
 
-\item{criterion}{criterion used in permutation test. See \code{\link{calc_criterion}} 
+\item{criterion}{criterion used in permutation test. See Details 
 for the list of possible criterions.}
 
 \item{adjust}{name of p-value adjustment method. See \code{\link[stats]{p.adjust}}
@@ -40,6 +40,13 @@ permutation test.
 Since the procedure involves multiple testing, it is advisable to use one
 of the avaible p-value adjustment methods. Such methods can be used directly by 
 specifying the \code{adjust} parameter.
+
+
+Available criterions:
+\describe{
+  \item{ig}{Information Gain. Calculated using \code{\link{calc_ig}}.}
+  \item{kl}{Kullback-Leibler divergence. Calculated using \code{\link{calc_kl}}.}
+}
 }
 \note{
 Both \code{target} and \code{features} must be binary, i.e. contain only 0 

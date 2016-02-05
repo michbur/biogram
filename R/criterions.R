@@ -40,11 +40,6 @@ check_criterion <- function(input_criterion, criterion_names = c("ig", "kl")) {
 #' important features. Each can be used by \code{\link{test_features}} by specifying the 
 #' \code{criterion} parameter.
 #' 
-#' Available criterions:
-#' \describe{
-#'   \item{ig}{Information Gain. Calculated using \code{\link{calc_ig}}.}
-#'   \item{kl}{Kullback-Leibler divergence. Calculated using \code{\link{calc_kl}}.}
-#' }
 #' @inheritParams test_features
 #' @param criterion_function a function calculating criterion. For a full list, see 
 #' \code{\link{test_features}}.
@@ -62,9 +57,7 @@ calc_criterion <- function(target, features, criterion_function) {
   tar_bit <- as.bit(target)
   l_tar <- length(target)
   pos_tar <- sum(target)
-  props_tar <- c(l_tar - pos_tar, pos_tar)/l_tar
-  #entrophy
-  ES <- - sum(props_tar * entlog(props_tar))
+  
   apply(features, 2, function(single_feature) 
-    criterion_function(single_feature, tar_bit, l_tar, pos_tar, ES))
+    criterion_function(single_feature, tar_bit, l_tar, pos_tar))
 }

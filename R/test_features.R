@@ -6,7 +6,7 @@
 #' @param target \code{integer} vector with target information (e.g. class labels).
 #' @param features \code{integer} matrix of features with number of rows equal 
 #' to the length of the target vector.
-#' @param criterion criterion used in permutation test. See \code{\link{calc_criterion}} 
+#' @param criterion criterion used in permutation test. See Details 
 #' for the list of possible criterions.
 #' @param adjust name of p-value adjustment method. See \code{\link[stats]{p.adjust}}
 #' for the list of possible values. If \code{NULL}, p-values are not adjusted.
@@ -21,6 +21,13 @@
 #' @details Since the procedure involves multiple testing, it is advisable to use one
 #' of the avaible p-value adjustment methods. Such methods can be used directly by 
 #' specifying the \code{adjust} parameter.
+#' 
+#' 
+#' Available criterions:
+#' \describe{
+#'   \item{ig}{Information Gain. Calculated using \code{\link{calc_ig}}.}
+#'   \item{kl}{Kullback-Leibler divergence. Calculated using \code{\link{calc_kl}}.}
+#' }
 #' @return an object of class \code{\link{feature_test}}.
 #' @note Both \code{target} and \code{features} must be binary, i.e. contain only 0 
 #' and 1 values.
