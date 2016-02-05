@@ -882,17 +882,17 @@
 #'  (Miyazawa-Jernigan, 1999)}
 #'  \item{ENGD860101}{Hydrophobicity index (Engelman et al., 1986)}
 #'  \item{FASG890101}{Hydrophobicity index (Fasman, 1989)}
-#'  \item{NA}{Values of Wc in proteins from class Beta, cutoff 6 A, 
+#'  \item{K6.5}{Values of Wc in proteins from class Beta, cutoff 6 A, 
 #'  separation 5 (Wozniak, 2014)}
-#'  \item{NA}{Values of Wc in proteins from class Beta, cutoff 8 A, 
+#'  \item{K8.5}{Values of Wc in proteins from class Beta, cutoff 8 A, 
 #'  separation 5 (Wozniak, 2014)}
-#'  \item{NA}{Values of Wc in proteins from class Beta, cutoff 12 A, 
+#'  \item{K12.5}{Values of Wc in proteins from class Beta, cutoff 12 A, 
 #'  separation 5 (Wozniak, 2014)}
-#'  \item{NA}{Values of Wc in proteins from class Beta, cutoff 6 A, 
+#'  \item{K6.15}{Values of Wc in proteins from class Beta, cutoff 6 A, 
 #'  separation 15 (Wozniak, 2014)}
-#'  \item{NA}{Values of Wc in proteins from class Beta, cutoff 8 A, 
+#'  \item{K8.15}{Values of Wc in proteins from class Beta, cutoff 8 A, 
 #'  separation 15 (Wozniak, 2014)}
-#'  \item{NA}{Values of Wc in proteins from class Beta, cutoff 12 A, 
+#'  \item{K12.15}{Values of Wc in proteins from class Beta, cutoff 12 A, 
 #'  separation 15 (Wozniak, 2014)}
 #' }
 #' @references Kawashima, S. and Kanehisa, M. (2000) AAindex: amino acid 

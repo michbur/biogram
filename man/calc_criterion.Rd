@@ -35,13 +35,13 @@ and 1 values.
 tar <- sample(0L:1, 100, replace = TRUE)
 feats <- matrix(sample(0L:1, 400, replace = TRUE), ncol = 4)
 
-#  Information Gain
+# Information Gain
 calc_criterion(tar, feats, calc_ig)
 
-#  hi-squared-based measure
+# hi-squared-based measure
 calc_criterion(tar, feats, calc_cs)
 
-#  Kullback-Leibler divergence
+# Kullback-Leibler divergence
 calc_criterion(tar, feats, calc_kl)
 }
 \seealso{

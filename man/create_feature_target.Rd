@@ -26,9 +26,9 @@ Creates a matrix of features and target based on the values from contingency mat
 }
 \examples{
 # equivalent of 
-#          target
+#         target
 # feature 10 375
-#         15 600
+#        15 600
 target_feature <- create_feature_target(10, 375, 15, 600)
 }
 
