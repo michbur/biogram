@@ -17,9 +17,9 @@
 #' tab <- table_ngrams(seq = rbind(seqs_pos, seqs_neg), 
 #'                     ngrams = c("1_c.t_0", "1_g.g_0", "2_t.c_0", "2_g.g_0", "3_c.c_0", "3_g.c_0"), 
 #'                     target = c(rep(1, 20), rep(0, 20)))
-#' #see the results
+#' # see the results
 #' print(tab)
-#' #easily plot the results using ggplot2
+#' # easily plot the results using ggplot2
 
 
 table_ngrams <- function(seq, ngrams, target) {
@@ -40,10 +40,10 @@ table_ngrams <- function(seq, ngrams, target) {
   }
   
   
-  #no need for n-gram validation, because count_specified does it
+  # no need for n-gram validation, because count_specified does it
   all_ngrams <- as.matrix(count_specified(seq, ngrams))
   
-  #values of target
+  # values of target
   val_tar <- sort(unique(target))
   
   res <- t(vapply(ngrams, function(ngram_name) 

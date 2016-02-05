@@ -12,9 +12,9 @@
 #' @return a matrix of 2 columns and n11+n10+n01+n00 rows. Columns represent
 #' target and feature vectors, respectively.
 #' @examples
-#' #equivalent of 
+#' # equivalent of 
 #' #         target
-#' #feature 10 375
+#' # feature 10 375
 #' #        15 600
 #' target_feature <- create_feature_target(10, 375, 15, 600)
 create_feature_target <- function(n11, n01, n10, n00){
@@ -42,16 +42,16 @@ create_feature_target <- function(n11, n01, n10, n00){
 #' @export
 #' @examples tar <- sample(0L:1, 100, replace = TRUE)
 #' feat <- sample(0L:1, 100, replace = TRUE)
-#' library(bit) #used to code vector as bit
+#' library(bit) # used to code vector as bit
 #' fast_crosstable(as.bit(tar), length(tar), sum(tar),  feat)
 
 fast_crosstable <- function(target_b, len_target, pos_target, feature) {
-  #no input tests - every if clause slows a little bit
-  feature_b = as.bit(feature) #from bit library, faster than any other type
+  # no input tests - every if clause slows a little bit
+  feature_b = as.bit(feature) # from bit library, faster than any other type
   
-  #target positive and feature positive
-  n_tar_f <- sum(feature_b & target_b) #simple boolean algebra to speed it more
-  #feature positive
+  # target positive and feature positive
+  n_tar_f <- sum(feature_b & target_b) # simple boolean algebra to speed it more
+  # feature positive
   pos_f <- sum(feature_b)
   
   c(n_tar_f, # tar +, feature +

@@ -24,7 +24,7 @@
 #' @importFrom combinat permn
 #' @export
 #' @examples
-#' #calculate encoding distance between two encodings of amino acids
+#' # calculate encoding distance between two encodings of amino acids
 #' aa1 = list(`1` = c("g", "a", "p", "v", "m", "l", "i"), 
 #'            `2` = c("k", "h"), 
 #'            `3` = c("d", "e"), 
@@ -35,12 +35,12 @@
 #'            `3` = c("f", "r", "w", "y", "s", "t", "c", "n"))
 #' calc_ed(aa1, aa2) 
 #'     
-#' #the encoding distance between two identical encodings is 0
+#' # the encoding distance between two identical encodings is 0
 #' calc_ed(aa1, aa1) 
 #'  
 
 calc_ed <- function(a, b, prop = NULL) {
-  #compare temporary a to temporary b
+  # compare temporary a to temporary b
   if(length(a) < length(b)) {
     warning("'a' must be longer than 'b'. Reverting a and b.") 
     tb <- a
@@ -66,10 +66,10 @@ calc_ed <- function(a, b, prop = NULL) {
     if(!(ncol(prop) %in% c(4, 20)))
       stop("'prop' must have 4 or 20 columns.")
   }
-  #encoding distance - distance between encodings
+  # encoding distance - distance between encodings
   ed <- 0
   
-  #exclude identical subgroups in a and b, because hey do not affect ed.
+  # exclude identical subgroups in a and b, because hey do not affect ed.
   ident_gr <- which(sapply(ta, function(single_subgroup_a)
     sapply(tb, function(single_subgroup_b)
       identical(sort(single_subgroup_a), sort(single_subgroup_b)))), arr.ind = TRUE)
@@ -79,7 +79,7 @@ calc_ed <- function(a, b, prop = NULL) {
     tb <- tb[-ident_gr[, "row"]]
   }
   
-  #if encodings are identical, ta and tb are 0
+  # if encodings are identical, ta and tb are 0
   if(length(ta) == 0 && length(tb) == 0)
     return(ed)
   
@@ -95,27 +95,27 @@ calc_ed <- function(a, b, prop = NULL) {
       }
     } else {
       
-#       #indices of groups to merge
-#       merges <- unlist(lapply(1L:(len_a - len_b + 1), function(n_subgroups) {
-#         combn(1L:len_a, n_subgroups, simplify = FALSE)
-#       }), recursive = FALSE)
-#       
-#       #list of merged
-#       reduced_size <- lapply(merges, function(single_merge) {
-#         
-#         all_lengths <- list(lengths(ta[single_merge], use.names = FALSE),
-#                             lengths(ta[-single_merge], use.names = FALSE))
-#         
-#         list(enc = list(unlist(ta[single_merge], use.names = FALSE), 
-#                         unlist(ta[-single_merge], use.names = FALSE)), #groups after merge
-#              ed = sum(sapply(all_lengths, function(single_length) {
-#                sum(single_length[-which.max(single_length)])
-#              })))
-#       })
+#      # indices of groups to merge
+#      merges <- unlist(lapply(1L:(len_a - len_b + 1), function(n_subgroups) {
+#        combn(1L:len_a, n_subgroups, simplify = FALSE)
+#      }), recursive = FALSE)
+#      
+#      # list of merged
+#      reduced_size <- lapply(merges, function(single_merge) {
+#        
+#        all_lengths <- list(lengths(ta[single_merge], use.names = FALSE),
+#                            lengths(ta[-single_merge], use.names = FALSE))
+#        
+#        list(enc = list(unlist(ta[single_merge], use.names = FALSE), 
+#                        unlist(ta[-single_merge], use.names = FALSE)), # groups after merge
+#             ed = sum(sapply(all_lengths, function(single_length) {
+#               sum(single_length[-which.max(single_length)])
+#             })))
+#      })
       
       merges <- create_merges(len_a, len_b)
 
-      #list of merged
+      # list of merged
       reduced_size <- lapply(merges, function(single_merge) {
         ed <- sum(sapply(single_merge, function(i) {
           all_lengths <- lengths(ta[i])
@@ -146,10 +146,10 @@ calc_ed <- function(a, b, prop = NULL) {
     
     norm_factor <- sum(sapply(coords_a, function(single_coords_a) {
       distances <- sapply(coords_b, function(single_coords_b) 
-        #vector of distances between groups
+        # vector of distances between groups
         sqrt(sum((single_coords_a - single_coords_b)^2))
       )
-      #c(dist = min(distances), id = unname(which.min(distances)))
+      # c(dist = min(distances), id = unname(which.min(distances)))
       min(distances)
     }))
     
@@ -168,9 +168,9 @@ calc_ed_single <- function(ta, tb, ed = 0) {
   #                       counts <- do.call(rbind, lapply(ta, function(single_subgroup_a)
   #                         data.frame(counts = sum(single_subgroup_a %in% single_subgroup_b))))
   #                       
-  #                       #order matrix
-  #                       #first row - sequence of groups
-  #                       #second row - groups' order
+  #                       # order matrix
+  #                       # first row - sequence of groups
+  #                       # second row - groups' order
   #                       ordmat <- matrix(c(1L:length(tb),order(counts[, "counts"], decreasing = TRUE)), 
   #                                        nrow = 2, byrow = TRUE)
   #                       cbind(agr = 1L:length(tb), position = ordmat[1, order(ordmat[2, ])],
@@ -183,19 +183,19 @@ calc_ed_single <- function(ta, tb, ed = 0) {
   
   
   len_b <- length(tb)
-  #all permutations of assigning subgroups from encoding 'a' to subgroups of 'b'
+  # all permutations of assigning subgroups from encoding 'a' to subgroups of 'b'
   perms <- expand.grid(lapply(1L:len_b, function(dummy) 1L:len_b))
   perms <- perms[apply(perms, 1, function(single_permutation) 
     length(unique(single_permutation))) == len_b, ]
   bgr <- 1L:len_b
   
-  #compute the ed for all permutations and get the minimum
+  # compute the ed for all permutations and get the minimum
   ed + min(apply(perms, 1, function(agr) {
     sum(lengths(lapply(1L:len_b, function(gr_id) {
       tb_group <- tb[[bgr[[gr_id]]]]
-      #added amino acids from other groups
+      # added amino acids from other groups
       unlist(lapply(agr[-gr_id], function(ida_from) {
-        #id of the single amino acid
+        # id of the single amino acid
         ta[[ida_from]][which(ta[[ida_from]] %in% tb_group)]
       }))
     })))
@@ -243,10 +243,10 @@ validate_encoding <- function(x, u) {
 
 create_merges <- function(x, n_groups) {
   all_merges <- listParts(x)
-  #all partitions of x of the proper length
+  # all partitions of x of the proper length
   chosen_merges <- all_merges[lengths(all_merges) == n_groups]
 
-  #all permutations of a single partition
+  # all permutations of a single partition
   perms <- permn(n_groups)
   
   unlist(lapply(chosen_merges, function(single_merge) {

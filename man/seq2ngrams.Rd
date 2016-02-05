@@ -31,7 +31,7 @@ A format of \code{d} vector is discussed in Details of
 \code{\link{count_ngrams}}.
 }
 \examples{
-#trigrams from multiple sequences
+# trigrams from multiple sequences
 seqs <- matrix(sample(1L:4, 600, replace = TRUE), ncol = 50)
 seq2ngrams(seqs, 3, 1L:4)
 }

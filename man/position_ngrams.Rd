@@ -25,9 +25,9 @@ Tranforms a vector of positioned n-grams into a list of positions filled with n-
 that start on them.
 }
 \examples{
-#position data in the list format
+# position data in the list format
 position_ngrams(c("2_1.1.2_0.1", "3_1.1.2_0.0", "3_2.2.2_0.0"))
-#position data in the data frame format
+# position data in the data frame format
 position_ngrams(c("2_1.1.2_0.1", "3_1.1.2_0.0", "3_2.2.2_0.0"), df = TRUE)
 }
 \seealso{

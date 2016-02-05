@@ -23,7 +23,7 @@ example_result <- distr_crit(target = target_feature[,1],
                              feature = target_feature[,2])
 plot(example_result)
 
-#a ggplot2 plot
+# a ggplot2 plot
 library(ggplot2)
 ggplot_distr <- function(x) {
 b <- data.frame(cbind(x=as.numeric(rownames(attr(x, "plot_data"))), 

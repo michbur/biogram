@@ -56,18 +56,18 @@
 #' 
 #' Count only specified n-grams: \code{\link{count_specified}}.
 #' @examples 
-#' #count trigrams without position information for nucleotides
+#' # count trigrams without position information for nucleotides
 #' count_ngrams(sample(1L:4, 50, replace = TRUE), 3, 1L:4, pos = FALSE)
-#' #count position-specific trigrams from multiple nucleotide sequences
+#' # count position-specific trigrams from multiple nucleotide sequences
 #' seqs <- matrix(sample(1L:4, 600, replace = TRUE), ncol = 50)
 #' ngrams <- count_ngrams(seqs, 3, 1L:4, pos = TRUE)
-#' #output results of the n-gram counting to screen
+#' # output results of the n-gram counting to screen
 #' as.matrix(ngrams)
 
 count_ngrams <- function(seq, n, u, d = 0, pos = FALSE, 
                          scale = FALSE, threshold = 0) {
   
-  #if sequence is not a matrix (single sequence), convert it to matrix with 1 row
+  # if sequence is not a matrix (single sequence), convert it to matrix with 1 row
   if (class(seq) != "matrix")
     seq <- matrix(seq, nrow = 1)
   
@@ -79,28 +79,28 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE,
     warning(paste0("'seq' contains following unigrams not present in 'u' parameter:\n",
                    paste(u_seq[!(u_seq %in% u)], collapse = ", ")))
   
-  #length of sequence
+  # length of sequence
   len_seq <- ncol(seq)
-  #number of sequences
+  # number of sequences
   n_seqs <- nrow(seq)
   
-  #create list of n-grams for n
+  # create list of n-grams for n
   possib_ngrams <- create_ngrams(n, u)  
   
-  #look for n-gram indices for d
+  # look for n-gram indices for d
   ngram_ind <- get_ngrams_ind(len_seq, n, d)
   max_grams <- calc_max_grams(len_seq, n, ngram_ind)
   
   
-  #extract n-grams from sequence
+  # extract n-grams from sequence
   grams <- vapply(1L:n_seqs, function(i)
     seq2ngrams_helper(seq[i, ], ind = ngram_ind, max_grams), rep("a", max_grams))
-  #if only one n-gram per sequence is extracted, the result must be converted to matrix
+  # if only one n-gram per sequence is extracted, the result must be converted to matrix
   if(!is.matrix(grams))
     grams <- matrix(grams, ncol = n_seqs)
   
   if (pos) {    
-    #get positioned possible n-grams
+    # get positioned possible n-grams
     pos_possib_ngrams <- create_ngrams(n, u, max_grams)
     
     res <- do.call(cbind, c(lapply(possib_ngrams, function(current_ngram)
@@ -133,9 +133,9 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE,
 }
 
 count_ngrams_helper <- function(seq, feature_list, n, ind, pos) {
-  #feature list(list of possible n-grams) is outside, because count_ngrams is meant to
-  #be inside the loop
-  #same for indices
+  # feature list(list of possible n-grams) is outside, because count_ngrams is meant to
+  # be inside the loop
+  # same for indices
   if (n > 1) {
     element_matrix <- do.call(cbind, lapply(ind, function(i) seq[i]))
     grams <- apply(element_matrix, 1, function(x) 
@@ -154,13 +154,13 @@ count_ngrams_helper <- function(seq, feature_list, n, ind, pos) {
 
 #ultrafast function for n-gram extraction
 seq2ngrams_helper <- function(seq, ind, max_grams) {
-  #get all consecutive n-grams from sequence
-  #length(ind) > 1 - equivalent of n > 1 
+  # get all consecutive n-grams from sequence
+  # length(ind) > 1 - equivalent of n > 1 
   if (length(ind) > 1) {
-    #element_matrix contains elements of n-gram in matrix structure
+    # element_matrix contains elements of n-gram in matrix structure
     element_matrix <- vapply(ind, function(i) seq[i], rep(seq[1], max_grams))
     
-    #rare situation, only one n-gram in sequence
+    # rare situation, only one n-gram in sequence
     if(max_grams == 1) {
       grams <- paste(element_matrix, collapse=".")
     } else {
@@ -170,11 +170,11 @@ seq2ngrams_helper <- function(seq, ind, max_grams) {
     
     
   } else {
-    #in case of unigrams take sequence - output must be character
+    # in case of unigrams take sequence - output must be character
     grams <- as.character(seq)
   }
   
-  #all n-grams from seuqence - character vector
+  # all n-grams from seuqence - character vector
   grams
 }
 

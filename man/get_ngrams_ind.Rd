@@ -29,7 +29,7 @@ A format of \code{d} vector is discussed in Details of
 \code{\link{count_ngrams}}.
 }
 \examples{
-#positions trigrams in sequence of length 10
+# positions trigrams in sequence of length 10
 get_ngrams_ind(10, 9, 0)
 }
 

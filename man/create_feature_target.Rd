@@ -25,10 +25,10 @@ target and feature vectors, respectively.
 Creates a matrix of features and target based on the values from contingency matrix.
 }
 \examples{
-#equivalent of 
-#         target
-#feature 10 375
-#        15 600
+# equivalent of 
+#          target
+# feature 10 375
+#         15 600
 target_feature <- create_feature_target(10, 375, 15, 600)
 }
 

@@ -52,11 +52,11 @@
 #' \code{\link{cut.feature_test}} - aggregates test results in groups based on feature's
 #' p-value.
 #' @examples
-#' #significant feature
+#' # significant feature
 #' tar_feat1 <- create_feature_target(10, 390, 0, 600) 
-#' #significant feature
+#' # significant feature
 #' tar_feat2 <- create_feature_target(9, 391, 1, 599)
-#' #insignificant feature
+#' # insignificant feature
 #' tar_feat3 <- create_feature_target(198, 202, 300, 300)
 #' test_res <- test_features(tar_feat1[, 1], cbind(tar_feat1[, 2], tar_feat2[, 2], 
 #'                           tar_feat3[, 2]))
@@ -67,11 +67,11 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
   
   valid_criterion <- check_criterion(criterion)
   
-  #criterion function
+  # criterion function
   crit_function <- function(target, features)
     calc_criterion(target, features, valid_criterion[["crit_function"]])
   
-  #few tests for data consistency
+  # few tests for data consistency
   if (!all(target %in% c(0, 1))) {
     stop("target is not {0,1}-valued vector")
   }
@@ -91,7 +91,7 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
     colSums(features)
   }
   
-  #eliminate non-infomative features
+  # eliminate non-infomative features
   features <- features[, feature_size > threshold & feature_size < 
                          (nrow(features) - threshold), drop = FALSE]
   
@@ -115,12 +115,12 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
       1 - dist[which.max(dist[, "criterion"] >= estm - 1e-15), "cdf"]
     })
   } else {
-    #slow version
+    # slow version
     rowMeans(crit_function(target, features) <= 
                replicate(times, crit_function(sample(target), features)))
   }
   
-  #p-values sometimes are a tiny little bit bigger than 1
+  # p-values sometimes are a tiny little bit bigger than 1
   p_vals[p_vals > 1] <- 1
   
   if(!is.null(adjust))

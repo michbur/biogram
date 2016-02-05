@@ -26,7 +26,7 @@ decode_single_ngrams <- function(splitted_ngram) {
   seq <- strsplit(splitted_ngram[1 + pos_inf], ".", fixed = TRUE)[[1]]
   if(length(seq) > 1) {
     dists <- strsplit(splitted_ngram[2 + pos_inf], ".", fixed = TRUE)[[1]]
-    #distances in bar form
+    # distances in bar form
     bar_dists <- vapply(dists, function(i) 
       paste(rep("_", i), collapse = ""), "a")
     paste(c(vapply(1L:(length(seq) - 1), function(i)
@@ -50,14 +50,14 @@ decode_single_ngrams <- function(splitted_ngram) {
 #' code_ngrams(c("aaa_b", "d__aa", "abd"))
 
 code_ngrams <- function(decoded_ngrams) {
-  #ad some checks for decoded n-grams (allow only letters, numbers and underscores)
+  # ad some checks for decoded n-grams (allow only letters, numbers and underscores)
   as.vector(sapply(decoded_ngrams, function(decoded_ngram) {
     sn <- strsplit(decoded_ngram, "")[[1]]
     
-    #get indices of elements
+    # get indices of elements
     id_elements <- which(sn != "_")
     
-    #calculate distances between elements
+    # calculate distances between elements
     dists <- sapply(2L:length(id_elements), function(id) 
       id_elements[id] - id_elements[id - 1] - 1)
     paste0(paste(sn[sn != "_"], collapse = "."), "_", 

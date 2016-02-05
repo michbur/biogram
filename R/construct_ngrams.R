@@ -35,9 +35,9 @@
 #' }
 
 construct_ngrams <- function(target, seq, u, n_max, conf_level = 0.95, gap = TRUE) {
-  #build unigrams
+  # build unigrams
   unigrams <- count_ngrams(seq, 1, u, pos = TRUE)
-  #filter unigrams
+  # filter unigrams
   test_unigrams <- test_features(target, unigrams)
   signif_ngrams <- cut(test_unigrams, breaks = c(0, 1 - conf_level, 1))[[1]]
   
@@ -73,7 +73,7 @@ build_and_test_gaps <- function(signif_ngrams, seq, n, u, target) {
   gap_nplusgrams <- gap_ngrams(nplusgrams)
   new_counts <- count_specified(seq, gap_nplusgrams)
   
-  #artificial counts created by sum of counts of all gapped n-grams belonging to n-gram
+  # artificial counts created by sum of counts of all gapped n-grams belonging to n-gram
   art_counts <- do.call(cbind, lapply(1L:length(nplusgrams), function(id_ngram) {
     as.numeric(row_sums(new_counts[, n*(id_ngram - 1) + 1:n]) > 0)
   }))

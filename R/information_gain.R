@@ -22,14 +22,14 @@
 #' @export
 #' @examples tar <- sample(0L:1, 100, replace = TRUE)
 #' feat <- sample(0L:1, 100, replace = TRUE)
-#' library(bit) #used to code vector as bit
+#' library(bit) # used to code vector as bit
 #' calc_ig(feat, as.bit(tar), 100, sum(tar))
 calc_ig <- function(feature, target_b, len_target, pos_target) {
   crosstable <- fast_crosstable(target_b, len_target, pos_target, feature)
   counts_feature <- c(crosstable[2] + crosstable[4], crosstable[1] + crosstable[3])
   
   props_tar <- c(len_target - pos_target, pos_target)/len_target
-  #entropy
+  # entropy
   ES <- - sum(props_tar * entlog(props_tar))
   
   log_crosstable <- c(entlog(crosstable[1] %/e% counts_feature[2]),
@@ -37,7 +37,7 @@ calc_ig <- function(feature, target_b, len_target, pos_target) {
                       entlog(crosstable[2] %/e% counts_feature[1]),
                       entlog(crosstable[4] %/e% counts_feature[1]))
   
-  #entropy - conditional entrophy
+  # entropy - conditional entrophy
   ES + (crosstable[1] * log_crosstable[1] +
           crosstable[3] * log_crosstable[2] +
           crosstable[2] * log_crosstable[3] + 

@@ -19,10 +19,10 @@ is_ngram <- function(x) {
   if(!(length(sngram) %in% c(2, 3)))
     return(FALSE)
   
-  #check if there is position information
+  # check if there is position information
   pos_inf <- ifelse(length(sngram) == 3, TRUE, FALSE)
   
-  #validate position information
+  # validate position information
   if(pos_inf) 
     if(is.na(suppressWarnings(as.numeric(sngram[[1]]))) || as.numeric(sngram[[1]]) < 1)
       return(FALSE)
@@ -30,13 +30,13 @@ is_ngram <- function(x) {
   seq <- strsplit(sngram[1 + pos_inf], ".", fixed = TRUE)[[1]]
   dists <- strsplit(sngram[2 + pos_inf], ".", fixed = TRUE)[[1]]
   
-  #validate distance 
+  # validate distance 
   if(length(seq) > 1) {
-    #for n-grams biggers than uni-grams it must have length n - 1
+    # for n-grams biggers than uni-grams it must have length n - 1
     if(length(dists) != (length(seq) - 1)) 
       return(FALSE)
   } else {
-    #for unigrams the distance vector has also size 1
+    # for unigrams the distance vector has also size 1
     if(length(dists) != 1) 
       return(FALSE)
   }

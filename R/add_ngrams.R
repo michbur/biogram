@@ -33,12 +33,12 @@ add_1grams <- function(ngrams) {
   positioned_ngrams <- position_ngrams(ngrams, df = TRUE, 
                                        unigrams_output = FALSE)
   
-  #calculate end of the n-gram
+  # calculate end of the n-gram
   ngrams_ends <- if(n[1] == 1) {
-    #if unigram, end is equal to the start of n-gram
+    # if unigram, end is equal to the start of n-gram
     positioned_ngrams[["position"]]
   } else {
-    #if n > 1, end is equal to the start of n-gram plus n plus sum of distances
+    # if n > 1, end is equal to the start of n-gram plus n plus sum of distances
     positioned_ngrams[["position"]] + 
       apply(positioned_ngrams, 1, function(ngram) {
         sn <- strsplit(as.character(ngram[1]), "_")[[1]]
@@ -49,10 +49,10 @@ add_1grams <- function(ngrams) {
   }
   
   position_data <- cbind(positioned_ngrams, ngrams_ends)
-  #ngram, start position of n-gram, end position of n-gram
+  # ngram, start position of n-gram, end position of n-gram
   colnames(position_data) <- c("ngram", "pstart", "pend")
   
-  #create table for unigrams that will be added to existing n-grams
+  # create table for unigrams that will be added to existing n-grams
   positioned_ugrams <- position_ngrams(ngrams, df = TRUE, unigrams_output = TRUE)
   positioned_ugrams <- positioned_ugrams[!duplicated(positioned_ugrams), ]
   positioned_ugrams[["ngram"]] <- as.character(positioned_ugrams[["ngram"]])
@@ -62,13 +62,13 @@ add_1grams <- function(ngrams) {
   # position_data[["pend"]] < max(u_positions)
   # n-grams to which we cannot add anything on the left side
   # position_data[["pstart"]] > min(u_positions)
-  #add unigrams on the right side
+  # add unigrams on the right side
   
   res_right <- add_unigrams_right(position_data[position_data[["pend"]] < max(u_positions), ], 
                                   positioned_ugrams, n = n[1])
   res_left <- add_unigrams_left(position_data[position_data[["pend"]] > min(u_positions), ], 
                                 positioned_ugrams, n = n[1])
-  #work with long n-grams (positions bigger than 9)
+  # work with long n-grams (positions bigger than 9)
   res <- c(res_left, res_right)
   
   names(res) <- NULL
@@ -81,16 +81,16 @@ add_unigrams_right <- function(position_data, positioned_ugrams, n)
   unlist(apply(position_data, 1, function(single_row) {
     chosen_ngram <- strsplit(single_row["ngram"], "_")[[1]]
     single_position <- as.numeric(single_row["pend"])
-    #u_grams that may be pasted
+    # u_grams that may be pasted
     other_ugrams <- positioned_ugrams[positioned_ugrams[["position"]] > single_position, ]
-    #position in other_ugrams is now distance between single_position and their position
+    # position in other_ugrams is now distance between single_position and their position
     other_ugrams[["position"]] <- other_ugrams[["position"]] - single_position - 1
-    #remaining distance - cut redundant 0 when n = 1
+    # remaining distance - cut redundant 0 when n = 1
     remain_distance <- ifelse(n == 1, "", paste0(chosen_ngram[[2]], "."))
     apply(other_ugrams, 1, function(other_ugram)
-      paste0(as.numeric(single_row["pstart"]), "_", #position 
-             chosen_ngram[[1]], ".", substr(other_ugram[1], 1, 1), #ngram 
-             "_", remain_distance, as.numeric(other_ugram[2])))})) #distance
+      paste0(as.numeric(single_row["pstart"]), "_", # position 
+             chosen_ngram[[1]], ".", substr(other_ugram[1], 1, 1), # ngram 
+             "_", remain_distance, as.numeric(other_ugram[2])))})) # distance
 
 
 
@@ -98,16 +98,16 @@ add_unigrams_left <- function(position_data, positioned_ugrams, n)
   unlist(apply(position_data, 1, function(single_row) {
     chosen_ngram <- strsplit(single_row["ngram"], "_")[[1]]
     single_position <- as.numeric(single_row["pstart"])
-    #u_grams that may be pasted
+    # u_grams that may be pasted
     other_ugrams <- positioned_ugrams[positioned_ugrams[["position"]] < single_position, ]
-    #position in other_ugrams is now distance between single_position and their position
+    # position in other_ugrams is now distance between single_position and their position
     other_ugrams[["position"]] <- single_position - other_ugrams[["position"]] - 1
-    #remaining distance - cut redundant 0 when n = 1
+    # remaining distance - cut redundant 0 when n = 1
     remain_distance <- ifelse(n == 1, "", paste0(".", chosen_ngram[[2]]))
     apply(other_ugrams, 1, function(other_ugram)
-      paste0(as.numeric(single_row["pstart"]) - as.numeric(other_ugram[2]) - 1, "_", #position 
-             substr(other_ugram[1], 1, 1), ".", chosen_ngram[[1]], #ngram 
-             "_", as.numeric(other_ugram[2]), remain_distance)) #distance
+      paste0(as.numeric(single_row["pstart"]) - as.numeric(other_ugram[2]) - 1, "_", # position 
+             substr(other_ugram[1], 1, 1), ".", chosen_ngram[[1]], # ngram 
+             "_", as.numeric(other_ugram[2]), remain_distance)) # distance
   }))
 
 

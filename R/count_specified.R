@@ -21,23 +21,23 @@
 #'                                  "2_4.2_2", "2_1.4_2", "3_1.3_2"))
 
 count_specified <- function(seq, ngrams) {
-  #validate n-grams
+  # validate n-grams
   validated_ngram <- sapply(ngrams, is_ngram)
   if(!all(validated_ngram))
     stop("Improper n-grams: ", paste(names(which(!validated_ngram)), collapse = ", "))
   
-  #if sequence is not a matrix (single sequence), convert it to matrix with 1 row
+  # if sequence is not a matrix (single sequence), convert it to matrix with 1 row
   if (class(seq) != "matrix")
     seq <- matrix(seq, nrow = 1)
   
-  #length of sequence
+  # length of sequence
   len_seq <- ncol(seq)
-  #number of sequences
+  # number of sequences
   n_seqs <- nrow(seq)
   
   df <- ngrams2df(ngrams)
   
-  #splitted ngrams
+  # splitted ngrams
   sn_grams <- strsplit(df[, "ngram"], ".", fixed = TRUE)
   
   ngrams_list <- lapply(1L:nrow(df), function(single_ngram) 
@@ -46,7 +46,7 @@ count_specified <- function(seq, ngrams) {
     )
   )
   
-  #when ncol(df) == 3 n-grams are positioned
+  # when ncol(df) == 3 n-grams are positioned
   if(ncol(df) == 3)
     ngrams_list <- lapply(1L:nrow(df), function(single_ngram) 
       c(ngrams_list[[single_ngram]], position = as.numeric(df[single_ngram, "position"]))
@@ -54,7 +54,7 @@ count_specified <- function(seq, ngrams) {
   
   names(ngrams_list) <- ngrams
 
-  #when ncol(df) == 3 n-grams are positioned
+  # when ncol(df) == 3 n-grams are positioned
   res <- if(ncol(df) == 3) {
     vapply(ngrams_list, function(single_ngram) 
       count_single_positioned_ngram(single_ngram, seq, len_seq), rep(0, nrow(seq)))
@@ -66,7 +66,7 @@ count_specified <- function(seq, ngrams) {
   if(class(res) == "numeric") {
     res <- matrix(res, ncol = 1)
   }
-  #name columns
+  # name columns
   colnames(res) <- ngrams
   
   as.simple_triplet_matrix(res)

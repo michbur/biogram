@@ -19,7 +19,7 @@ create_feature_test <- function(p_value, criterion, adjust, times, occ) {
   if (!(is.numeric(p_value) && is.vector(p_value)))
     stop("p_values must be numeric")
   
-  #add names if they are missing
+  # add names if they are missing
   if(is.null(names(p_value)))
     names(p_value) <- paste0("feature", 1L:length(p_value))
   
@@ -68,7 +68,7 @@ summary.feature_test <- function(object, conf_level = 0.95, ...) {
 #' @return nothing.
 #' @export
 print.feature_test <- function(x, ...) {
-  #strange workaround but may be faster than setting all other attributes to NULL
+  # strange workaround but may be faster than setting all other attributes to NULL
   print(vapply(x, function(i) i, 0), ...)
 }
 
@@ -99,7 +99,7 @@ cut.feature_test <- function(x, split = "significances",
     stop("'split' must have one of following values: 'significances', 'positives', 
            'negatives'.")
   
-  #define 
+  # define 
   cut_function <- function(vector)
     cut(vector, breaks = breaks, include.lowest = TRUE, right = TRUE, ...)
   
@@ -120,41 +120,41 @@ cut.feature_test <- function(x, split = "significances",
 }
 
 # aggregate.feature_test <- function(x, significances = c(0, 0.0001, 0.01, 0.05, 1), 
-#                                    frequencies = c(0, 0.05, 0.1, 0.2, 1), 
-#                                    split = "significances", ...) {
-#   
-#   cutted_pvals <- cut(x, breaks = significances, include.lowest = TRUE)
-#   #aggregate does not cut here, because it does not return standard list output
-#   #dat <- aggregate(ngrams ~ cutted_pvals, data = data.frame(ngrams = names(x), cutted_pvals), 
-#   #                    function(i)
-#   #                      as.character(i))
-#   occ_pos <- cut(attr(x, "occ")["pos", ], 
-#                  breaks = frequencies, include.lowest = TRUE)
-#   occ_neg <- cut(attr(x, "occ")["neg", ], 
-#                  breaks = frequencies, include.lowest = TRUE)
-#   dat <- data.frame(ngram = names(x), 
-#                     p_value = cutted_pvals,
-#                     occ_pos = occ_pos,
-#                     occ_neg = occ_neg)
-#   
-#   if(!is.null(split)) {
-#     if(!(split %in% c("significances", "positives", "negatives")))
-#       stop("'split' must have one of following values: 'significances', 'positives', 
-#            'negatives' or NULL")
-#     
-#     split_factor <- switch(split,
-#                            significances = list(levels(cutted_pvals),
-#                                                 "p_value"),
-#                            positives = list(levels(occ_pos),
-#                                             "occ_pos"),
-#                            negatives = list(levels(occ_neg),
-#                                             "occ_neg"))
-#     
-#     dat <- lapply(split_factor[[1]], function(i)
-#       as.character(dat[dat[[split_factor[[2]]]] == i, "ngram"]))
-#     
-#     names(dat) <- split_factor[[1]]
-#   }
-#   
-#   dat
+#                                   frequencies = c(0, 0.05, 0.1, 0.2, 1), 
+#                                   split = "significances", ...) {
+#  
+#  cutted_pvals <- cut(x, breaks = significances, include.lowest = TRUE)
+#  # aggregate does not cut here, because it does not return standard list output
+#  # dat <- aggregate(ngrams ~ cutted_pvals, data = data.frame(ngrams = names(x), cutted_pvals), 
+#  #                    function(i)
+#  #                      as.character(i))
+#  occ_pos <- cut(attr(x, "occ")["pos", ], 
+#                 breaks = frequencies, include.lowest = TRUE)
+#  occ_neg <- cut(attr(x, "occ")["neg", ], 
+#                 breaks = frequencies, include.lowest = TRUE)
+#  dat <- data.frame(ngram = names(x), 
+#                    p_value = cutted_pvals,
+#                    occ_pos = occ_pos,
+#                    occ_neg = occ_neg)
+#  
+#  if(!is.null(split)) {
+#    if(!(split %in% c("significances", "positives", "negatives")))
+#      stop("'split' must have one of following values: 'significances', 'positives', 
+#           'negatives' or NULL")
+#    
+#    split_factor <- switch(split,
+#                           significances = list(levels(cutted_pvals),
+#                                                "p_value"),
+#                           positives = list(levels(occ_pos),
+#                                            "occ_pos"),
+#                           negatives = list(levels(occ_neg),
+#                                            "occ_neg"))
+#    
+#    dat <- lapply(split_factor[[1]], function(i)
+#      as.character(dat[dat[[split_factor[[2]]]] == i, "ngram"]))
+#    
+#    names(dat) <- split_factor[[1]]
+#  }
+#  
+#  dat
 # }

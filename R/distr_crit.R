@@ -41,11 +41,11 @@ distr_crit <- function(target, feature, criterion = "ig") {
   if(cross_tab[3L] == 0)
     max_iter <- sort(cross_tab)[2]
   
-  #values of criterion for different contingency tables
+  # values of criterion for different contingency tables
   diff_conts <- sapply(0L:max_iter, function(i) {
-    #to do - check if other criterions also follow this distribution
+    # to do - check if other criterions also follow this distribution
     
-    #if there are more 1 than 0
+    # if there are more 1 than 0
     ones <- n - non_zero_target - non_zero_feat + i > 0
     
     k <- if(ones) {
@@ -60,9 +60,9 @@ distr_crit <- function(target, feature, criterion = "ig") {
                           size = n,
                           prob = c(p*q, (1-p)*q, p*(1-q), (1-p)*(1-q)),
                           log = TRUE)
-    #feature-target data - different contingency tables
+    # feature-target data - different contingency tables
     ft_data <- do.call(create_feature_target, as.list(k))
-    #values of criterion
+    # values of criterion
     vals <- unname(crit_function(ft_data[,1], ft_data[, 2, drop = FALSE]))
     c(prob_log = prob_log, vals = vals)
   })

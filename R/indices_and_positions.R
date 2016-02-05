@@ -13,14 +13,14 @@
 #' \code{\link{count_ngrams}}.
 #' @export
 #' @examples 
-#' #positions trigrams in sequence of length 10
+#' # positions trigrams in sequence of length 10
 #' get_ngrams_ind(10, 9, 0)
 
 get_ngrams_ind <- function(len_seq, n, d) {
-  #n - size of gram (i.e. 2-grams: "AA", "AC", ...)
-  #d - distance between two consecutive letter (a vector of distances)
+  # n - size of gram (i.e. 2-grams: "AA", "AC", ...)
+  # d - distance between two consecutive letter (a vector of distances)
   
-  #calculate indices of n-grams elements
+  # calculate indices of n-grams elements
   ind <- lapply(1L:n, function(i) 
     (1 + i - 1):(len_seq - n + i))
   
@@ -28,7 +28,7 @@ get_ngrams_ind <- function(len_seq, n, d) {
     stop("Length of d must be 1 or n - 1")
   
   if(n > 1) {
-    #if distance vector is too short, recycle it
+    # if distance vector is too short, recycle it
     if(length(d) == 1 && n > 2)
       d <- rep(d, n - 1)
     
@@ -41,7 +41,7 @@ get_ngrams_ind <- function(len_seq, n, d) {
     
     attr(ind, "d") <- d
   } else {
-    #distance is a nonsense for unigrams
+    # distance is a nonsense for unigrams
     attr(ind, "d") <- 0
   }
   
@@ -61,7 +61,7 @@ get_ngrams_ind <- function(len_seq, n, d) {
 #' @export
 #' @examples 
 #' seqs <- matrix(sample(1L:4, 600, replace = TRUE), ncol = 50)
-#' #make several sequences shorter by replacing them partially with NA
+#' # make several sequences shorter by replacing them partially with NA
 #' seqs[8L:11, 46L:50] <- NA
 #' seqs[1L, 31L:50] <- NA
 #' count_total(seqs, 3, c(1, 0))
@@ -69,16 +69,16 @@ get_ngrams_ind <- function(len_seq, n, d) {
 count_total <- function(seq, n, d) {
   seq_lengths <- ncol(seq) - apply(seq, 1, function(i) sum(is.na(i)))
   
-  #unique lengths of sequences
+  # unique lengths of sequences
   tablel <- data.frame(table(seq_lengths))
   
-  #calculate number of posible n-grams for each unique length
+  # calculate number of posible n-grams for each unique length
   tablel <- cbind(tablel, totals = vapply(as.numeric(as.character(tablel[["seq_lengths"]])), function(single_length) {
     ind <- get_ngrams_ind(single_length, n, d)
     calc_max_grams(single_length, n, ind)
   }, 0))
   
-  #multiply number of possible n-grams by time the sequence of this length occur in data
+  # multiply number of possible n-grams by time the sequence of this length occur in data
   sum(apply(tablel[, -1], 1, function(i)
     i["Freq"] * i["totals"]))
 }
@@ -89,7 +89,7 @@ count_total <- function(seq, n, d) {
 #(when result is negative)
 
 calc_max_grams <- function(len_seq, n, ngram_ind){
-  #use attr(ngram_ind, "d") instead of d because of distance recycling
+  # use attr(ngram_ind, "d") instead of d because of distance recycling
   max_grams <- len_seq - n - sum(attr(ngram_ind, "d")) + 1
   if (max_grams < 1)
     stop("n-gram too long.")

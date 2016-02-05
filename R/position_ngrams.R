@@ -17,9 +17,9 @@
 #' 
 #' Validate n-gram structure: \code{\link{is_ngram}}.
 #' @examples
-#' #position data in the list format
+#' # position data in the list format
 #' position_ngrams(c("2_1.1.2_0.1", "3_1.1.2_0.0", "3_2.2.2_0.0"))
-#' #position data in the data frame format
+#' # position data in the data frame format
 #' position_ngrams(c("2_1.1.2_0.1", "3_1.1.2_0.0", "3_2.2.2_0.0"), df = TRUE)
 
 position_ngrams <- function(ngrams, df = FALSE, unigrams_output = TRUE) {
@@ -28,18 +28,18 @@ position_ngrams <- function(ngrams, df = FALSE, unigrams_output = TRUE) {
     stop("Improper n-grams: ", paste(names(which(!validated_ngram)), collapse = ", "))
   
   sngrams <- strsplit(ngrams, "_")
-  #check if there is information about position
+  # check if there is information about position
   if(length(sngrams[[1]]) != 3)
     stop("n-grams do not have position information.")
   
-  #table of positions
+  # table of positions
   pos_table <- if(unigrams_output) {
     do.call(rbind, lapply(sngrams, function(single_ngram) {
       unigrams <- strsplit(single_ngram[[2]], ".", fixed = TRUE)[[1]]
       dists <- strsplit(single_ngram[[3]], ".", fixed = TRUE)[[1]]
-      #positions of unigrams
+      # positions of unigrams
       uni_positions <- as.numeric(single_ngram[[1]])
-      #for loop suitable only for n-grams bigger than unigrams
+      # for loop suitable only for n-grams bigger than unigrams
       if(nchar(single_ngram[[2]]) > 1)
         for (next_unigram in as.numeric(dists))
           uni_positions[length(uni_positions) + 1] <- next_unigram + uni_positions[length(uni_positions)] + 1
@@ -48,7 +48,7 @@ position_ngrams <- function(ngrams, df = FALSE, unigrams_output = TRUE) {
   } else {
     pos_table <- do.call(rbind, lapply(sngrams, function(single_ngram) {
       ngram_name <- paste0(single_ngram[2], "_", single_ngram[3])
-      #positions of unigrams
+      # positions of unigrams
       ngram_position <- as.numeric(single_ngram[[1]])
       data.frame(ngrams = ngram_name, pos = ngram_position)
     }))
@@ -57,8 +57,8 @@ position_ngrams <- function(ngrams, df = FALSE, unigrams_output = TRUE) {
   if(df) {
     res <- pos_table
     colnames(res) <- c("ngram", "position")
-    #duplicates shouldn't be removed
-    #res <- res[!duplicated(res), ]
+    # duplicates shouldn't be removed
+    # res <- res[!duplicated(res), ]
     res <- res[order(res[["ngram"]]), ]
     res <- res[order(res[["position"]]), ]
     rownames(res) <- NULL

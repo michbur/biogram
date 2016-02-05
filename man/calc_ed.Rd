@@ -36,7 +36,7 @@ in \code{b}. The position of a group is defined as the mean value of properties 
 amino acids or nucleotides belonging the group.
 }
 \examples{
-#calculate encoding distance between two encodings of amino acids
+# calculate encoding distance between two encodings of amino acids
 aa1 = list(`1` = c("g", "a", "p", "v", "m", "l", "i"), 
            `2` = c("k", "h"), 
            `3` = c("d", "e"), 
@@ -47,7 +47,7 @@ aa2 = list(`1` = c("g", "a", "p", "v", "m", "l", "q"),
            `3` = c("f", "r", "w", "y", "s", "t", "c", "n"))
 calc_ed(aa1, aa2) 
     
-#the encoding distance between two identical encodings is 0
+# the encoding distance between two identical encodings is 0
 calc_ed(aa1, aa1) 
  
 }

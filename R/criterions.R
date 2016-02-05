@@ -15,7 +15,7 @@
 # @seealso
 # Calculate the value of criterion: \code{\link{calc_criterion}}.
 check_criterion <- function(input_criterion, criterion_names = c("ig", "kl", "cs")) {
-  #think twice about grep
+  # think twice about grep
   valid_name <- criterion_names[grepl(tolower(input_criterion), criterion_names)]
   
   if (length(valid_name) == 0)
@@ -29,7 +29,7 @@ check_criterion <- function(input_criterion, criterion_names = c("ig", "kl", "cs
                            ig = list(crit_function = calc_ig, nice_name = "Information Gain"),
                            kl = list(crit_function = calc_kl, nice_name = "Kullback-Leibler divergence"),
                            cs = list(crit_function = calc_cs, nice_name = "Chi-squared-based measure"))
-  #TO DO - should also return the full name of criterion for purpose of summaries/plots
+  # TO DO - should also return the full name of criterion for purpose of summaries/plots
   c(crit_name = valid_name, criterion_data)
 }
 
