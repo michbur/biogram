@@ -25,8 +25,9 @@
 #' 
 #' Available criterions:
 #' \describe{
-#'   \item{ig}{Information Gain. Calculated using \code{\link{calc_ig}}.}
-#'   \item{kl}{Kullback-Leibler divergence. Calculated using \code{\link{calc_kl}}.}
+#'   \item{ig}{Information Gain: \code{\link{calc_ig}}.}
+#'   \item{kl}{Kullback-Leibler divergence: \code{\link{calc_kl}}.}
+#'   \item{cs}{Chi-squared-based measure: \code{\link{calc_cs}}.}
 #' }
 #' @return an object of class \code{\link{feature_test}}.
 #' @note Both \code{target} and \code{features} must be binary, i.e. contain only 0 

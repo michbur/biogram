@@ -14,7 +14,7 @@
 # }
 # @seealso
 # Calculate the value of criterion: \code{\link{calc_criterion}}.
-check_criterion <- function(input_criterion, criterion_names = c("ig", "kl")) {
+check_criterion <- function(input_criterion, criterion_names = c("ig", "kl", "cs")) {
   #think twice about grep
   valid_name <- criterion_names[grepl(tolower(input_criterion), criterion_names)]
   
@@ -27,7 +27,8 @@ check_criterion <- function(input_criterion, criterion_names = c("ig", "kl")) {
   
   criterion_data <- switch(valid_name,
                            ig = list(crit_function = calc_ig, nice_name = "Information Gain"),
-                           kl = list(crit_function = calc_kl, nice_name = "Kullback-Leibler divergence"))
+                           kl = list(crit_function = calc_kl, nice_name = "Kullback-Leibler divergence"),
+                           cs = list(crit_function = calc_cs, nice_name = "Chi-squared-based measure"))
   #TO DO - should also return the full name of criterion for purpose of summaries/plots
   c(crit_name = valid_name, criterion_data)
 }
@@ -50,9 +51,17 @@ check_criterion <- function(input_criterion, criterion_names = c("ig", "kl")) {
 #' @seealso \code{\link{test_features}}.
 #' @export
 #' @examples 
-#' calc_criterion(sample(0L:1, 100, replace = TRUE), 
-#'                matrix(sample(0L:1, 400, replace = TRUE), ncol = 4),
-#'                calc_ig)
+#' tar <- sample(0L:1, 100, replace = TRUE)
+#' feats <- matrix(sample(0L:1, 400, replace = TRUE), ncol = 4)
+#' 
+#' # Information Gain
+#' calc_criterion(tar, feats, calc_ig)
+#' 
+#' # hi-squared-based measure
+#' calc_criterion(tar, feats, calc_cs)
+#' 
+#' # Kullback-Leibler divergence
+#' calc_criterion(tar, feats, calc_kl)
 calc_criterion <- function(target, features, criterion_function) {
   tar_bit <- as.bit(target)
   l_tar <- length(target)

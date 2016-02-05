@@ -32,9 +32,17 @@ Both \code{target} and \code{features} must be binary, i.e. contain only 0
 and 1 values.
 }
 \examples{
-calc_criterion(sample(0L:1, 100, replace = TRUE), 
-               matrix(sample(0L:1, 400, replace = TRUE), ncol = 4),
-               calc_ig)
+tar <- sample(0L:1, 100, replace = TRUE)
+feats <- matrix(sample(0L:1, 400, replace = TRUE), ncol = 4)
+
+# Information Gain
+calc_criterion(tar, feats, calc_ig)
+
+# hi-squared-based measure
+calc_criterion(tar, feats, calc_cs)
+
+# Kullback-Leibler divergence
+calc_criterion(tar, feats, calc_kl)
 }
 \seealso{
 \code{\link{test_features}}.

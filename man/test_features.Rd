@@ -44,8 +44,9 @@ specifying the \code{adjust} parameter.
 
 Available criterions:
 \describe{
-  \item{ig}{Information Gain. Calculated using \code{\link{calc_ig}}.}
-  \item{kl}{Kullback-Leibler divergence. Calculated using \code{\link{calc_kl}}.}
+  \item{ig}{Information Gain: \code{\link{calc_ig}}.}
+  \item{kl}{Kullback-Leibler divergence: \code{\link{calc_kl}}.}
+  \item{cs}{Chi-squared-based measure: \code{\link{calc_cs}}.}
 }
 }
 \note{
