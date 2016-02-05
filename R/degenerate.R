@@ -54,10 +54,10 @@ degenerate <- function(seq, element_groups) {
 #' Convert letters to numbers
 #'
 #' Converts biological sequence from letter to number notation.
-#' @param seq \code{character} vector representing single sequence.
+#' @inheritParams degenerate
 #' @param seq_type the type of sequence. Can be \code{rna}, \code{dna} or \code{prot}.
 #' @keywords manip
-#' @return a \code{numeric} vector containing converted elements.
+#' @return a \code{numeric} vector or matrix containing converted elements.
 #' @export
 #' @keywords manip
 #' @seealso 
@@ -87,10 +87,10 @@ l2n <- function(seq, seq_type) {
 #' Convert numbers to letters
 #'
 #' Converts biological sequence from number to letter notation.
-#' @param seq \code{numeric} vector representing single sequence.
+#' @param seq \code{integer} vector or matrix representing single sequence.
 #' @param seq_type the type of sequence. Can be \code{rna}, \code{dna} or \code{prot}.
 #' @keywords manip
-#' @return a \code{numeric} vector containing converted elements.
+#' @return a \code{character} vector or matrix containing converted elements.
 #' @export
 #' @keywords manip
 #' @seealso 

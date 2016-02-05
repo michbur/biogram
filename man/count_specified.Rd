@@ -7,12 +7,12 @@
 count_specified(seq, ngrams)
 }
 \arguments{
-\item{seq}{a vector or matrix describing sequence(s).}
+\item{seq}{vector or matrix describing sequence(s).}
 
-\item{ngrams}{a vector of n-grams.}
+\item{ngrams}{vector of n-grams.}
 }
 \value{
-a \code{\link[slam]{simple_triplet_matrix}} where columns represent
+A \code{\link[slam]{simple_triplet_matrix}} where columns represent
 n-grams and rows sequences.
 }
 \description{

@@ -15,15 +15,18 @@ count_total(seq, n, d)
 consecutive elements). See Details.}
 }
 \value{
-A number of n-grams.
+An \code{integer} rperesenting the total number of n-grams.
 }
 \description{
-Computes total number of n-grams that can be extracted from sequences taking 
-into account their length (even or uneven).
+Computes total number of n-grams that can be extracted from sequences.
 }
 \details{
+The maximum number of possible n-grams is limited by their length 
+and the distance between elements of the n-gram.
+}
+\note{
 A format of \code{d} vector is discussed in Details of 
-\code{\link{count_ngrams}}.
+\code{\link{count_ngrams}}. The maximum
 }
 \examples{
 seqs <- matrix(sample(1L:4, 600, replace = TRUE), ncol = 50)

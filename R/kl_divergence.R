@@ -3,8 +3,8 @@
 #' Computes Kullback-Leibler divergence between features and target vector.
 #'
 #' @inheritParams calc_ig
-#' @return a \code{integer} vector of length equal to the number of features 
-#' containing computed Kullback-Leibler divergence values.
+#' @return A \code{numeric} vector of length 1 representing Kullback-Leibler divergence 
+#' value.
 #' @seealso \code{\link{test_features}}.
 #' Kullback-Leibler divergence is calculated using \code{\link[entropy]{KL.plugin}}.
 #' 

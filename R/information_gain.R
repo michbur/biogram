@@ -6,7 +6,7 @@
 #' @param target_b target in bits (as per \code{\link[bit]{as.bit}}).
 #' @param len_target length of target vector.
 #' @param pos_target number of positive cases in target vector.
-#' @return a single numeric value - information gain in nats.
+#' @return A \code{numeric} vector of length 1 representing information gain in nats.
 #' @details The information gain term is used here (improperly) as a synonym of mutual 
 #' information. It is defined as:
 #' \deqn{IG(X; Y) = \sum_{y \in Y} \sum_{x \in X} p(x, y) \log \left(\frac{p(x, y)}{p(x) p(y)}  \right)}

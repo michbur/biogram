@@ -16,8 +16,7 @@ calc_cs(feature, target_b, len_target, pos_target)
 \item{pos_target}{number of positive cases in target vector.}
 }
 \value{
-a \code{integer} vector of length equal to the number of features 
-containing computed Chi-square values.
+A \code{numeric} vector of length 1 representing computed Chi-square values.
 }
 \description{
 Computes Chi-squared-based measure between features and target vector.

@@ -8,7 +8,7 @@
 #' @param ds \code{list} of distances between elements of n-grams. Each element of the list
 #' is a vector used as distance for the respective n-gram size given by the \code{ns}
 #' parameter.
-#' @return a \code{integer} matrix with named columns. The naming conventions are the same
+#' @return An \code{integer} matrix with named columns. The naming conventions are the same
 #' as in \code{\link{count_ngrams}}.
 #' @details \code{ns} vector and \code{ds} vector must have equal length. Elements of 
 #' \code{ds} vector are used as equivalents of \code{d} parameter for respective values 

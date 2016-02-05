@@ -7,9 +7,9 @@
 table_ngrams(seq, ngrams, target)
 }
 \arguments{
-\item{seq}{a vector or matrix describing sequence(s).}
+\item{seq}{vector or matrix describing sequence(s).}
 
-\item{ngrams}{a vector of n-grams.}
+\item{ngrams}{vector of n-grams.}
 
 \item{target}{\code{integer} vector with target information (e.g. class labels). 
 Must have at least two values.}

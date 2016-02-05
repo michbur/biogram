@@ -51,13 +51,14 @@ get_ngrams_ind <- function(len_seq, n, d) {
 
 #' Count total number of n-grams
 #'
-#' Computes total number of n-grams that can be extracted from sequences taking 
-#' into account their length (even or uneven).
+#' Computes total number of n-grams that can be extracted from sequences. 
 #'
 #' @inheritParams count_ngrams
-#' @return A number of n-grams. 
-#' @details A format of \code{d} vector is discussed in Details of 
-#' \code{\link{count_ngrams}}.
+#' @return An \code{integer} rperesenting the total number of n-grams.
+#' @details The maximum number of possible n-grams is limited by their length 
+#' and the distance between elements of the n-gram. 
+#' @note A format of \code{d} vector is discussed in Details of 
+#' \code{\link{count_ngrams}}. The maximum 
 #' @export
 #' @examples 
 #' seqs <- matrix(sample(1L:4, 600, replace = TRUE), ncol = 50)

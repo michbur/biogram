@@ -7,12 +7,12 @@
 l2n(seq, seq_type)
 }
 \arguments{
-\item{seq}{\code{character} vector representing single sequence.}
+\item{seq}{\code{character} vector or matrix representing single sequence.}
 
 \item{seq_type}{the type of sequence. Can be \code{rna}, \code{dna} or \code{prot}.}
 }
 \value{
-a \code{numeric} vector containing converted elements.
+a \code{numeric} vector or matrix containing converted elements.
 }
 \description{
 Converts biological sequence from letter to number notation.

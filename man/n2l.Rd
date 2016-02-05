@@ -7,12 +7,12 @@
 n2l(seq, seq_type)
 }
 \arguments{
-\item{seq}{\code{numeric} vector representing single sequence.}
+\item{seq}{\code{integer} vector or matrix representing single sequence.}
 
 \item{seq_type}{the type of sequence. Can be \code{rna}, \code{dna} or \code{prot}.}
 }
 \value{
-a \code{numeric} vector containing converted elements.
+a \code{character} vector or matrix containing converted elements.
 }
 \description{
 Converts biological sequence from number to letter notation.

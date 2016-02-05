@@ -3,8 +3,7 @@
 #' Computes Chi-squared-based measure between features and target vector.
 #'
 #' @inheritParams calc_ig
-#' @return a \code{integer} vector of length equal to the number of features 
-#' containing computed Chi-square values.
+#' @return A \code{numeric} vector of length 1 representing computed Chi-square values.
 #' @seealso \code{\link{test_features}}.
 #' 
 #' \code{\link[stats]{chisq.test}} - Pearson's chi-squared test for count data.

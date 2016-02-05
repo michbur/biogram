@@ -16,8 +16,8 @@ calc_kl(feature, target_b, len_target, pos_target)
 \item{pos_target}{number of positive cases in target vector.}
 }
 \value{
-a \code{integer} vector of length equal to the number of features 
-containing computed Kullback-Leibler divergence values.
+A \code{numeric} vector of length 1 representing Kullback-Leibler divergence 
+value.
 }
 \description{
 Computes Kullback-Leibler divergence between features and target vector.

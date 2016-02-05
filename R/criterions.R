@@ -3,7 +3,7 @@
 # Checks if the criterion is viable or matches it to the list of implemented 
 # criterions.
 # 
-# @param input_criterion a \code{character} string, criterion from input.
+# @param input_criterion \code{character} string, criterion from input.
 # @param criterion_names list of implemented criterions, always in lowercase.
 # @export
 # @return a list of three: 

@@ -2,7 +2,7 @@
 #' 
 #' Checks if the character string may be used as an n-gram and its notation follows specific 
 #' convention of \code{biogram} package.
-#' @param x a \code{character} string representing single n-gram.
+#' @param x \code{character} string representing single n-gram.
 #' @return \code{TRUE} if n-gram's notation is correct, \code{FALSE} if not.
 #' @export
 #' @examples

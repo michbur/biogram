@@ -16,7 +16,7 @@ calc_ig(feature, target_b, len_target, pos_target)
 \item{pos_target}{number of positive cases in target vector.}
 }
 \value{
-a single numeric value - information gain in nats.
+A \code{numeric} vector of length 1 representing information gain in nats.
 }
 \description{
 Computes information gain of single feature and target vector.

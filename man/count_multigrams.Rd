@@ -28,7 +28,7 @@ applied only to the counts of n-grams without position information. See \code{De
 two groups (larger or equal to threshold vs. smaller than threshold).}
 }
 \value{
-a \code{integer} matrix with named columns. The naming conventions are the same
+An \code{integer} matrix with named columns. The naming conventions are the same
 as in \code{\link{count_ngrams}}.
 }
 \description{

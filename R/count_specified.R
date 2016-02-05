@@ -2,9 +2,9 @@
 #'
 #' Counts specified n-grams in the input sequence(s).
 #'
-#' @param seq a vector or matrix describing sequence(s). 
-#' @param ngrams a vector of n-grams.
-#' @return a \code{\link[slam]{simple_triplet_matrix}} where columns represent
+#' @param seq vector or matrix describing sequence(s). 
+#' @param ngrams vector of n-grams.
+#' @return A \code{\link[slam]{simple_triplet_matrix}} where columns represent
 #' n-grams and rows sequences.
 #' @export
 #' @details \code{\link{count_specified}} counts only selected n-grams declared by

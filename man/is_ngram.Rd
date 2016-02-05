@@ -7,7 +7,7 @@
 is_ngram(x)
 }
 \arguments{
-\item{x}{a \code{character} string representing single n-gram.}
+\item{x}{\code{character} string representing single n-gram.}
 }
 \value{
 \code{TRUE} if n-gram's notation is correct, \code{FALSE} if not.
