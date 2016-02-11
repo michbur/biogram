@@ -4,14 +4,14 @@
 #'
 #' @param feature feature vector.
 #' @param target_b target in bits (as per \code{\link[bit]{as.bit}}).
-#' @param len_target length of target vector.
-#' @param pos_target number of positive cases in target vector.
+#' @param len_target length of the target vector.
+#' @param pos_target number of positive cases in the target vector.
 #' @return A \code{numeric} vector of length 1 representing information gain in nats.
 #' @details The information gain term is used here (improperly) as a synonym of mutual 
 #' information. It is defined as:
 #' \deqn{IG(X; Y) = \sum_{y \in Y} \sum_{x \in X} p(x, y) \log \left(\frac{p(x, y)}{p(x) p(y)}  \right)}
 #' 
-#' In biogram package information gain is calculated using following relationship: 
+#' In biogram package information gain is computed using following relationship: 
 #' \eqn{IG = E(S) - E(S|F)}
 #' @note During calculations \eqn{0 \log 0  = 0}. For a justification see References. 
 #' 

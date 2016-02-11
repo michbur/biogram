@@ -9,9 +9,9 @@ fast_crosstable(target_b, len_target, pos_target, feature)
 \arguments{
 \item{target_b}{target in bits (as per \code{\link[bit]{as.bit}}).}
 
-\item{len_target}{length of target vector.}
+\item{len_target}{length of the target vector.}
 
-\item{pos_target}{number of positive cases in target vector.}
+\item{pos_target}{number of positive cases in the target vector.}
 
 \item{feature}{feature vector.}
 }

@@ -11,9 +11,9 @@ calc_cs(feature, target_b, len_target, pos_target)
 
 \item{target_b}{target in bits (as per \code{\link[bit]{as.bit}}).}
 
-\item{len_target}{length of target vector.}
+\item{len_target}{length of the target vector.}
 
-\item{pos_target}{number of positive cases in target vector.}
+\item{pos_target}{number of positive cases in the target vector.}
 }
 \value{
 A \code{numeric} vector of length 1 representing computed Chi-square values.
