@@ -29,4 +29,11 @@ of the input sequences. Each element of the list represents a position in
 the sequence and contains amino acid, that are likely to occure on this
 position.
 }
+\examples{
+data(human_cleave)
+#cluster_reg_exp is computationally expensive
+\donttest{
+results <- cluster_reg_exp(human_cleave[1L:20, 1L:4])
+}
+}
 

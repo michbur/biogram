@@ -2,6 +2,7 @@
 #' Compute degrees of freedom of one regular expression
 #' 
 #' @param x, list of vectors, regular expression
+#' @noRd
 #' @keywords internal
 #' @return numeric, degrees of freedom
 reg_exp_df <- function(x){
@@ -11,9 +12,10 @@ reg_exp_df <- function(x){
 
 #' Compute degrees of freedom for a list of regular expressions
 #' 
-#' @param regExp, list of list of vectors, lsit of regular expressions
-#' @keywords internal
+#' @param regExp, list of list of vectors, list of regular expressions
 #' @return numeric, degrees of freedom 
+#' @noRd
+#' @keywords internal
 #' @examples
 #' x1 <- list(c(1,2),3)
 #' x2 <- list(1,c(2,4)) 
@@ -27,6 +29,7 @@ count_df <- function(reg_exp){
 #' 
 #' @param e1 list of vectors, first regular expression
 #' @param e2 list of vectors, second regular expression
+#' @noRd
 #' @keywords internal
 #' @return list of vectors, smallest regular expression that contains e1 and e2 
 #' @examples 
@@ -55,6 +58,12 @@ join_reg_exp <- function(exp1, exp2){
 ##'  \item{"seqClustering"}{clustering of sequences in best clustering}
 ##'  \item{"allRegExps"}{all regular expressions.}
 ##'  \item{"allIndices"}{all clusterings}
+##' }
+##' @examples
+##' data(human_cleave)
+##' #cluster_reg_exp is computationally expensive
+##' \donttest{
+##' results <- cluster_reg_exp(human_cleave[1L:20, 1L:4])
 ##' }
 cluster_reg_exp <- function(ngrams){
   n <- length(ngrams)
