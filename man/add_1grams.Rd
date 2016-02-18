@@ -4,10 +4,13 @@
 \alias{add_1grams}
 \title{Add 1-grams}
 \usage{
-add_1grams(ngrams)
+add_1grams(ngram, u)
 }
 \arguments{
-\item{ngrams}{a vector of positioned n-grams (as created by \code{\link{count_ngrams}}).}
+\item{ngram}{a single n-gram.}
+
+\item{u}{\code{integer}, \code{numeric} or \code{character} vector of all possible 
+unigrams.}
 }
 \value{
 vector of n-grams (where \code{n} is equal to the \code{n} of the input plus one) 
@@ -17,18 +20,10 @@ with position information.
 Builds (n+1)-grams from n-grams.
 }
 \details{
-n-grams are built by pasting existing n-grams with unigrams extracted 
-from them.
-}
-\note{
-All n-grams must have the same length (\code{n}).
+n-grams are built by pasting every possible unigram in the every possible free 
+position.
 }
 \examples{
-add_1grams(c("1_1_0", "2_1_0", "5_1_0", "7_1_0", "4_2_0", 
-"5_2_0", "7_2_0", "8_5_0"))
-add_1grams(c("1_2.3.4_0.0", "4_1.1.1_0.0"))
-}
-\seealso{
-Function used by \code{add_1grams} to extract unigrams: \code{\link{position_ngrams}}.
+add_1grams("1_2.3.4_3.0", 1L:5)
 }
 
