@@ -23,6 +23,7 @@ was replaced by a gap), \code{2_1.2_2} and \code{2_1.1_0}.
 }
 \examples{
 gap_ngrams(c("2_1.1.2_0.1", "3_1.1.2_0.0", "3_2.2.2_0.0"))
+gap_ngrams(c("1.1.2_0.1", "1.1.2_0.0", "2.2.2_0.0"))
 }
 \seealso{
 Reverse function: \code{\link{add_1grams}}.
