@@ -77,7 +77,7 @@ add_1grams_positioned <- function(decoded, start_position, seq_length, u, add_po
 #' by a gap. For example, introducing gaps in n-gram \code{2_1.1.2_0.1} 
 #' will results in three n-grams: \code{3_1.2_1} (where the \code{2_1_0} unigram 
 #' was replaced by a gap), \code{2_1.2_2} and \code{2_1.1_0}.
-#' @seealso Reverse function: \code{\link{add_1ngrams}}.
+#' @seealso Reverse function: \code{\link{add_1grams}}.
 #' @export
 #' @examples 
 #' gap_ngrams(c("2_1.1.2_0.1", "3_1.1.2_0.0", "3_2.2.2_0.0"))
