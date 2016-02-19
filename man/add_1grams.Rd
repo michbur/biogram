@@ -4,26 +4,34 @@
 \alias{add_1grams}
 \title{Add 1-grams}
 \usage{
-add_1grams(ngram, u)
+add_1grams(ngram, u, seq_length)
 }
 \arguments{
 \item{ngram}{a single n-gram.}
 
 \item{u}{\code{integer}, \code{numeric} or \code{character} vector of all possible 
 unigrams.}
+
+\item{seq_length}{length of an origin sequence.}
 }
 \value{
-vector of n-grams (where \code{n} is equal to the \code{n} of the input plus one) 
-with position information.
+vector of n-grams (where \code{n} is equal to the \code{n} of the input plus one).
 }
 \description{
 Builds (n+1)-grams from n-grams.
 }
 \details{
 n-grams are built by pasting every possible unigram in the every possible free 
-position.
+position. The total length of n-gram (n plus total distance between elements of the n-gram) 
+is limited by the length of an origin sequence, because the n-gram cannot be longer than 
+an origin sequence.
 }
 \examples{
-add_1grams("1_2.3.4_3.0", 1L:5)
+add_1grams("1_2.3.4_3.0", 1L:4, 8)
+
+add_1grams("a.a_1", c("a", "b", "c"), 4)
+}
+\seealso{
+Reverse function: \code{\link{gap_ngrams}}.
 }
 
