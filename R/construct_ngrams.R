@@ -62,14 +62,14 @@ construct_ngrams <- function(target, seq, u, n_max, conf_level = 0.95, gap = TRU
 }
 
 build_and_test <- function(signif_ngrams, seq, n, u, target, conf_level) {
-  nplusgrams <- unique(add_1grams(signif_ngrams))
+  nplusgrams <- unique(add_1grams(signif_ngrams, u, ncol(seq)))
   new_counts <- count_specified(seq, nplusgrams)
   new_test <- test_features(target, new_counts)
   cut(new_test, breaks = c(0, conf_level, 1))[[1]]
 }
 
 build_and_test_gaps <- function(signif_ngrams, seq, n, u, target) {
-  nplusgrams <- unique(add_1grams(signif_ngrams))
+  nplusgrams <- unique(add_1grams(signif_ngrams, u, ncol(seq)))
   gap_nplusgrams <- gap_ngrams(nplusgrams)
   new_counts <- count_specified(seq, gap_nplusgrams)
   
