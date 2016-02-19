@@ -111,10 +111,14 @@ gap_single_ngram <- function(ngram_id, sn_grams, distances, df, decoded) {
     code_ngrams(paste0(s_decoded, collapse = ""))
   }))
   
-  # positions of gapped n-grams
-  # first position is increased, because first element of the n-gram becomes a gap
-  res_positions <- c(pos_start + ids[2] - ids[1], rep(pos_start, length(res) - 1))
+  if(!is.null(pos_start)) {
+    # positions of gapped n-grams
+    # first position is increased, because first element of the n-gram becomes a gap
+    res_positions <- c(pos_start + ids[2] - ids[1], rep(pos_start, length(res) - 1))
+    
+    res <- unlist(lapply(1L:length(ids), function(i)
+      paste0(res_positions[i], "_", res[i])))
+  }
   
-  unlist(lapply(1L:length(ids), function(i)
-    paste0(res_positions[i], "_", res[i])))
+  res
 }
