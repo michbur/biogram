@@ -33,7 +33,7 @@ position.
 data(human_cleave)
 #cluster_reg_exp is computationally expensive
 \donttest{
-results <- cluster_reg_exp(human_cleave[1L:20, 1L:4])
+results <- cluster_reg_exp(human_cleave[1L:10, 1L:4])
 }
 }
 

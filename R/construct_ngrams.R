@@ -33,7 +33,6 @@
 #'      '5' = c(3, 4)))
 #' bigrams <- construct_ngrams(human_cleave[, "tar"], deg_seqs, 1L:5, 2)
 #' }
-
 construct_ngrams <- function(target, seq, u, n_max, conf_level = 0.95, gap = TRUE) {
   # build unigrams
   unigrams <- count_ngrams(seq, 1, u, pos = TRUE)
@@ -47,12 +46,7 @@ construct_ngrams <- function(target, seq, u, n_max, conf_level = 0.95, gap = TRU
   
   for(i in 2L:n_max) {
     if(length(signif_ngrams) != 0) {
-      signif_ngrams <- if(i > 2 && gap) {
-        build_and_test_gaps(signif_ngrams, seq, i, u, target)
-      } else {
-        build_and_test(signif_ngrams, seq, i, u, target, conf_level)
-      }
-          
+      signif_ngrams <- build_and_test(signif_ngrams, seq, u, target, conf_level)
       res[[i]] <- signif_ngrams
     } else {
       NULL
@@ -61,25 +55,11 @@ construct_ngrams <- function(target, seq, u, n_max, conf_level = 0.95, gap = TRU
   res
 }
 
-build_and_test <- function(signif_ngrams, seq, n, u, target, conf_level) {
-  nplusgrams <- unique(add_1grams(signif_ngrams, u, ncol(seq)))
+build_and_test <- function(signif_ngrams, seq, u, target, conf_level) {
+  seq_length <- ncol(seq)
+  nplusgrams <- unique(unlist(lapply(signif_ngrams, function(single_ngram)
+    add_1grams(single_ngram, u, seq_length))))
   new_counts <- count_specified(seq, nplusgrams)
   new_test <- test_features(target, new_counts)
   cut(new_test, breaks = c(0, conf_level, 1))[[1]]
-}
-
-build_and_test_gaps <- function(signif_ngrams, seq, n, u, target) {
-  nplusgrams <- unique(add_1grams(signif_ngrams, u, ncol(seq)))
-  gap_nplusgrams <- gap_ngrams(nplusgrams)
-  new_counts <- count_specified(seq, gap_nplusgrams)
-  
-  # artificial counts created by sum of counts of all gapped n-grams belonging to n-gram
-  art_counts <- do.call(cbind, lapply(1L:length(nplusgrams), function(id_ngram) {
-    as.numeric(row_sums(new_counts[, n*(id_ngram - 1) + 1:n]) > 0)
-  }))
-  
-  colnames(art_counts) <- nplusgrams
-  
-  new_test <- test_features(target, art_counts)
-  cut(new_test, breaks = c(0, 0.05, 1))[[1]]
 }
