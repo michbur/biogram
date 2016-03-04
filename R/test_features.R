@@ -73,15 +73,20 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
   
   # few tests for data consistency
   if (!all(target %in% c(0, 1))) {
-    stop("target is not {0,1}-valued vector")
+    stop("'target' is not {0,1}-valued vector")
   }
+  
+  if (length(unique(target)) != 2) {
+    stop("Both classes must be present in 'target'.")
+  }
+  
   if (nrow(features) != length(target)) {
-    stop("target and feature have different lengths")
+    stop("'target' and 'features' have different number of cases.")
   }
   
   apply(features, 2, function(feature) {
     if (!all(feature %in% c(0,1)) ) {
-      stop("feature is not {0,1}-valued vector")
+      stop("'features' are not {0,1}-valued matrix.")
     }
   })
   
