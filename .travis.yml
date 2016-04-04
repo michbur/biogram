@@ -1,44 +1,29 @@
-## Sample .travis.yml file for use with metacran/r-builder
-## See https://github.com/metacran/r-builder for details.
-
-language: c
+language: r
+r:
+  - oldrel
+  - release
+  - devel
+  
 sudo: required
 
-env:
-  global:
-    - RENV="./pkg-build.sh"
-
-
 before_install:
-  - curl -OL https://raw.githubusercontent.com/metacran/r-builder/master/pkg-build.sh
-  - chmod 755 pkg-build.sh
-  - ./pkg-build.sh bootstrap
+  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
+  - chmod 755 ./travis-tool.sh
+  - ./travis-tool.sh bootstrap
   - sudo apt-get install libgmp3-dev
-  - sudo apt-get install aptitude
-  - sudo apt-get install libcurl4-openssl-dev
-  - sudo apt-get install libxml2-dev
 
 install:
-  - ./pkg-build.sh install_deps
+  - ./travis-tool.sh install_deps
 
-script:
-  - ./pkg-build.sh run_tests
-
-after_success:
-  - Rscript -e 'install.packages(devtools)'
-  - Rscript -e 'devtools::install_github("jimhester/covr")'
-  - Rscript -e 'covr::coveralls()'
+script: ./travis-tool.sh run_tests
 
 after_failure:
-  - ./pkg-build.sh dump_logs
+  - ./travis-tool.sh dump_logs
 
 notifications:
   email:
     on_success: change
     on_failure: change
 
-env:
-  matrix:
-    - RVERSION=oldrel
-    - RVERSION=release
-    - RVERSION=devel
+r_github_packages:
+  - jimhester/covr
