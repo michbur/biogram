@@ -57,11 +57,15 @@ code_ngrams <- function(decoded_ngrams) {
     # get indices of elements
     id_elements <- which(sn != "_")
     
-    # calculate distances between elements
-    dists <- sapply(2L:length(id_elements), function(id) 
-      id_elements[id] - id_elements[id - 1] - 1)
-    paste0(paste(sn[sn != "_"], collapse = "."), "_", 
-           paste(dists, collapse = "."))
+    if(length(sn) == 1) {
+      paste0(sn, "_0")
+    } else {
+      # calculate distances between elements
+      dists <- sapply(2L:length(id_elements), function(id) 
+        id_elements[id] - id_elements[id - 1] - 1)
+      paste0(paste(sn[sn != "_"], collapse = "."), "_", 
+             paste(dists, collapse = "."))
+    }
   }))
 }
 
