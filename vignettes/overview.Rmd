@@ -39,7 +39,17 @@ my_theme <- theme(plot.background=element_rect(fill = "transparent",
 
 ```
 
-# Encoding distance
+# Reduction of dimensionality
+
+Since the number of potential n-grams grows exponentially with the $n$, n-gram datasets are often very large. To deal with the curse of dimensionality, the **biogram** package offers two solutions. The first relies on the reduction of an alphabet, which is a common approach in case of analysis of amino acid sequences (CITATIONS) and less applied in studies of nucleic acids.  
+
+The alternate solution is to filter the non-informative n-grams. The **biogram** package employs feature selection algorithm QuiPT, which allows very fast feature filtering.   
+
+## Alphabet reduction
+
+*degenerate*
+
+### Encoding distance
 
 The encoding distance, as computed per the *calc_ed* function, is defined as the minimum number of amino acids that have to be moved between subgroups of encoding to make **a** identical to **b** (the order of subgroups in the encoding and amino acids in a group is unimportant).
 
@@ -120,17 +130,22 @@ rownames(tmp) <- paste0("Enc b, group ", rownames(tmp))
 kable(tmp, caption = "Distances between groups of encodings a and b.")
 ```
 
-For each group in encoding **a**, we choose the minimum distance $d_i$ between the group and any group belonging to the encoding **b**. The normalization factor is equal to the sum of minimum distances for each group in **a**.
+The scale factor $s$ for the encoding distance between the encoding 
+**a** with $n$ subgroups (enumerated with $i$) and the encoding **b** 
+with $m$ subgroups (enumerated with $j$), we first calculated $p_i$ and $q_j$, 
+i.e. the mean values of corresponding physicochemical properties of all amino acids for each 
+subgroup. 
 
+$$ 
+s_{ab} = \sum^n_{i = 1}  \left( \min_{j=1,\dots,m} \; \; \sum^L_{l=1} \sqrt{ 
+(p_{i,l} - q_{j,l})^2} \right) 
 $$
-n_f = \sum_{i \in 1, 2, 3} \min \left( d_i \right) 
-$$
 
-In the case depicted above, $n_f$ is equal to the sum of `r paste0(round(apply(tmp, 2, min), 4), collapse = ", ")`: `r round(sum(apply(tmp, 2, min)), 4)`.
+In the case depicted above, $s_{ab}$ is equal to the sum of `r paste0(round(apply(tmp, 2, min), 4), collapse = ", ")`: `r round(sum(apply(tmp, 2, min)), 4)`.
 
-## biogram implementation
+#### biogram implementation
 
-The sole function responsible for computing an encoding distance is *calc_ed*.
+The encoding distance is computed with the *calc_ed* function.
 
 ```{r, echo = TRUE}
 
@@ -151,9 +166,7 @@ data(aaprop)
 calc_ed(a = a, b = b, prop = aaprop[c(22, 211), ])
 ```
 
-
-
-# Quick Permutation Test (QuiPT)
+### Quick Permutation Test (QuiPT)
 
 QuiPT is fast solution for filtering a large number of binary features provided 
 that target vector is also binary. It is typical case for positioned n-gram data. 
@@ -167,19 +180,19 @@ some important information about target. The **biogram** package employs several
 of such a dependence (see `?calc_criterion`). We shall consider in detail only information 
 gain, but similar conclusions can be done for other measures.
 
-#### Definition - entropy
+##### Definition - entropy
 For a discrete random variable we define entropy by:
 $$ H(X) = - \sum^m p_j log p_j$$
 For a Bernoulli r.v. we get a simplified expression
 $$ H(X) = -p \cdot log(p) - (1-p) \cdot log(1-p)$$
 
-#### Definition -  conditional entropy
+##### Definition -  conditional entropy
 For two discrete r.v. X, Y we define average conditional entropy by:
 $$H(Y|X) = \sum_j P(X=v_j) H(Y|X=v_j)$$
 If X and Y are Bernoulli's then:
 $$H(Y|X) = q \cdot H(Y|X=1) + (1-q) \cdot H(Y|X=0)$$
 
-#### Definition - Information gain
+##### Definition - Information gain
 $$IG(Y|X) = H(Y) - H(Y|X)$$
 
 The intuition is that:
@@ -194,7 +207,7 @@ Let us consider the contingency table we get:
 | 0 | $n_{0,1}$ | $n_{0,0}$ |
 
 
-### Computing IG distribution under null hypothesis
+#### Computing IG distribution under null hypothesis
 As can be seen above we have 4 possible outcomes.
 If probability that target equals 1 is $p$ and probability that feature equals
 1 is $q$ and feature and target are independent then each of them has the 
