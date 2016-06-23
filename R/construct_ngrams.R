@@ -7,6 +7,8 @@
 #' @param n_max size of constructed n-grams.
 #' @param conf_level confidence level.
 #' @param gap \code{logical}, if \code{TRUE} gaps are used. See Details.
+#' @param use_heuristics, if \code{FALSE} then all n-grams are tested. This may
+#' slow down computations significantly 
 #' @return a vector of n-grams.
 #' @details 
 #' 
@@ -34,7 +36,8 @@
 #'      '5' = c(3, 4)))
 #' bigrams <- construct_ngrams(human_cleave[c(1L:100, 801L:900), "tar"], deg_seqs, 1L:5, 2)
 
-construct_ngrams <- function(target, seq, u, n_max, conf_level = 0.95, gap = TRUE) {
+construct_ngrams <- function(target, seq, u, n_max, conf_level = 0.95, gap = TRUE,
+                             use_heuristics = TRUE) {
   # build unigrams
   unigrams <- count_ngrams(seq, 1, u, pos = TRUE)
   # filter unigrams
@@ -43,12 +46,30 @@ construct_ngrams <- function(target, seq, u, n_max, conf_level = 0.95, gap = TRU
   
   res <- list()
   
-  res[[1]] <- signif_ngrams
+  if(use_heuristics){
+    res[[1]] <- signif_ngrams
+  } else {
+    res[[1]] <- signif_ngrams
+    signif_ngrams <- paste0(create_ngrams(1, 1L:4, possible_grams = ncol(seq)), "_0")
+  }
+  
   
   for(i in 2L:n_max) {
     if(length(signif_ngrams) != 0) {
-      signif_ngrams <- build_and_test(signif_ngrams, seq, u, target, conf_level)
-      res[[i]] <- signif_ngrams
+      #code from build_and_test because we need nplusgrams for non-heuristic version
+      seq_length <- ncol(seq)
+      nplusgrams <- unique(unlist(lapply(signif_ngrams, function(single_ngram)
+        add_1grams(single_ngram, u, seq_length))))
+      new_counts <- count_specified(seq, nplusgrams)
+      new_test <- test_features(target, new_counts)
+      
+      if(use_heuristics){
+        signif_ngrams <- cut(new_test, breaks = c(0, conf_level, 1))[[1]]
+        res[[i]] <- signif_ngrams
+      } else {
+        res[[i]] <- cut(new_test, breaks = c(0, conf_level, 1))[[1]]
+        signif_ngrams <- nplusgrams
+      }
     } else {
       NULL
     }
