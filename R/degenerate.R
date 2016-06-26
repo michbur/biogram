@@ -80,7 +80,10 @@ l2n <- function(seq, seq_type) {
                                    "s", "t", "v", "w", "y"))
   names(elements_list) <- 1L:length(elements_list)
   seq <- tolower(seq)
-  as.numeric(degenerate(seq, elements_list))
+  deg_seq <- as.numeric(degenerate(seq, elements_list))
+  if(is.matrix(seq))
+    deg_seq <- matrix(deg_seq, ncol = ncol(seq))
+  deg_seq
 }
 
 
