@@ -38,7 +38,7 @@ create_feature_target <- function(n11, n01, n10, n00){
 #' @details Input looks odd, but the function was build to be as fast 
 #' as possible subroutine of \code{\link{calc_ig}}, which works on
 #' many features but only one target.
-#' @note Binary vector means numeric vector with 0 or 1.
+#' @note Binary vector means a numeric vector with 0 or 1.
 #' @export
 #' @examples tar <- sample(0L:1, 100, replace = TRUE)
 #' feat <- sample(0L:1, 100, replace = TRUE)
@@ -58,4 +58,31 @@ fast_crosstable <- function(target_b, len_target, pos_target, feature) {
     pos_target - n_tar_f, # tar +, feature -
     pos_f - n_tar_f, # tar -, feature +
     len_target - pos_target - pos_f + n_tar_f) # tar -, feature -
+}
+
+#' Convert sequence list to matrix
+#'
+#' Converts a list of sequences to a matrix.
+#'
+#' @param seq_list list of sequences (e.g. as returned by 
+#' the \code{\link[seqinr]{read.fasta}} function).
+#' @return a matrix of sequences.
+#' @details a matrix with the number of rows equal to the number of 
+#' sequences and the number of columns equal to the length of the 
+#' longest sequence. If sequences do not have the same length, 
+#' shorter sequences are filled with NAs.
+#' @export
+#' @examples 
+#' # list of sequences
+#' sample_list <- lapply(round(runif(5, 6, 15), 0), function(i)
+#'   sample(c("A", "C", "G", "T"), i, replace = TRUE))
+#' # convert to matrix
+#' list2matrix(sample_list)
+
+
+list2matrix <- function(seq_list) {
+  max_len <- max(lengths(seq_list))
+  t(sapply(seq_list, function(single_seq)
+    c(single_seq, rep(NA, max_len - length(single_seq)))
+  ))
 }

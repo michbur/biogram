@@ -33,7 +33,7 @@ as possible subroutine of \code{\link{calc_ig}}, which works on
 many features but only one target.
 }
 \note{
-Binary vector means numeric vector with 0 or 1.
+Binary vector means a numeric vector with 0 or 1.
 }
 \examples{
 tar <- sample(0L:1, 100, replace = TRUE)
