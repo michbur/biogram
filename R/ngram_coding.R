@@ -18,7 +18,9 @@ decode_ngrams <- function(ngrams) {
     stop("Improper n-grams: paste(names(which(!validated_ngram)), collapse = ", ").")
   
   sngrams <- strsplit(ngrams, "_")
-  vapply(sngrams, decode_single_ngrams, "a")
+  decoded <- vapply(sngrams, decode_single_ngrams, "a")
+  names(decoded) <- ngrams
+  decoded
 }
 
 decode_single_ngrams <- function(splitted_ngram) {

@@ -4,7 +4,8 @@
 \alias{construct_ngrams}
 \title{Construct and filter n-grams}
 \usage{
-construct_ngrams(target, seq, u, n_max, conf_level = 0.95, gap = TRUE)
+construct_ngrams(target, seq, u, n_max, conf_level = 0.95, gap = TRUE,
+  use_heuristics = TRUE)
 }
 \arguments{
 \item{target}{\code{integer} vector with target information (e.g. class labels).}
@@ -19,6 +20,9 @@ possible unigrams.}
 \item{conf_level}{confidence level.}
 
 \item{gap}{\code{logical}, if \code{TRUE} gaps are used. See Details.}
+
+\item{use_heuristics, }{if \code{FALSE} then all n-grams are tested. This may
+slow down computations significantly}
 }
 \value{
 a vector of n-grams.
