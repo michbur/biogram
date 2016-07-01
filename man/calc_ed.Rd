@@ -11,7 +11,8 @@ calc_ed(a, b, prop = NULL)
 about the required structure of encoding).}
 
 \item{b}{encoding to which \code{a} should be compared. Must have equal number 
-of groups or less than \code{a}.}
+of groups or less than \code{a}. Both \code{a} and {b} must have the the same 
+number of elements.}
 
 \item{prop}{\code{matrix} of physicochemical properties to normalize the 
 encoding distance.  Must have either four or 20 columns and each column should 
@@ -34,6 +35,8 @@ If the parameter \code{prop} is supplied, the encoding distance is normalized by
 factor equal to the sum of distances for each group in \code{a} and the closest group 
 in \code{b}. The position of a group is defined as the mean value of properties of 
 amino acids or nucleotides belonging the group.
+
+See the package vignette for more details.
 }
 \examples{
 # calculate encoding distance between two encodings of amino acids

@@ -4,7 +4,8 @@
 #' @param a encoding (see \code{\link{validate_encoding}} for more information 
 #' about the required structure of encoding).
 #' @param b encoding to which \code{a} should be compared. Must have equal number 
-#' of groups or less than \code{a}.
+#' of groups or less than \code{a}. Both \code{a} and {b} must have the the same 
+#' number of elements.
 #' @param prop \code{matrix} of physicochemical properties to normalize the 
 #' encoding distance.  Must have either four or 20 columns and each column should 
 #' represent properties of the single amino acid/nucleotide. If \code{NULL},
@@ -18,6 +19,8 @@
 #' factor equal to the sum of distances for each group in \code{a} and the closest group 
 #' in \code{b}. The position of a group is defined as the mean value of properties of 
 #' amino acids or nucleotides belonging the group.
+#' 
+#' See the package vignette for more details.
 #' @seealso \code{\link{validate_encoding}}.
 #' @return an encoding distance.
 #' @importFrom partitions listParts
@@ -95,24 +98,6 @@ calc_ed <- function(a, b, prop = NULL) {
       }
     } else {
       
-#      # indices of groups to merge
-#      merges <- unlist(lapply(1L:(len_a - len_b + 1), function(n_subgroups) {
-#        combn(1L:len_a, n_subgroups, simplify = FALSE)
-#      }), recursive = FALSE)
-#      
-#      # list of merged
-#      reduced_size <- lapply(merges, function(single_merge) {
-#        
-#        all_lengths <- list(lengths(ta[single_merge], use.names = FALSE),
-#                            lengths(ta[-single_merge], use.names = FALSE))
-#        
-#        list(enc = list(unlist(ta[single_merge], use.names = FALSE), 
-#                        unlist(ta[-single_merge], use.names = FALSE)), # groups after merge
-#             ed = sum(sapply(all_lengths, function(single_length) {
-#               sum(single_length[-which.max(single_length)])
-#             })))
-#      })
-      
       merges <- create_merges(len_a, len_b)
 
       # list of merged
@@ -161,27 +146,6 @@ calc_ed <- function(a, b, prop = NULL) {
 
 calc_ed_single <- function(ta, tb, ed = 0) {
   
-  # comparision table, for the so called 'future' when I have enough time to write something 
-  # smarter
-  #   comp_tab <- cbind(bgr = sort(rep(1L:length(ta), length(tb))),
-  #                     do.call(rbind, lapply(tb, function(single_subgroup_b) {
-  #                       counts <- do.call(rbind, lapply(ta, function(single_subgroup_a)
-  #                         data.frame(counts = sum(single_subgroup_a %in% single_subgroup_b))))
-  #                       
-  #                       # order matrix
-  #                       # first row - sequence of groups
-  #                       # second row - groups' order
-  #                       ordmat <- matrix(c(1L:length(tb),order(counts[, "counts"], decreasing = TRUE)), 
-  #                                        nrow = 2, byrow = TRUE)
-  #                       cbind(agr = 1L:length(tb), position = ordmat[1, order(ordmat[2, ])],
-  #                             counts)
-  #                     })
-  #                     ))
-  #   
-  #   agr <- comp_tab[comp_tab[, "position"] == 1, "agr"]
-  #   bgr <- comp_tab[comp_tab[, "position"] == 1, "bgr"]
-  
-  
   len_b <- length(tb)
   # all permutations of assigning subgroups from encoding 'a' to subgroups of 'b'
   perms <- expand.grid(lapply(1L:len_b, function(dummy) 1L:len_b))
@@ -205,15 +169,15 @@ calc_ed_single <- function(ta, tb, ed = 0) {
 
 #' Validate encoding
 #'
-#' Checks if an encoding has the proper structure 
+#' Checks the structure of an encoding.
 #' @param x encoding.
 #' @param u \code{integer}, \code{numeric} or \code{character} vector of all
 #' elements belonging to the encoding. See Details.
 #' @keywords manip
 #' @return \code{TRUE} if the \code{x} is a correctly reduced \code{u}, 
 #' \code{FALSE} in any other cases.
-#' @details The encoding is a reduced alphabet, the list of groups to which 
-#' elements of sequence should be aggregated. All elements of the alphabet (all 
+#' @details The encoding is a list of groups to which elements of an alphabet 
+#' should be reduced. All elements of the alphabet (all 
 #' amino acids or all nucleotides) should appear in the encoding.
 #' @export
 #' @keywords manip

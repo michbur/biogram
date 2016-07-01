@@ -17,11 +17,11 @@ elements belonging to the encoding. See Details.}
 \code{FALSE} in any other cases.
 }
 \description{
-Checks if an encoding has the proper structure
+Checks the structure of an encoding.
 }
 \details{
-The encoding is a reduced alphabet, the list of groups to which 
-elements of sequence should be aggregated. All elements of the alphabet (all 
+The encoding is a list of groups to which elements of an alphabet 
+should be reduced. All elements of the alphabet (all 
 amino acids or all nucleotides) should appear in the encoding.
 }
 \examples{
