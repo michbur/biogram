@@ -13,6 +13,13 @@
 #' }
 #' @name feature_test
 #' @docType class
+#' @seealso 
+#' Methods: 
+#' \itemize{
+#' \item \code{\link{cut.feature_test}}
+#' \item \code{\link{print.feature_test}}
+#' \item \code{\link{summary.feature_test}}
+#' }
 NULL
 
 create_feature_test <- function(p_value, criterion, adjust, times, occ) {

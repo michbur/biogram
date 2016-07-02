@@ -20,4 +20,12 @@ attributes characterizes futher the details of test which returned these p-value
   \item{occ}{frequency of features splitted in subset based on the value of target.}
 }
 }
+\seealso{
+Methods: 
+\itemize{
+\item \code{\link{cut.feature_test}}
+\item \code{\link{print.feature_test}}
+\item \code{\link{summary.feature_test}}
+}
+}
 
