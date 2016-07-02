@@ -16,6 +16,7 @@
 #' @seealso 
 #' Methods: 
 #' \itemize{
+#' \item \code{\link{as.data.frame.feature_test}}
 #' \item \code{\link{cut.feature_test}}
 #' \item \code{\link{print.feature_test}}
 #' \item \code{\link{summary.feature_test}}
@@ -125,6 +126,31 @@ cut.feature_test <- function(x, split = "significances",
   
   res
 }
+
+#' Coerce feature_test object to a data frame
+#'
+#' Coerce results of \code{\link{test_features}} function to a 
+#' \code{\link[base]{data.frame}}.
+#'
+#' @param x object of class \code{\link{feature_test}}.
+#' @param row.names ignored.
+#' @param optional ignored.
+#' @param stringsAsFactors logical: should the character vector be converted 
+#' to a factor?.
+#' @param ... additional arguments to be passed to or from methods.
+#' @return a data frame with four columns: names of n-gram, p-values,
+#' occurrences in positive and negative sequences.
+#' @export
+as.data.frame.feature_test <- function(x, 
+                                       row.names = NULL, optional = FALSE, 
+                                       stringsAsFactors = FALSE, ...) {
+  
+  data.frame(ngram = names(x),
+             p.value = as.vector(x),
+             t(attr(x, "occ")), ..., stringsAsFactors = stringsAsFactors,
+             row.names = NULL)
+}
+
 
 # aggregate.feature_test <- function(x, significances = c(0, 0.0001, 0.01, 0.05, 1), 
 #                                   frequencies = c(0, 0.05, 0.1, 0.2, 1), 

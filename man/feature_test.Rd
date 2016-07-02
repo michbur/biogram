@@ -23,6 +23,7 @@ attributes characterizes futher the details of test which returned these p-value
 \seealso{
 Methods: 
 \itemize{
+\item \code{\link{as.data.frame.feature_test}}
 \item \code{\link{cut.feature_test}}
 \item \code{\link{print.feature_test}}
 \item \code{\link{summary.feature_test}}
