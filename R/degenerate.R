@@ -28,7 +28,10 @@
 degenerate <- function(seq, element_groups) {
   tmp_seq <- seq
   if (!all(unique(tmp_seq) %in% unlist(element_groups))) {
-    warning("'seq' contains elements not present in 'element_groups'. Such elements will be replaced by NA.")
+    warning("'seq' contains elements not present in 'element_groups'. 
+            Element(s): ", 
+            paste0(setdiff(unique(tmp_seq), unlist(element_groups)), collapse = ", "), 
+            " will be replaced by NA.")
     tmp_seq[!(tmp_seq %in% unlist(element_groups))] <- NA
   }
 
