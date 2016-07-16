@@ -55,6 +55,7 @@ calc_ed(aa1, aa1)
  
 }
 \seealso{
-\code{\link{validate_encoding}}.
+\code{\link{encoding2df}}: converts an encoding to a data frame.
+\code{\link{validate_encoding}}: validate a structure of an encoding.
 }
 

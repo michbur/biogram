@@ -40,6 +40,7 @@ validate_encoding(enc2, 1L:4)
 }
 \seealso{
 \code{\link{calc_ed}}: calculate the encoding distance between two encodings.
+\code{\link{encoding2df}}: converts an encoding to a data frame.
 }
 \keyword{manip}
 

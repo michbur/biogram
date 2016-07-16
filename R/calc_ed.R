@@ -21,7 +21,9 @@
 #' amino acids or nucleotides belonging the group.
 #' 
 #' See the package vignette for more details.
-#' @seealso \code{\link{validate_encoding}}.
+#' @seealso 
+#' \code{\link{encoding2df}}: converts an encoding to a data frame.
+#' \code{\link{validate_encoding}}: validate a structure of an encoding.
 #' @return an encoding distance.
 #' @importFrom partitions listParts
 #' @importFrom combinat permn
@@ -183,6 +185,7 @@ calc_ed_single <- function(ta, tb, ed = 0) {
 #' @keywords manip
 #' @seealso 
 #' \code{\link{calc_ed}}: calculate the encoding distance between two encodings.
+#' \code{\link{encoding2df}}: converts an encoding to a data frame.
 #' @examples
 #' enc1 = list(`1` = c("a", "t"), 
 #'             `2` = c("g", "c"))
@@ -218,4 +221,35 @@ create_merges <- function(x, n_groups) {
         unname(single_merge)[single_perm])
     }), recursive = FALSE)
 }
+
+#' Convert encoding to data frame
+#'
+#' Converts an encoding to a data frame.
+#' @param x encoding.
+#' @keywords manip
+#' @return data frame with two columns. First column represents an index of a 
+#' group in the supplied encoding and the second column contains all elements of 
+#' the encoding.
+#' @details The encoding is a list of groups to which elements of an alphabet 
+#' should be reduced. All elements of the alphabet (all 
+#' amino acids or all nucleotides) should appear in the encoding.
+#' @export
+#' @keywords manip
+#' @seealso 
+#' \code{\link{calc_ed}}: calculate the encoding distance between two encodings.
+#' \code{\link{validate_encoding}}: validate a structure of an encoding.
+#' @examples
+#' enc1 = list(`1` = c("a", "t"), 
+#'             `2` = c("g", "c"))
+#' encoding2df(enc1)
+
+
+encoding2df <- function(x) {
+  do.call(rbind, lapply(1L:length(x), function(gr_id) {
+    data.frame(gr_id = gr_id, element = x[[gr_id]], stringsAsFactors = FALSE)
+  }))
+}
+
+
+#as introduced by Stephenson 2013
 
