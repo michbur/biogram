@@ -22,6 +22,7 @@
 #' 
 #' See the package vignette for more details.
 #' @seealso 
+#' \code{\link{calc_si}}: compute the similarity index of two encodings.
 #' \code{\link{encoding2df}}: converts an encoding to a data frame.
 #' \code{\link{validate_encoding}}: validate a structure of an encoding.
 #' @return an encoding distance.
@@ -255,7 +256,3 @@ encoding2df <- function(x, sort = FALSE) {
   
   res
 }
-
-
-#as introduced by Stephenson 2013
-
