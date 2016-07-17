@@ -226,6 +226,7 @@ create_merges <- function(x, n_groups) {
 #'
 #' Converts an encoding to a data frame.
 #' @param x encoding.
+#' @param sort if \code{TRUE} rows are sorted according to elements.
 #' @keywords manip
 #' @return data frame with two columns. First column represents an index of a 
 #' group in the supplied encoding and the second column contains all elements of 
@@ -244,10 +245,15 @@ create_merges <- function(x, n_groups) {
 #' encoding2df(enc1)
 
 
-encoding2df <- function(x) {
-  do.call(rbind, lapply(1L:length(x), function(gr_id) {
-    data.frame(gr_id = gr_id, element = x[[gr_id]], stringsAsFactors = FALSE)
+encoding2df <- function(x, sort = FALSE) {
+  res <- do.call(rbind, lapply(1L:length(x), function(gr_id) {
+    data.frame(gr_id = gr_id, element = x[[gr_id]])
   }))
+  
+  if(sort)
+    res <- res[order(levels(res[["element"]])), ]
+  
+  res
 }
 
 

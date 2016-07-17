@@ -4,10 +4,12 @@
 \alias{encoding2df}
 \title{Convert encoding to data frame}
 \usage{
-encoding2df(x)
+encoding2df(x, sort = FALSE)
 }
 \arguments{
 \item{x}{encoding.}
+
+\item{sort}{if \code{TRUE} rows are sorted according to elements.}
 }
 \value{
 data frame with two columns. First column represents an index of a 
