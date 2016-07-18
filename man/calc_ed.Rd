@@ -55,6 +55,8 @@ calc_ed(aa1, aa1)
  
 }
 \seealso{
-\code{\link{validate_encoding}}.
+\code{\link{calc_si}}: compute the similarity index of two encodings.
+\code{\link{encoding2df}}: converts an encoding to a data frame.
+\code{\link{validate_encoding}}: validate a structure of an encoding.
 }
 
