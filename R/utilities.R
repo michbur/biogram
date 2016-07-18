@@ -59,3 +59,17 @@ fast_crosstable <- function(target_b, len_target, pos_target, feature) {
     pos_f - n_tar_f, # tar -, feature +
     len_target - pos_target - pos_f + n_tar_f) # tar -, feature -
 }
+
+
+#' Binarize
+#'
+#' Binarizes a matrix.
+#' 
+#' @param x \code{matrix} or \code{\link[slam]{simple_triplet_matrix}}.
+#' @export
+#' @return a \code{matrix} or \code{\link[slam]{simple_triplet_matrix}} 
+#' (depending on the input).
+
+binarize <- function(x) {
+  x
+}
