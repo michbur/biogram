@@ -71,5 +71,18 @@ fast_crosstable <- function(target_b, len_target, pos_target, feature) {
 #' (depending on the input).
 
 binarize <- function(x) {
-  x
+  nonbin_matrix <- if(is.simple_triplet_matrix(x)) {
+    as.matrix(x)
+  } else {
+    x
+  }
+    
+  nonbin_matrix <- nonbin_matrix > 0
+  storage.mode(nonbin_matrix) <- "integer"
+  
+  if(is.simple_triplet_matrix(x)) {
+    as.simple_triplet_matrix(nonbin_matrix)
+  } else {
+    nonbin_matrix
+  }
 }
