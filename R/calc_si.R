@@ -11,7 +11,7 @@
 #' @seealso 
 #' \code{\link{calc_ed}}: calculate the encoding distance between two encodings.
 #' @references Stephenson, J.D., and Freeland, S.J. (2013). Unearthing the Root 
-#' of Amino Acid Similarity. J Mol Evol 77, 159–169.
+#' of Amino Acid Similarity. J Mol Evol 77, 159-169.
 #' @examples
 #' # example from Stephenson & Freeland, 2013 (Fig. 6)
 #' enc1 <- list(`1` = "A",

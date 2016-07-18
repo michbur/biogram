@@ -45,7 +45,7 @@ calc_si(enc1, enc3)
 }
 \references{
 Stephenson, J.D., and Freeland, S.J. (2013). Unearthing the Root 
-of Amino Acid Similarity. J Mol Evol 77, 159–169.
+of Amino Acid Similarity. J Mol Evol 77, 159-169.
 }
 \seealso{
 \code{\link{calc_ed}}: calculate the encoding distance between two encodings.
