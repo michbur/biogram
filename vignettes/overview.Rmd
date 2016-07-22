@@ -51,6 +51,8 @@ The alternate solution is to filter the non-informative n-grams. The **biogram**
 
 ### Similarity index
 
+The similarity index was firstly introduced as the unnamed distance measure for reduced alphabets by XXX. Briefly, if a pair of elements is in both encodings in the same group or in different groups, the pair scores 1 and in the opposite case 0. The pairs of the identical elements are ignored. The score is later divided by the number of possible pairs ($20 \times 19$ in case of the amino acid alphabet). 
+
 $A$: an alphabet.
 $a_1$: an element in the reduced alphabet 1.
 $a_2$: an element in the reduced alphabet 2.
