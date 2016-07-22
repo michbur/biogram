@@ -49,6 +49,20 @@ The alternate solution is to filter the non-informative n-grams. The **biogram**
 
 *degenerate*
 
+### Similarity index
+
+$A$: an alphabet.
+$a_1$: an element in the reduced alphabet 1.
+$a_2$: an element in the reduced alphabet 2.
+
+$$
+S = \sum_{a_1 \in A} \sum_{a_2 \in A, a_2 \neq a_1 } \sum_{enc_1 \in encodings_1} \sum_{enc_2 \in encodings_2} 1_{a_1 \in enc_1 \land a_2 \in enc_2}
+$$
+
+$$
+I_S = \frac{S}{ |A|^2 - |A| }
+$$
+
 ### Encoding distance
 
 The encoding distance, as computed per the *calc_ed* function, is defined as the minimum number of amino acids that have to be moved between subgroups of encoding to make **a** identical to **b** (the order of subgroups in the encoding and amino acids in a group is unimportant).
