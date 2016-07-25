@@ -43,6 +43,8 @@
 #' Machine Learning: ECML 2004, 15th European 
 #' Conference on Machine Learning, Springer, 2004.
 #' @seealso 
+#' \code{\link{binarize}} - binarizes input data.
+#' 
 #' \code{\link{calc_criterion}} - computes selected criterion.
 #' 
 #' \code{\link{distr_crit}} - distribution of criterion used in QuiPT.
@@ -62,6 +64,22 @@
 #'                           tar_feat3[, 2]))
 #' summary(test_res)
 #' cut(test_res)
+#' 
+#' # real data example
+#' # we will analyze only a subsample of a dataset to make analysis quicker
+#' ids <- c(1L:100, 701L:800)
+#' deg_seqs <- degenerate(human_cleave[ids, 1L:9], 
+#'                        list(`a` = c(1, 6, 8, 10, 11, 18), 
+#'                             `b` = c(2, 5, 13, 14, 16, 17, 19, 20), 
+#'                             `c` = c(3, 4, 7, 9, 12, 15)))
+#' 
+#' # positioned n-grams example
+#' bigrams_pos <- count_ngrams(deg_seqs, 2, letters[1L:3], pos = TRUE)
+#' test_features(human_cleave[ids, 10], bigrams_pos)
+#' 
+#' # unpositioned n-grams example, binarization required
+#' bigrams_notpos <- count_ngrams(deg_seqs, 2, letters[1L:3], pos = TRUE)
+#' test_features(human_cleave[ids, 10], binarize(bigrams_notpos))
 test_features <- function(target, features, criterion = "ig", adjust = "BH", 
                           threshold = 1, quick = TRUE, times = 1e5) {
   
@@ -86,7 +104,7 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
   
   apply(features, 2, function(feature) {
     if (!all(feature %in% c(0,1)) ) {
-      stop("'features' are not {0,1}-valued matrix.")
+      stop("'features' are not {0,1}-valued matrix. Consider using binarize().")
     }
   })
   
