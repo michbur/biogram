@@ -1,5 +1,5 @@
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/biogram)](http://cran.r-project.org/package=biogram)
-[![Downloads](http://cranlogs.r-pkg.org/badges/biogram)](http://cran.rstudio.com/package=biogram)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/biogram)](https://cran.r-project.org/package=biogram)
+[![Downloads](http://cranlogs.r-pkg.org/badges/biogram)](https://cran.r-project.org/package=biogram)
 [![Build Status](https://api.travis-ci.org/michbur/biogram.png)](https://travis-ci.org/michbur/biogram)
 [![codecov.io](https://codecov.io/github/michbur/biogram/coverage.svg?branch=master)](https://codecov.io/github/michbur/biogram?branch=master) 
 
@@ -15,7 +15,7 @@ biogram uses Quick Permutation Test (QuiPT) for fast feature filtering.
 Installation
 ------------
 
-biogram is available [on CRAN](http://cran.r-project.org/package=biogram), so installation is as simple as:
+biogram is available [on CRAN](https://cran.r-project.org/package=biogram), so installation is as simple as:
 
 ```
 install.packages("biogram")
@@ -38,4 +38,4 @@ citation("biogram")
 ```
 
 or use:
-Michal Burdukiewicz, Piotr Sobczyk and Chris Lauber (2016). biogram: N-Gram Analysis of Biological Sequences. R package version 1.3. http://CRAN.R-project.org/package=biogram
+Michal Burdukiewicz, Piotr Sobczyk and Chris Lauber (2016). biogram: N-Gram Analysis of Biological Sequences. R package version 1.3. https://cran.r-project.org/package=biogram

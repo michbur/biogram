@@ -3,17 +3,22 @@ citHeader("To cite biogram in publications, please use:")
 if(!exists("meta") || is.null(meta)) meta <- packageDescription("biogram") 
 year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date) 
 vers <- paste("R package version", meta$Version)
+title <- paste0(meta[["Package"]], ": ", tolower(meta[["Title"]]))
+url <- paste0("https://cran.r-project.org/package=", meta[["Package"]])
 
 citEntry(entry = "Manual",
   author = "Michal Burdukiewicz and Piotr Sobczyk and Chris Lauber",
-  title = "biogram: analysis of biological sequences using n-grams",
+  title = title,
   year = year, 
   note = vers,
-  url = "http://CRAN.R-project.org/package=biogram",
-  textVersion = paste("Burdukiewicz M, Sobczyk P and Lauber C (", 
+  url = "https://CRAN.R-project.org/package=biogram",
+  textVersion = paste0("Burdukiewicz M, Sobczyk P and Lauber C (", 
            year, 
-           "). biogram: analysis of biological sequences using n-grams. ", 
+           "). ", 
+           title,
+           ". ",
            vers, 
-           ". http://CRAN.R-project.org/package=biogram",
-           ".", sep="")
+           ". ", 
+           url,
+           ".")
 )
