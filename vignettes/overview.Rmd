@@ -94,7 +94,7 @@ b <- list(`1` = c("f", "r", "w", "y"),
 kable(group2df(b), caption = "Encoding B")
 ```
 
-The encoding distance between both groups is `r calc_ed(a, b)`.  
+The encoding distance between both groups is `r calc_ed(a, b, measure = "pi")`.  
 
 ```{r, echo = FALSE, message = FALSE, results='asis'}
 data(aaprop)
@@ -175,11 +175,11 @@ b <- list(`1` = c("f", "r", "w", "y"),
           `3` = c("a", "d", "e", "g", "h", "k", "m", "n", "p", "q", "s"))
 
 # calculate encoding distance
-calc_ed(a = a, b = b)
+calc_ed(a = a, b = b, measure = "pi")
 
 # get properties from aaprop dataset and calculate normalized encoding distance
 data(aaprop)
-calc_ed(a = a, b = b, prop = aaprop[c(22, 211), ])
+calc_ed(a = a, b = b, measure = "pi", prop = aaprop[c(22, 211), ])
 ```
 
 ### Quick Permutation Test (QuiPT)

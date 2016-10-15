@@ -30,9 +30,10 @@
 #' calc_si(enc1, enc3)
 
 calc_si <- function(a, b) {
-  if(!validate_encoding(a, unlist(b)))
-    stop("Encodings ('a' and 'b') must contain the same elements.")
-  
+  calc_ed(a, b, measure = "si", prop = NULL)
+}
+
+calc_si_hidden <- function(a, b) {
   # similarity matrix
   comp <- encoding2matrix(a) == encoding2matrix(b)
   diag(comp) <- 0
