@@ -1,7 +1,7 @@
 Package: biogram
 Type: Package
 Title: N-Gram Analysis of Biological Sequences
-Version: 1.4
+Version: 1.5
 LazyData: true
 Date: 2017-01-5
 Authors@R: c(
