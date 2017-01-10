@@ -76,3 +76,35 @@ ed1_gen<-function(enc){
   ed1_encodings[-1]
   
 }
+
+get_1ed <- function(enc) {
+  len_enc <- length(enc)
+  new_encs <- unlist(unlist(lapply(1L:len_enc, function(single_group_id) {
+    single_group <- enc[[single_group_id]]
+    len_group <- length(single_group)
+    potential_groups <- 1L:(len_enc + 1)
+    
+    lapply(1L:len_group, function(single_unigram_id) {
+      # new encoding with removed single element and added empty group
+      new_enc <- c(list(single_group[-single_unigram_id]),
+                   enc[-single_group_id],
+                   list(c())) 
+      lapply(potential_groups[-single_group_id], function(destiny_group_id) {
+        new_enc[[destiny_group_id]] <- c(single_group[single_unigram_id], new_enc[[destiny_group_id]])
+        tmp <- new_enc[lengths(new_enc) != 0]
+        # if(is.na(tmp[[1]]))
+        #   browser()
+        tmp
+      })
+    })
+  }), recursive = FALSE), recursive = FALSE)
+  
+  only_unique <- unique(unlist(lapply(new_encs, function(single_enc) {
+    pasted_enc <- sort(unlist(lapply(single_enc, function(single_group)
+      paste0(sort(single_group), collapse = "")
+    )))
+    paste0(pasted_enc[order(nchar(pasted_enc))], collapse = "_")
+  })))
+  
+  lapply(strsplit(only_unique, "_"), strsplit, split = "")
+}
