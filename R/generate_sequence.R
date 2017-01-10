@@ -108,7 +108,6 @@ generate_unigrams <- function(unigram_list,
 #' generate_single_region(alph, 10, rules1, 0.9)
 generate_single_region <- function(alphabet, reg_len, prop_ranges, rigor) {
   
-  unigrams <- colnames(alphabet)
   min_range <- sapply(prop_ranges, function(i) i[1])
   max_range <- sapply(prop_ranges, function(i) i[2])
   
