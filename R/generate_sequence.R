@@ -8,9 +8,9 @@
 #' @export
 #' @examples 
 #' generate_single_unigram(list(P1 = c(0, 0.5), 
-#' P2 = c(0.2, 0.4),
-#' P3 = c(0.5, 1),
-#' P4 = c(0, 0)))
+#'                              P2 = c(0.2, 0.4),
+#'                              P3 = c(0.5, 1),
+#'                              P4 = c(0, 0)))
 #' 
 generate_single_unigram <- function(unigram_ranges) {
   unigram_props <- lapply(unigram_ranges, function(i) {
@@ -78,7 +78,11 @@ generate_unigrams <- function(unigram_list,
 #' and rows to particular properties.
 #' @param reg_len the number of unigrams inside the region.
 #' @param prop_ranges required intervals of properties of unigrams in the region. 
-#' See Detailes.
+#' See Details.
+#' @param rigor a \code{numeric} value between 0 and 1 defining how stricly 
+#' unigrams are kept within \code{prop_ranges}. If 1, only unigrams within 
+#' \code{prop_ranges} are inside the region. if 0.9, there is 10% chance that 
+#' unigrams that are not in the \code{prop_ranges} will be inside the region.
 #' @export
 #' @examples 
 #' props1 <- list(P1 = c(0, 0.5), 
@@ -101,20 +105,26 @@ generate_unigrams <- function(unigram_list,
 #'                P3 = c(0, 0.5),
 #'                P4 = c(1, 1))
 #' 
-#' generate_single_region(alph, 10, rules1)
-generate_single_region <- function(alphabet, reg_len, prop_ranges) {
+#' generate_single_region(alph, 10, rules1, 0.9)
+generate_single_region <- function(alphabet, reg_len, prop_ranges, rigor) {
   
   unigrams <- colnames(alphabet)
   min_range <- sapply(prop_ranges, function(i) i[1])
   max_range <- sapply(prop_ranges, function(i) i[2])
   
-  unigrams <- names(which(apply(alphabet >= min_range & alphabet <= max_range, 2, all)))
+  regionality <- apply(alphabet >= min_range & alphabet <= max_range, 2, all)
+  regional_unigrams <- names(which(regionality))
+  nonregional_unigrams <- names(which(!regionality))
   
-  region <- c()
-  for(i in 1L:reg_len) {
-    region[i] <- sample(unigrams, 1)
-  }
+  rigorous_id <- runif(reg_len)
+  region <- rep(NA, reg_len)
+  region[rigorous_id <= rigor] <- sample(regional_unigrams, 
+                                         size = sum(rigorous_id <= rigor), 
+                                         replace = TRUE)
+  
+  region[rigorous_id > rigor] <- sample(nonregional_unigrams, 
+                                        size = sum(rigorous_id > rigor), 
+                                        replace = TRUE)
   
   region
 }
-

@@ -15,9 +15,9 @@ Generate a single unigram based on the given properties.
 }
 \examples{
 generate_single_unigram(list(P1 = c(0, 0.5), 
-P2 = c(0.2, 0.4),
-P3 = c(0.5, 1),
-P4 = c(0, 0)))
+                             P2 = c(0.2, 0.4),
+                             P3 = c(0.5, 1),
+                             P4 = c(0, 0)))
 
 }
 \seealso{
