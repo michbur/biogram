@@ -7,11 +7,11 @@
 generate_single_unigram(unigram_ranges)
 }
 \arguments{
-\item{unigram_ranges}{list of ranges which contain the property. If named, names 
-are preserved.}
+\item{unigram_ranges}{list of ranges containing respective properties. If named, 
+names are preserved.}
 }
 \description{
-Generate a single unigram based on the given properties.
+Assign randomly generated properties to a single unigram.
 }
 \examples{
 generate_single_unigram(list(P1 = c(0, 0.5), 

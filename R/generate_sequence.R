@@ -1,8 +1,8 @@
 #' Generate single unigram 
 #'
-#' Generate a single unigram based on the given properties.
-#' @param unigram_ranges list of ranges which contain the property. If named, names 
-#' are preserved.
+#' Assign randomly generated properties to a single unigram.
+#' @param unigram_ranges list of ranges containing respective properties. If named, 
+#' names are preserved.
 #' @seealso \code{generate_single_unigram} is a helper function for 
 #' \code{\link{generate_unigrams}}.
 #' @export
