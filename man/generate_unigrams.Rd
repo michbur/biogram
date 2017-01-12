@@ -19,9 +19,11 @@ overwrite any existing names.}
 Generates an alphabet of unigrams based on given list of properties.
 }
 \details{
-Unigram parameters are represented as a list of ranges which contain 
-the property. All list of ranges should have the same length, which is an 
-equivalent of describing each unigram using the same properties.
+Unigram parameters are represented as a list of intervals, where 
+each interval corresponds to a different property. The function generate 
+unigrams randomly choosing values of properties from given intervals 
+using uniform distribution. All lists of ranges should have the same length, 
+which equils to describing each unigram using the same properties.
 }
 \examples{
 props1 <- list(P1 = c(0, 0.5), 

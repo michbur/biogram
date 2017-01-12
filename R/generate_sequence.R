@@ -29,9 +29,11 @@ generate_single_unigram <- function(unigram_ranges) {
 #' overwrite any existing unigram names.
 #' @param prop_names names of properties. If not \code{NULL}, will 
 #' overwrite any existing names.
-#' @details Unigram parameters are represented as a list of ranges which contain 
-#' the property. All list of ranges should have the same length, which is an 
-#' equivalent of describing each unigram using the same properties. 
+#' @details Unigram parameters are represented as a list of intervals, where 
+#' each interval corresponds to a different property. The function generate 
+#' unigrams randomly choosing values of properties from given intervals 
+#' using uniform distribution. All lists of ranges should have the same length, 
+#' which equils to describing each unigram using the same properties. 
 #' @export
 #' @examples 
 #' props1 <- list(P1 = c(0, 0.5), 
