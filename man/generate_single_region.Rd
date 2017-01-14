@@ -4,7 +4,7 @@
 \alias{generate_single_region}
 \title{Generate single region}
 \usage{
-generate_single_region(alphabet, reg_len, prop_ranges, rigor)
+generate_single_region(alphabet, reg_len, prop_ranges, exactness)
 }
 \arguments{
 \item{alphabet}{the unigram alphabet. Columns are equivalent to unigrams 
@@ -15,14 +15,14 @@ and rows to particular properties.}
 \item{prop_ranges}{required intervals of properties of unigrams in the region. 
 See Details.}
 
-\item{rigor}{a \code{numeric} value between 0 and 1 defining how stricly 
+\item{exactness}{a \code{numeric} value between 0 and 1 defining how stricly 
 unigrams are kept within \code{prop_ranges}. If 1, only unigrams within 
 \code{prop_ranges} are inside the region. if 0.9, there is 10% chance that 
 unigrams that are not in the \code{prop_ranges} will be inside the region.}
 }
 \description{
-Generate a region of a specified length from a given alphabet of unigrams 
-considering provided set of rules.
+Generate a region using an alphabet of unigrams and considering provided 
+set of rules.
 }
 \examples{
 props1 <- list(P1 = c(0, 0.5), 
@@ -37,7 +37,7 @@ props2 <- list(P1 = c(0.5, 1),
 
 
 alph <- generate_unigrams(c(replicate(8, props1, simplify = FALSE),
-                          replicate(12, props2, simplify = FALSE)),
+                            replicate(12, props2, simplify = FALSE)),
                           unigram_names = letters[1L:20])
 
 rules1 <- list(P1 = c(0.5, 1), 

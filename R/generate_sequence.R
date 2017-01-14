@@ -74,14 +74,14 @@ generate_unigrams <- function(unigram_list,
 
 #' Generate single region 
 #'
-#' Generate a region of a specified length from a given alphabet of unigrams 
-#' considering provided set of rules.
+#' Generate a region using an alphabet of unigrams and considering provided 
+#' set of rules.
 #' @param alphabet the unigram alphabet. Columns are equivalent to unigrams 
 #' and rows to particular properties.
 #' @param reg_len the number of unigrams inside the region.
 #' @param prop_ranges required intervals of properties of unigrams in the region. 
 #' See Details.
-#' @param rigor a \code{numeric} value between 0 and 1 defining how stricly 
+#' @param exactness a \code{numeric} value between 0 and 1 defining how stricly 
 #' unigrams are kept within \code{prop_ranges}. If 1, only unigrams within 
 #' \code{prop_ranges} are inside the region. if 0.9, there is 10% chance that 
 #' unigrams that are not in the \code{prop_ranges} will be inside the region.
@@ -99,7 +99,7 @@ generate_unigrams <- function(unigram_list,
 #' 
 #' 
 #' alph <- generate_unigrams(c(replicate(8, props1, simplify = FALSE),
-#'                           replicate(12, props2, simplify = FALSE)),
+#'                             replicate(12, props2, simplify = FALSE)),
 #'                           unigram_names = letters[1L:20])
 #' 
 #' rules1 <- list(P1 = c(0.5, 1), 
@@ -108,7 +108,7 @@ generate_unigrams <- function(unigram_list,
 #'                P4 = c(1, 1))
 #' 
 #' generate_single_region(alph, 10, rules1, 0.9)
-generate_single_region <- function(alphabet, reg_len, prop_ranges, rigor) {
+generate_single_region <- function(alphabet, reg_len, prop_ranges, exactness) {
   
   min_range <- sapply(prop_ranges, function(i) i[1])
   max_range <- sapply(prop_ranges, function(i) i[2])
@@ -119,13 +119,29 @@ generate_single_region <- function(alphabet, reg_len, prop_ranges, rigor) {
   
   rigorous_id <- runif(reg_len)
   region <- rep(NA, reg_len)
-  region[rigorous_id <= rigor] <- sample(regional_unigrams, 
-                                         size = sum(rigorous_id <= rigor), 
+  region[rigorous_id <= exactness] <- sample(regional_unigrams, 
+                                         size = sum(rigorous_id <= exactness), 
                                          replace = TRUE)
   
-  region[rigorous_id > rigor] <- sample(nonregional_unigrams, 
-                                        size = sum(rigorous_id > rigor), 
+  region[rigorous_id > exactness] <- sample(nonregional_unigrams, 
+                                        size = sum(rigorous_id > exactness), 
                                         replace = TRUE)
   
   region
+}
+
+
+#' Generate sequence
+#'
+#' Generate a sequences using an alphabet of unigrams and set of rules.
+#' @param alphabet the unigram alphabet. Columns are equivalent to unigrams 
+#' and rows to particular properties.
+#' @param regions a list of rules describing regions.
+generate_sequence <- function(alphabet, regions) {
+  reg_list <- lapply(regions, function(single_region) {
+    generate_single_region(alphabet, 
+                           reg_len = single_region[["len"]],
+                           prop_ranges = single_region[["prop"]],
+                           exactness = single_region[["exactness"]])
+  })
 }
