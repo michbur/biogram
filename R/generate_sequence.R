@@ -145,3 +145,4 @@ generate_sequence <- function(alphabet, regions) {
                            exactness = single_region[["exactness"]])
   })
 }
+
