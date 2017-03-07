@@ -1,7 +1,33 @@
+#' Generating encodings with distance equal to 1
+#' 
 #' Generates a list of encodings whose distances from a given encoding are equal to 1.
 #' 
+#' @param enc encoding for which all encodings in distance equal to 1 are searched for.
 #' 
-#' @param enc encoding for which all encodings in distance equal to 1 are seached for.
+#' @return a list of encodings.
+#' 
+#' @details 
+#' We assume that the distance between two encodings is equal to 1 if only one element is assigned 
+#' to different groups in these two encodings.
+#' 
+#' The main function to generate the encodings is \code{ed1_gen}. It goes through every single element
+#' of the list of a given encoding, taking it from the group it originally belonged to and putting it into
+#' another group (an existing one or a newly created empty one), thus creating a new encoding 
+#' with the distance 1 to the original one. The functions \code{change_2_groups}, \code{add_new_group} 
+#' and \code{remove_group} are technical functions which make the changes in the assignments of the elements 
+#' to the groups. 
+#' 
+#' @examples
+#' \code{aa1} is an encoding in form of a list:
+#' aa1 = list(`1` = c("g", "a", "p", "v", "m", "l", "i"), 
+#'         `2` = c("k", "h"),
+#'         `3` = c("d", "e"), 
+#'         `4` = c("f", "r", "w", "y", "s", "t", "c", "n", "q"))
+#' To generate the list of encodings whose distances from \code{aa1} are equal to 1,
+#' we put \code{aa1} as the argument of the function \code{ed1_gen}:
+#' aa1_dist1_encodings = ed1_gen(aa1)
+#' 
+
 
 
 change_2_groups<-function(enc,i,j,l){
