@@ -72,15 +72,7 @@ degenerate <- function(seq, element_groups) {
 #' l2n(sample_seq, "prot")
 
 l2n <- function(seq, seq_type) {
-  if (!(seq_type %in% c("prot", "dna", "rna")))
-    stop("The value of 'what' must be: 'dna', 'rna' or 'prot'.")
-  elements_list <- switch(seq_type,
-                          rna = c("a", "c", "g", "u"),
-                          dna = c("a", "c", "g", "t"),
-                          prot = c("a", "c", "d", "e", "f", 
-                                   "g", "h",  "i", "k", "l", 
-                                   "m", "n", "p", "q", "r", 
-                                   "s", "t", "v", "w", "y"))
+  elements_list <- return_elements(seq_type)
   names(elements_list) <- 1L:length(elements_list)
   seq <- tolower(seq)
   deg_seq <- as.numeric(degenerate(seq, elements_list))
@@ -108,16 +100,21 @@ l2n <- function(seq, seq_type) {
 #' n2l(sample_seq, "prot")
 
 n2l <- function(seq, seq_type) {
-  if (!(seq_type %in% c("prot", "dna", "rna")))
-    stop("The value of 'what' must be: 'dna', 'rna' or 'prot'.")
-  names_list <- switch(seq_type,
-                          rna = c("a", "c", "g", "u"),
-                          dna = c("a", "c", "g", "t"),
-                          prot = c("a", "c", "d", "e", "f", 
-                                   "g", "h",  "i", "k", "l", 
-                                   "m", "n", "p", "q", "r", 
-                                   "s", "t", "v", "w", "y"))
+  names_list <- return_elements(seq_type)
   elements_list <- 1L:length(names_list)
   names(elements_list) <- names_list
   degenerate(seq, elements_list)
+}
+
+# internal functions returning elements for a specific sequence type: aa, dna, rna
+return_elements <- function(seq_type) {
+  if (!(seq_type %in% c("prot", "dna", "rna")))
+    stop("The value of 'what' must be: 'dna', 'rna' or 'prot'.")
+  switch(seq_type,
+         rna = c("a", "c", "g", "u"),
+         dna = c("a", "c", "g", "t"),
+         prot = c("a", "c", "d", "e", "f", 
+                  "g", "h",  "i", "k", "l", 
+                  "m", "n", "p", "q", "r", 
+                  "s", "t", "v", "w", "y"))
 }
