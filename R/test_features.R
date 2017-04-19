@@ -165,6 +165,10 @@ calc_occurences <- function(target, features) {
   occ <- apply(features, 2, function(i)
     fast_crosstable(target_b, len_target, pos_target, i))[c(1, 3), ]/
     c(pos_target, len_target - pos_target)
+  # apply may return a vector instead of an array
+  if(!is.matrix(occ))
+    occ <- matrix(occ, ncol = 1)
+  
   rownames(occ) <- c("pos", "neg")
   occ
 }
