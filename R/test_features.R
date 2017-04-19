@@ -150,11 +150,17 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
   if(!is.null(adjust))
     p_vals <- p.adjust(p_vals, method = adjust)
   
+  occ <- if(length(p_vals) > 0) {
+    calc_occurences(target, features)
+  } else {
+    NULL
+  }
+  
   create_feature_test(p_value = p_vals, 
                       criterion = valid_criterion[["nice_name"]],
                       adjust = adjust,
                       times = ifelse(quick, NA, times),
-                      occ = calc_occurences(target, features))
+                      occ = occ)
 }
 
 #calculates occurences of features in target+ and target- groups
