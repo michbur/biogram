@@ -18,10 +18,12 @@ See \code{\link{calc_criterion}} for the list of avaible criteria.}
 An object of class \code{\link{criterion_distribution}}.
 }
 \description{
-Computes criterion distribution for feature, target under null hypothesis
+Computes criterion distribution under null hypothesis for all contingency 
+tables possible for a feature and a target.
 }
 \details{
-both \code{target} and \code{feature} vectors may contain only 0 and 1.
+both \code{target} and \code{feature} vectors may contain only 0 
+and 1.
 }
 \examples{
 target_feature <- create_feature_target(10, 375, 15, 600) 

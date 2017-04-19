@@ -1,13 +1,15 @@
 #' Compute criterion distribution 
 #' 
-#' Computes criterion distribution for feature, target under null hypothesis
+#' Computes criterion distribution under null hypothesis for all contingency 
+#' tables possible for a feature and a target.
 #' 
 #' @param target \{0,1\}-valued target vector. See Details.
 #' @param feature \{0,1\}-valued feature vector. See Details.
 #' @param criterion criterion used for calculations of distribution. 
 #' See \code{\link{calc_criterion}} for the list of avaible criteria.
 #' @export
-#' @details both \code{target} and \code{feature} vectors may contain only 0 and 1.
+#' @details both \code{target} and \code{feature} vectors may contain only 0 
+#' and 1.
 #' @return An object of class \code{\link{criterion_distribution}}.
 #' @seealso \code{\link{calc_criterion}}.
 #' @keywords distribution
@@ -37,6 +39,7 @@ distr_crit <- function(target, feature, criterion = "ig") {
   p <- non_zero_target/n
   q <- non_zero_feat/n
   
+  # min_iter and max_iter limit the function to possible contingence matrices
   max_iter <- min(non_zero_target, non_zero_feat)
   min_iter <- max(0, non_zero_target + non_zero_feat - n)
   cross_tab <- fast_crosstable(as.bit(target), length(target), sum(target), feature)
