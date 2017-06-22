@@ -22,4 +22,3 @@ ngrams2df(c("2_1.1.2_0.0", "3_1.1.2_0.0", "3_2.2.2_0.0", "2_1.1_0"))
 \seealso{
 Decode n-grams: \code{\link{decode_ngrams}}.
 }
-

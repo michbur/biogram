@@ -39,4 +39,3 @@ calc_cs(feat, as.bit(tar), 100, sum(tar))
 
 \code{\link[stats]{chisq.test}} - Pearson's chi-squared test for count data.
 }
-

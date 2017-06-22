@@ -21,6 +21,7 @@ p-values.
   \item{occ}{frequency of features splitted in subset based on the value of target.}
 }
 }
+
 \seealso{
 Methods: 
 \itemize{
@@ -30,4 +31,3 @@ Methods:
 \item \code{\link{summary.feature_test}}
 }
 }
-

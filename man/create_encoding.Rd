@@ -36,4 +36,3 @@ encoding2df(enc1)
 \code{\link{validate_encoding}}: validate a structure of an encoding.
 }
 \keyword{hclust}
-

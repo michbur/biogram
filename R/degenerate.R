@@ -135,7 +135,9 @@ full2simple <- function(x) {
 #' Convert encoding from simple to full format
 #'
 #' Converts an encoding from the simple format to the full format.
-#' @param x encoding.
+#' @param x encoding (see Details).
+#' @details The encoding should be named. Each name should correspond to a different
+#' amino acid or nucleotide.
 #' @export
 #' @examples 
 #' aa1 = structure(c("1", "4", "3", "3", "4", "1", "2", "1", "2", "1", 
@@ -146,6 +148,8 @@ full2simple <- function(x) {
 #' simple2full(aa1)
 #' 
 simple2full <- function(x) {
+  if(is.null(names(x)))
+    stop("'x' must be named.")
   single_enc <- x
   gr <- unique(sort(single_enc))
   res <- lapply(gr, function(i)

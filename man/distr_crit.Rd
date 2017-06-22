@@ -33,4 +33,3 @@ distr_crit(target = target_feature[,1], feature = target_feature[,2])
 \code{\link{calc_criterion}}.
 }
 \keyword{distribution}
-

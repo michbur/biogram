@@ -43,4 +43,3 @@ validate_encoding(enc2, 1L:4)
 \code{\link{encoding2df}}: converts an encoding to a data frame.
 }
 \keyword{manip}
-

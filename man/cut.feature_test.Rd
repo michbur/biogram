@@ -31,4 +31,3 @@ Categorizes results of \code{\link{test_features}} function into groups based on
 significance.
 }
 \keyword{manip}
-

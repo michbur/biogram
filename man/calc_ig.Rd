@@ -45,4 +45,3 @@ calc_ig(feat, as.bit(tar), 100, sum(tar))
 Cover TM, Thomas JA \emph{Elements of Information Theory, 2nd Edition}
 Wiley, 2006.
 }
-

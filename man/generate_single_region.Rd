@@ -47,4 +47,3 @@ rules1 <- list(P1 = c(0.5, 1),
 
 generate_single_region(alph, 10, rules1, 0.9)
 }
-

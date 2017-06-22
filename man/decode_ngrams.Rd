@@ -26,4 +26,3 @@ Validate n-gram structure: \code{\link{is_ngram}}.
 
 Inverse function: \code{\link{code_ngrams}}.
 }
-

@@ -24,4 +24,3 @@ generate_single_unigram(list(P1 = c(0, 0.5),
 \code{generate_single_unigram} is a helper function for 
 \code{\link{generate_unigrams}}.
 }
-

@@ -16,4 +16,3 @@ a \code{matrix} or \code{\link[slam]{simple_triplet_matrix}}
 \description{
 Binarizes a matrix.
 }
-

@@ -41,4 +41,3 @@ feat <- sample(0L:1, 100, replace = TRUE)
 library(bit) # used to code vector as bit
 fast_crosstable(as.bit(tar), length(tar), sum(tar),  feat)
 }
-

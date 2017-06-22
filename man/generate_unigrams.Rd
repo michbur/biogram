@@ -42,4 +42,3 @@ alph <- generate_unigrams(c(replicate(8, props1, simplify = FALSE),
                           unigram_names = letters[1L:20])
                           
 }
-

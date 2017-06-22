@@ -28,4 +28,3 @@ gap_ngrams(c("1.1.2_0.1", "1.1.2_0.0", "2.2.2_0.0"))
 \seealso{
 Reverse function: \code{\link{add_1grams}}.
 }
-

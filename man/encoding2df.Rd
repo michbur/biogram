@@ -33,4 +33,3 @@ create_encoding(aaprop[1L:5, ], 5)
 \code{\link{validate_encoding}}: validate a structure of an encoding.
 }
 \keyword{manip}
-

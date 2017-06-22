@@ -53,4 +53,3 @@ count_multigrams(c(3, 1), seq = seqs, u = 1L:4)
 count_multigrams(c(4, 4, 4), list(c(2, 0, 1), c(2, 1, 0), c(0, 1, 2)), 
                  seqs, 1L:4, pos = TRUE)
 }
-

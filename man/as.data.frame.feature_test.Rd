@@ -27,4 +27,3 @@ occurrences in positive and negative sequences.
 Coerce results of \code{\link{test_features}} function to a 
 \code{\link[base]{data.frame}}.
 }
-

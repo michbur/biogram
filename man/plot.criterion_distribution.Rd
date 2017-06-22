@@ -46,4 +46,3 @@ p
 ggplot_distr(example_result)
 
 }
-

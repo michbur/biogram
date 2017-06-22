@@ -55,4 +55,3 @@ bigrams <- construct_ngrams(human_cleave[c(1L:100, 801L:900), "tar"], deg_seqs, 
 \seealso{
 Feature filtering method: \code{\link{test_features}}.
 }
-

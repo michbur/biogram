@@ -55,4 +55,3 @@ calc_ed(aa1, aa1, measure = "pi")
 \code{\link{encoding2df}}: converts an encoding to a data frame.
 \code{\link{validate_encoding}}: validate a structure of an encoding.
 }
-

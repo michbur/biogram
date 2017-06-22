@@ -35,4 +35,3 @@ tab <- table_ngrams(seq = rbind(seqs_pos, seqs_neg),
 print(tab)
 # easily plot the results using ggplot2
 }
-

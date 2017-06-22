@@ -22,7 +22,7 @@ unigrams are kept within \code{prop_ranges}. If 1, only unigrams within
 unigrams that are not in the \code{prop_ranges} will be inside the region.}
 }
 }
+
 \seealso{
 \code{\link{generate_sequence}}
 }
-

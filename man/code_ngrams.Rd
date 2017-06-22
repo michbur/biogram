@@ -22,4 +22,3 @@ code_ngrams(c("aaa_b", "d__aa", "abd"))
 \seealso{
 Inverse function: \code{\link{decode_ngrams}}.
 }
-

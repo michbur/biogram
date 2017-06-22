@@ -38,4 +38,3 @@ letters to numbers.
 \code{\link{calc_ed}} to calculate distance between encodings.
 }
 \keyword{manip}
-

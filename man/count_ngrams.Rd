@@ -83,4 +83,3 @@ Count n-grams for multiple values of n: \code{\link{count_multigrams}}.
 
 Count only specified n-grams: \code{\link{count_specified}}.
 }
-

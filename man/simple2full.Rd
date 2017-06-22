@@ -7,10 +7,14 @@
 simple2full(x)
 }
 \arguments{
-\item{x}{encoding.}
+\item{x}{encoding (see Details).}
 }
 \description{
 Converts an encoding from the simple format to the full format.
+}
+\details{
+The encoding should be named. Each name should correspond to a different
+amino acid or nucleotide.
 }
 \examples{
 aa1 = structure(c("1", "4", "3", "3", "4", "1", "2", "1", "2", "1", 
@@ -21,4 +25,3 @@ aa1 = structure(c("1", "4", "3", "3", "4", "1", "2", "1", "2", "1",
 simple2full(aa1)
 
 }
-

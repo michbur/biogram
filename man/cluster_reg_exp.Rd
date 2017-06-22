@@ -36,4 +36,3 @@ data(human_cleave)
 results <- cluster_reg_exp(human_cleave[1L:10, 1L:4])
 }
 }
-

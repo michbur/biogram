@@ -17,4 +17,3 @@ nothing.
 \description{
 Prints results of \code{\link{test_features}} function.
 }
-

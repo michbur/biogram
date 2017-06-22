@@ -35,4 +35,3 @@ count_specified(seqs, ngrams = c("2_4.2_0", "2_1.4_0", "3_1.3_0",
 \seealso{
 Count all possible n-grams: \code{\link{count_ngrams}}.
 }
-

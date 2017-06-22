@@ -43,4 +43,3 @@ of Mathematical Statistics 22 (1):79-86, 1951.
 \code{\link{test_features}}.
 Kullback-Leibler divergence is calculated using \code{\link[entropy]{KL.plugin}}.
 }
-

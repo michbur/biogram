@@ -34,4 +34,3 @@ add_1grams("a.a_1", c("a", "b", "c"), 4)
 \seealso{
 Reverse function: \code{\link{gap_ngrams}}.
 }
-

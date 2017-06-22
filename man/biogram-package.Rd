@@ -2,8 +2,8 @@
 % Please edit documentation in R/biogram.R
 \docType{package}
 \name{biogram-package}
-\alias{biogram}
 \alias{biogram-package}
+\alias{biogram}
 \title{biogram - analysis of biological sequences using n-grams}
 \description{
 \code{biogram} package is a toolbox for the analysis of
@@ -53,6 +53,7 @@ objects as the aggregations of amino acids are not easily comparable. We introdu
 encoding distance, a measure defining the distance between encodings. It can be computed 
 using the \code{\link{calc_ed}} function.
 }
+
 \examples{
 # use data set from package
 data(human_cleave)
@@ -95,4 +96,3 @@ cut(test2)
 \author{
 Michal Burdukiewicz, Piotr Sobczyk, Chris Lauber
 }
-

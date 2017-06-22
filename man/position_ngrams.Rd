@@ -35,4 +35,3 @@ Transform n-gram name to human-friendly form: \code{\link{decode_ngrams}}.
 
 Validate n-gram structure: \code{\link{is_ngram}}.
 }
-

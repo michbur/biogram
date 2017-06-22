@@ -24,4 +24,3 @@ aa1 = list(`1` = c("g", "a", "p", "v", "m", "l", "i"),
 write_encoding(aa1)
 
 }
-

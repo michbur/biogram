@@ -20,4 +20,3 @@ aa1 = list(`1` = c("g", "a", "p", "v", "m", "l", "i"),
 full2simple(aa1)
 
 }
-

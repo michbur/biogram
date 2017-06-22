@@ -40,4 +40,3 @@ create_ngrams(2, 1L:20, 9)
 # paste0 adds information about distance at the end of n-gram
 paste0(create_ngrams(2, 1L:4, 8), "_0")
 }
-

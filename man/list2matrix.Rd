@@ -27,4 +27,3 @@ list2matrix(list(s1 = c("c", "g", "g", "t"),
                  s3 = c("a", "a", "t")))
 }
 \keyword{manip}
-

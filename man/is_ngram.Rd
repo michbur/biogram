@@ -20,4 +20,3 @@ convention of \code{biogram} package.
 print(is_ngram("1_1.1.1_0.0"))
 print(is_ngram("not_ngram"))
 }
-

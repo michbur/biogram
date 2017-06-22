@@ -50,4 +50,3 @@ of Amino Acid Similarity. J Mol Evol 77, 159-169.
 \seealso{
 \code{\link{calc_ed}}: calculate the encoding distance between two encodings.
 }
-

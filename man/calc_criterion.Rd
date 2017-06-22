@@ -47,4 +47,3 @@ calc_criterion(tar, feats, calc_kl)
 \seealso{
 \code{\link{test_features}}.
 }
-

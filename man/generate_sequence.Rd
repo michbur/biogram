@@ -15,4 +15,3 @@ and rows to particular properties.}
 \description{
 Generate a sequences using an alphabet of unigrams and set of rules.
 }
-

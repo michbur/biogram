@@ -914,4 +914,3 @@ residue-residue contacts and their application in contact prediction.
 20(11):2497
 }
 \keyword{datasets}
-

@@ -27,4 +27,3 @@ l2n(sample_seq, "prot")
 Inverse function: \code{\link{n2l}}.
 }
 \keyword{manip}
-
