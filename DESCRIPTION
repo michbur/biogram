@@ -7,6 +7,7 @@ Date: 2017-01-5
 Authors@R: c(
     person("Michal", "Burdukiewicz",
     email = "michalburdukiewicz@gmail.com",
+    comment = c(ORCID = "0000-0001-8926-582X"),
     role = c("cre", "aut")),
     person("Piotr", "Sobczyk",
     role = "aut"),
