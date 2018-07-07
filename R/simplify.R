@@ -11,8 +11,7 @@
 #' @keywords manip
 #' @return A list.
 #' @export
-#' @examples
-#' simplify()
+
 
 simplify_alph <- function(target, seqs, n_generations = 100, n_alph = 200, alph_len = 6) {
   
