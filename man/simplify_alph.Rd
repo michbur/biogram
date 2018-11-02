@@ -23,7 +23,4 @@ A list.
 'Degenerates' amino acid or nucleic sequence by aggregating 
 elements to bigger groups.
 }
-\examples{
-simplify()
-}
 \keyword{manip}

@@ -4,8 +4,8 @@
 \alias{cut.feature_test}
 \title{Categorize tested features}
 \usage{
-\method{cut}{feature_test}(x, split = "significances", breaks = c(0, 1e-04,
-  0.01, 0.05, 1), ...)
+\method{cut}{feature_test}(x, split = "significances", breaks = c(0,
+  1e-04, 0.01, 0.05, 1), ...)
 }
 \arguments{
 \item{x}{an object of class \code{\link{feature_test}}.}
