@@ -7,7 +7,7 @@ r:
   - devel
 
 r_github_packages:
-  - jimhester/covr
+  - r-lib/covr
 
 before_install:
   - export DISPLAY=:99.0
