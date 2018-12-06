@@ -25,3 +25,22 @@ read_fasta <- function(file) {
   
   seq_list
 }
+
+
+#' Write FASTA files
+#'
+#' A lightweight tool to read nucleic or amino-acid sequences from a file 
+#' in FASTA format.
+#' 
+#' @param seq a list of sequences.
+#' @param file the name of the output file.
+#' @param nchar the number of characters per line.
+#' @export
+#' @seealso 
+#' \code{\link[seqinr]{write.fasta}}: heavier function for writing FASTA files.
+write_fasta <- function(seq, file, nchar = 80) {
+  char_vec <- unlist(lapply(1L:length(seq), function(ith_id) 
+    c(paste0(">", names(seq[ith_id])), 
+      lapply(split(seq[[ith_id]], floor(seq_along(seq[[ith_id]])/nchar)), paste0, collapse = ""))))
+  writeLines(text = char_vec, con = file)
+}
