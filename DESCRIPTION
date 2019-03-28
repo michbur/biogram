@@ -12,6 +12,8 @@ Authors@R: c(
     person("Piotr", "Sobczyk",
     role = "aut"),
     person("Chris", "Lauber",
+    role = "aut"),
+    person("Dominik", "Rafacz",
     role = "aut"))
 Description: Tools for extraction and analysis of various
     n-grams (k-mers) derived from biological sequences (proteins
