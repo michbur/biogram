@@ -24,7 +24,7 @@
 #' }
 NULL
 
-create_feature_test <- function(p_value, criterion, adjust, times, occ) {
+create_feature_test <- function(p_value, crit_value, criterion, adjust, times, occ) {
   if (!(is.numeric(p_value) && is.vector(p_value)))
     stop("p_values must be numeric")
   
@@ -32,8 +32,14 @@ create_feature_test <- function(p_value, criterion, adjust, times, occ) {
   if(is.null(names(p_value)) & length(p_value) > 0)
     names(p_value) <- paste0("feature", 1L:length(p_value))
   
-  res <- p_value
-  attributes(res) <- list(names = names(p_value),
+  res <- list()
+  
+  res[["p_value"]] <- p_value
+  res[["crit"]] <- crit_value
+  attributes(res[["p_value"]]) <- list(names = names(p_value))
+  attributes(res[["crit"]]) <- list(names = names(p_value))
+  
+  attributes(res) <- list(names = c("p_value", "crit"),
                           criterion = criterion,
                           adjust = adjust,
                           times = times,
