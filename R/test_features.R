@@ -118,7 +118,7 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
   features <- features[, feature_size > threshold & feature_size < 
                          (nrow(features) - threshold), drop = FALSE]
   
-  p_vals_and_crit <- if(quick) {
+  p_vals <- if(quick) {
     
     # compute distribution once
     feature_size <- unique(feature_size)
@@ -131,20 +131,18 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
     })
     
     names(dists) <- feature_size
-
+    
     apply(features, 2, function(feature) {
       feature <- as.matrix(feature, ncol = 1)
       estm <- crit_function(target, feature)
       dist <- dists[[paste(sum(feature))]]
-      c(crit = estm, pval = unname(1 - dist[which.max(dist[, "criterion"] >= estm - 1e-15), "cdf"]))
+      1 - dist[which.max(dist[, "criterion"] >= estm - 1e-15), "cdf"]
     })
   } else {
     # slow version
     rowMeans(crit_function(target, features) <= 
                replicate(times, crit_function(sample(target), features)))
   }
-  
-  p_vals <- p_vals_and_crit["pval", ]
   
   # p-values sometimes are a tiny little bit bigger than 1
   p_vals[p_vals > 1] <- 1
@@ -159,7 +157,6 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
   }
   
   create_feature_test(p_value = p_vals, 
-                      crit_value = p_vals_and_crit["crit", ],
                       criterion = valid_criterion[["nice_name"]],
                       adjust = adjust,
                       times = ifelse(quick, NA, times),
