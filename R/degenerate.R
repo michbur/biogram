@@ -48,7 +48,7 @@ degenerate <- function(seq, element_groups) {
     tmp_seq[tmp_seq %in% element_groups[[i]]] <- names(element_groups)[i]
   }
   
-  if(class(seq) == "matrix")
+  if(is.matrix(seq))
     dim(tmp_seq) <- dim(seq)
   
   tmp_seq

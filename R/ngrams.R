@@ -53,7 +53,7 @@ seq2ngrams <- function(seq, n, u, d = 0, pos = FALSE) {
     stop("'seq' must be vector or matrix.")
   
   # if sequence is not a matrix (single sequence), convert it to matrix with 1 row
-  if (class(seq) != "matrix")
+  if (!(is.matrix(seq)))
     seq <- matrix(seq, nrow = 1)
   
   # length of sequence

@@ -68,7 +68,7 @@ count_ngrams <- function(seq, n, u, d = 0, pos = FALSE,
                          scale = FALSE, threshold = 0) {
   
   # if sequence is not a matrix (single sequence), convert it to matrix with 1 row
-  if (class(seq) != "matrix")
+  if ("matrix" %in% class(seq))
     seq <- matrix(seq, nrow = 1)
   
   if (scale && pos)
