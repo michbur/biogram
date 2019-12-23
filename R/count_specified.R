@@ -63,7 +63,7 @@ count_specified <- function(seq, ngrams) {
       count_single_unpositioned_ngram(single_ngram, seq, len_seq), rep(0, nrow(seq)))
   }
   
-  if(class(res) == "numeric") {
+  if("numeric" %in% class(res)) {
     res <- matrix(res, ncol = 1)
   }
   # name columns
