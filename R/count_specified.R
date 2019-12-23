@@ -27,7 +27,7 @@ count_specified <- function(seq, ngrams) {
     stop("Improper n-grams: ", paste(names(which(!validated_ngram)), collapse = ", "))
   
   # if sequence is not a matrix (single sequence), convert it to matrix with 1 row
-  if (is.matrix(seq))
+  if (!is.matrix(seq))
     seq <- matrix(seq, nrow = 1)
   
   # length of sequence
