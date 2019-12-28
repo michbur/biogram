@@ -4,8 +4,15 @@
 \alias{count_multigrams}
 \title{Detect and count multiple n-grams in sequences}
 \usage{
-count_multigrams(ns, ds = rep(0, length(ns)), seq, u, pos = FALSE,
-  scale = FALSE, threshold = 0)
+count_multigrams(
+  ns,
+  ds = rep(0, length(ns)),
+  seq,
+  u,
+  pos = FALSE,
+  scale = FALSE,
+  threshold = 0
+)
 }
 \arguments{
 \item{ns}{\code{numeric} vector of n-grams' sizes. See Details.}

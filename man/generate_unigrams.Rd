@@ -4,8 +4,7 @@
 \alias{generate_unigrams}
 \title{Generate unigrams}
 \usage{
-generate_unigrams(unigram_list, unigram_names = NULL,
-  prop_names = NULL)
+generate_unigrams(unigram_list, unigram_names = NULL, prop_names = NULL)
 }
 \arguments{
 \item{unigram_list}{a list of unigrams' parameters. See Details.}
