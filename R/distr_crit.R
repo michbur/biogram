@@ -7,8 +7,8 @@
 #' @param feature \{0,1\}-valued feature vector. See Details.
 #' @param criterion criterion used for calculations of distribution. 
 #' See \code{\link{calc_criterion}} for the list of avaible criteria.
-#' @param iter_limit limit the number of calculated contingence matrices,
-#' default NULL
+#' @param iter_limit limit the number of calculated contingence matrices. If
+#' \code{NULL}, computes all possible contingence matrices.
 #' @export
 #' @details both \code{target} and \code{feature} vectors may contain only 0 
 #' and 1.

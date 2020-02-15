@@ -14,10 +14,10 @@ Authors@R: c(
     person("Chris", "Lauber",
     role = "aut"),
     person("Dominik", "Rafacz",
-    role = "aut")),
+    role = "aut"),
     person("Katarzyna", "Sidorczuk",
     role = "ctb",
-    comment = c(ORCID = "0000-0001-6576-9054"))
+    comment = c(ORCID = "0000-0001-6576-9054")))
 Description: Tools for extraction and analysis of various
     n-grams (k-mers) derived from biological sequences (proteins
     or nucleic acids). Contains QuiPT (quick permutation test) for fast

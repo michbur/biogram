@@ -4,7 +4,7 @@
 \alias{distr_crit}
 \title{Compute criterion distribution}
 \usage{
-distr_crit(target, feature, criterion = "ig")
+distr_crit(target, feature, criterion = "ig", iter_limit = NULL)
 }
 \arguments{
 \item{target}{\{0,1\}-valued target vector. See Details.}
@@ -13,6 +13,9 @@ distr_crit(target, feature, criterion = "ig")
 
 \item{criterion}{criterion used for calculations of distribution. 
 See \code{\link{calc_criterion}} for the list of avaible criteria.}
+
+\item{iter_limit}{limit the number of calculated contingence matrices. If
+\code{NULL}, computes all possible contingence matrices.}
 }
 \value{
 An object of class \code{\link{criterion_distribution}}.
