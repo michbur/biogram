@@ -19,7 +19,7 @@
 #' target_feature <- create_feature_target(10, 375, 15, 600) 
 #' distr_crit(target = target_feature[,1], feature = target_feature[,2])
 
-distr_crit <- function(target, feature, criterion = "ig", iter_limit = NULL) {
+distr_crit <- function(target, feature, criterion = "ig", iter_limit = 200) {
   n <- length(target)
   if (length(feature) != n) {
     stop("Target and feature have different lengths.")
