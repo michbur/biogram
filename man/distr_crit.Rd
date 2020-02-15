@@ -4,7 +4,7 @@
 \alias{distr_crit}
 \title{Compute criterion distribution}
 \usage{
-distr_crit(target, feature, criterion = "ig", iter_limit = NULL)
+distr_crit(target, feature, criterion = "ig", iter_limit = 200)
 }
 \arguments{
 \item{target}{\{0,1\}-valued target vector. See Details.}
