@@ -7,6 +7,8 @@
 #' @param feature \{0,1\}-valued feature vector. See Details.
 #' @param criterion criterion used for calculations of distribution. 
 #' See \code{\link{calc_criterion}} for the list of avaible criteria.
+#' @param iter_limit limit the number of calculated contingence matrices,
+#' default NULL
 #' @export
 #' @details both \code{target} and \code{feature} vectors may contain only 0 
 #' and 1.
@@ -17,7 +19,7 @@
 #' target_feature <- create_feature_target(10, 375, 15, 600) 
 #' distr_crit(target = target_feature[,1], feature = target_feature[,2])
 
-distr_crit <- function(target, feature, criterion = "ig") {
+distr_crit <- function(target, feature, criterion = "ig", iter_limit = NULL) {
   n <- length(target)
   if (length(feature) != n) {
     stop("Target and feature have different lengths.")
@@ -46,10 +48,13 @@ distr_crit <- function(target, feature, criterion = "ig") {
   # if(cross_tab[3L] == 0)
   #   max_iter <- sort(cross_tab)[2]
 
+  if (is.null(iter_limit))
+    iter_limit <- max_iter
+  
   # values of criterion for different contingency tables
   crit_range <- max_iter - min_iter
-  possible_crit_values <- if(crit_range > 200) {
-    round(seq(from = min_iter, to = max_iter, length.out = 200), 0)
+  possible_crit_values <- if(crit_range > iter_limit) {
+    round(seq(from = min_iter, to = max_iter, length.out = iter_limit), 0)
   } else {
     min_iter:max_iter
   }
