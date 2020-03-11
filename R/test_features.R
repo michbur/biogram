@@ -102,11 +102,6 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
     stop("'target' and 'features' have different number of cases.")
   }
   
-  apply(features, 2, function(feature) {
-    if (!all(feature %in% c(0,1)) ) {
-      stop("'features' are not {0,1}-valued matrix. Consider using binarize().")
-    }
-  })
   
   feature_size <- if ("simple_triplet_matrix" %in% class(features)) {
     slam::col_sums(features)
@@ -126,7 +121,7 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
     dists <- lapply(feature_size, function(i){
       t <- create_feature_target(i, abs(sum(target) - i), 0, 
                                  abs(length(target) - sum(target))) 
-
+      
       distr_crit(t[, 1], t[, 2], criterion = criterion)
     })
     
