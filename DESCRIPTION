@@ -3,7 +3,7 @@ Type: Package
 Title: N-Gram Analysis of Biological Sequences
 Version: 1.6.3
 LazyData: true
-Date: 2020-03-12
+Date: 2020-03-22
 Authors@R: c(
     person("Michal", "Burdukiewicz",
     email = "michalburdukiewicz@gmail.com",
