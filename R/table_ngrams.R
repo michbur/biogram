@@ -49,7 +49,7 @@ table_ngrams <- function(seq, ngrams, target) {
   res <- t(vapply(ngrams, function(ngram_name) 
     vapply(val_tar, function(target_value) sum(all_ngrams[target == target_value, ngram_name]), 0), c(0, 0)))
   
-  res_df <- data.frame(rownames(res), res)
+  res_df <- data.frame(rownames(res), res, stringsAsFactors = TRUE)
   rownames(res_df) <- NULL
   colnames(res_df) <- c("ngram", paste0("target", val_tar))
   

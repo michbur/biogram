@@ -71,7 +71,7 @@ count_total <- function(seq, n, d) {
   seq_lengths <- ncol(seq) - apply(seq, 1, function(i) sum(is.na(i)))
   
   # unique lengths of sequences
-  tablel <- data.frame(table(seq_lengths))
+  tablel <- data.frame(table(seq_lengths), stringsAsFactors = TRUE)
   
   # calculate number of posible n-grams for each unique length
   tablel <- cbind(tablel, totals = vapply(as.numeric(as.character(tablel[["seq_lengths"]])), function(single_length) {

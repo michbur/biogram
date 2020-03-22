@@ -43,14 +43,14 @@ position_ngrams <- function(ngrams, df = FALSE, unigrams_output = TRUE) {
       if(nchar(single_ngram[[2]]) > 1)
         for (next_unigram in as.numeric(dists))
           uni_positions[length(uni_positions) + 1] <- next_unigram + uni_positions[length(uni_positions)] + 1
-      data.frame(ngrams = paste0(unigrams, "_0"), pos = uni_positions)
+      data.frame(ngrams = paste0(unigrams, "_0"), pos = uni_positions, stringsAsFactors = TRUE)
     }))
   } else {
     pos_table <- do.call(rbind, lapply(sngrams, function(single_ngram) {
       ngram_name <- paste0(single_ngram[2], "_", single_ngram[3])
       # positions of unigrams
       ngram_position <- as.numeric(single_ngram[[1]])
-      data.frame(ngrams = ngram_name, pos = ngram_position)
+      data.frame(ngrams = ngram_name, pos = ngram_position, stringsAsFactors = TRUE)
     }))
   }
 
