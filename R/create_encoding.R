@@ -54,7 +54,7 @@ create_encoding <- function(prop, len) {
 
 encoding2df <- function(x, sort = FALSE) {
   res <- do.call(rbind, lapply(1L:length(x), function(gr_id) {
-    data.frame(gr_id = gr_id, element = x[[gr_id]], stringsAsFactors = FALSE)
+    data.frame(gr_id = gr_id, element = x[[gr_id]], stringsAsFactors = TRUE)
   }))
   
   if(sort)
