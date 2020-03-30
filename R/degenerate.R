@@ -54,6 +54,32 @@ degenerate <- function(seq, element_groups) {
   tmp_seq
 }
 
+#' @export
+degenerate_ngrams <- function(x, element_groups, binarize = FALSE) {
+  
+  deg_ngrams <- colnames(x) %>% 
+    decode_ngrams %>% 
+    strsplit("") %>% 
+    lapply(degenerate, element_groups = c(element_groups, c("_" = "_"))) %>% 
+    lapply(paste0, collapse = "") %>% 
+    lapply(code_ngrams)
+  
+  res <- do.call(cbind, lapply(unique(deg_ngrams), function(ith_ngram) {
+    row_sums(x[, ith_ngram == deg_ngrams, drop = FALSE])
+  }))
+  
+  colnames(res) <- unique(deg_ngrams)
+  
+  if(binarize)
+    res <- binarize(res)
+  
+  if(inherits(x, "simple_triplet_matrix"))
+    res <- as.simple_triplet_matrix(res)
+  
+  res
+}
+
+
 #' Convert letters to numbers
 #'
 #' Converts biological sequence from letter to number notation.
