@@ -54,8 +54,23 @@ degenerate <- function(seq, element_groups) {
   tmp_seq
 }
 
+#' Degenerate n-grams
+#' 
+#' 'Degenerates' n-grams by aggregating amino acid or nucleotide elements
+#' into bigger groups. 
+#' @param x object containing n-grams.
+#' @param element_groups encoding of elements: list of groups to which elements 
+#' of n-grams should be aggregated. Must have unique names.
+#' @param binarize logical indicating if n-grams should be binarized
+#' @return A \code{character} vector or matrix (if input is a matrix) 
+#' containing degenerated n-grams.
 #' @export
+
 degenerate_ngrams <- function(x, element_groups, binarize = FALSE) {
+  
+  if ('_' %in% unlist(element_groups)) {
+    stop("'element_groups' cannot contain '_'.")
+  }
   
   deg_ngrams <- colnames(x) %>% 
     decode_ngrams %>% 
