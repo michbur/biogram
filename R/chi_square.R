@@ -15,10 +15,9 @@
 #' @export
 #' @examples tar <- sample(0L:1, 100, replace = TRUE)
 #' feat <- sample(0L:1, 100, replace = TRUE)
-#' library(bit) # used to code vector as bit
-#' calc_cs(feat, as.bit(tar), 100, sum(tar))
-calc_cs <- function(feature, target_b, len_target, pos_target) {
-  crosstable_m <- matrix(fast_crosstable(target_b, len_target, pos_target, feature), nrow = 2, byrow = TRUE)
+#' calc_cs(feat, tar, 100, sum(tar))
+calc_cs <- function(feature, target, len_target, pos_target) {
+  crosstable_m <- matrix(fast_crosstable(target, len_target, pos_target, feature), nrow = 2, byrow = TRUE)
 
   # copied from original chisq.test in stats package
   sr <- rowSums(crosstable_m)

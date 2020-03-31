@@ -23,7 +23,7 @@ create_feature_target <- function(n11, n01, n10, n00){
   cbind(tar, feat)
 }
 
-#' Very fast 2d cross-tabulation
+#' 2d cross-tabulation
 #'
 #' Quickly cross-tabulates two binary vectors.
 #'
@@ -35,24 +35,20 @@ create_feature_target <- function(n11, n01, n10, n00){
 #' \item target -, feature+
 #' \item target -, feature-
 #' }
-#' @details Input looks odd, but the function was build to be as fast 
-#' as possible subroutine of \code{\link{calc_ig}}, which works on
+#' @details Input looks odd, but the function was build to be fast
+#' subroutine of \code{\link{calc_ig}}, which works on
 #' many features but only one target.
 #' @note Binary vector means a numeric vector with 0 or 1.
 #' @export
 #' @examples tar <- sample(0L:1, 100, replace = TRUE)
 #' feat <- sample(0L:1, 100, replace = TRUE)
-#' library(bit) # used to code vector as bit
-#' fast_crosstable(as.bit(tar), length(tar), sum(tar),  feat)
+#' fast_crosstable(tar, length(tar), sum(tar),  feat)
 
-fast_crosstable <- function(target_b, len_target, pos_target, feature) {
-  # no input tests - every if clause slows a little bit
-  feature_b = as.bit(feature) # from bit library, faster than any other type
-  
+fast_crosstable <- function(target, len_target, pos_target, feature) {
   # target positive and feature positive
-  n_tar_f <- sum(feature_b & target_b) # simple boolean algebra to speed it more
+  n_tar_f <- sum(feature == 1 & target == 1) 
   # feature positive
-  pos_f <- sum(feature_b)
+  pos_f <- sum(feature)
   
   c(n_tar_f, # tar +, feature +
     pos_target - n_tar_f, # tar +, feature -

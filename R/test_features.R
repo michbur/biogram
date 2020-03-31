@@ -160,7 +160,7 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
 
 #calculates occurences of features in target+ and target- groups
 calc_occurences <- function(target, features) {
-  target_b <- as.bit(target)
+  target_b <- target
   len_target <- length(target)
   pos_target <- sum(target)
   occ <- apply(features, 2, function(i)

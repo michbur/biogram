@@ -30,7 +30,6 @@ Depends:
     R (>= 3.0.0),
     slam
 Imports:
-    bit,
     combinat,
     entropy,
     partitions
@@ -41,4 +40,4 @@ Suggests:
 NeedsCompilation: no
 Repository: CRAN
 Encoding: UTF-8
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0

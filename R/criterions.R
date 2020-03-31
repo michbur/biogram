@@ -63,10 +63,10 @@ check_criterion <- function(input_criterion, criterion_names = c("ig", "kl", "cs
 #' # Kullback-Leibler divergence
 #' calc_criterion(tar, feats, calc_kl)
 calc_criterion <- function(target, features, criterion_function) {
-  tar_bit <- as.bit(target)
+  tar <- target
   l_tar <- length(target)
   pos_tar <- sum(target)
   
   apply(features, 2, function(single_feature) 
-    criterion_function(single_feature, tar_bit, l_tar, pos_tar))
+    criterion_function(single_feature, tar, l_tar, pos_tar))
 }

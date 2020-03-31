@@ -44,7 +44,7 @@ distr_crit <- function(target, feature, criterion = "ig", iter_limit = 200) {
   # min_iter and max_iter limit the function to possible contingence matrices
   max_iter <- min(non_zero_target, non_zero_feat)
   min_iter <- max(0, non_zero_target + non_zero_feat - n)
-  cross_tab <- fast_crosstable(as.bit(target), length(target), sum(target), feature)
+  cross_tab <- fast_crosstable(target, length(target), sum(target), feature)
   # if(cross_tab[3L] == 0)
   #   max_iter <- sort(cross_tab)[2]
 

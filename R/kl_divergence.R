@@ -18,10 +18,9 @@
 #' of Mathematical Statistics 22 (1):79-86, 1951.
 #' @examples tar <- sample(0L:1, 100, replace = TRUE)
 #' feat <- sample(0L:1, 100, replace = TRUE)
-#' library(bit) # used to code vector as bit
-#' calc_kl(feat, as.bit(tar), 100, sum(tar))
-calc_kl <- function(feature, target_b, len_target, pos_target) {
-  crosstable <- fast_crosstable(target_b, len_target, pos_target, feature)
+#' calc_kl(feat, tar, 100, sum(tar))
+calc_kl <- function(feature, target, len_target, pos_target) {
+  crosstable <- fast_crosstable(target, len_target, pos_target, feature)
   counts_feature <- c(crosstable[2] + crosstable[4], crosstable[1] + crosstable[3])
   
   KL.plugin(crosstable[c(2, 4)]/counts_feature[1], crosstable[c(1, 3)]/counts_feature[2])

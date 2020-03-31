@@ -3,7 +3,7 @@
 #' Computes information gain of single feature and target vector.
 #'
 #' @param feature feature vector.
-#' @param target_b target in bits (as per \code{\link[bit]{as.bit}}).
+#' @param target target.
 #' @param len_target length of the target vector.
 #' @param pos_target number of positive cases in the target vector.
 #' @return A \code{numeric} vector of length 1 representing information gain in nats.
@@ -15,17 +15,16 @@
 #' \eqn{IG = E(S) - E(S|F)}
 #' @note During calculations \eqn{0 \log 0  = 0}. For a justification see References. 
 #' 
-#' The function was designed to be as fast as possible subroutine of 
+#' The function was designed to be afast subroutine of 
 #' \code{\link{calc_criterion}} and might be cumbersome if directly called by a user.
 #' @references Cover TM, Thomas JA \emph{Elements of Information Theory, 2nd Edition}
 #' Wiley, 2006.
 #' @export
 #' @examples tar <- sample(0L:1, 100, replace = TRUE)
 #' feat <- sample(0L:1, 100, replace = TRUE)
-#' library(bit) # used to code vector as bit
-#' calc_ig(feat, as.bit(tar), 100, sum(tar))
-calc_ig <- function(feature, target_b, len_target, pos_target) {
-  crosstable <- fast_crosstable(target_b, len_target, pos_target, feature)
+#' calc_ig(feat, tar, 100, sum(tar))
+calc_ig <- function(feature, target, len_target, pos_target) {
+  crosstable <- fast_crosstable(target, len_target, pos_target, feature)
   counts_feature <- c(crosstable[2] + crosstable[4], crosstable[1] + crosstable[3])
   
   props_tar <- c(len_target - pos_target, pos_target)/len_target
