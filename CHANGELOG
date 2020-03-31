@@ -1,5 +1,6 @@
 Changes from Version 1.4 to 1.5.
 * Prepared the package for R 4.0.0 (stringsAsFactors).
+* Removed dependencies to the orphaned bit package (will be missed!). 
 
 Changes from Version 1.4 to 1.5.
 * Prepared the package for R 4.0.0.
