@@ -72,12 +72,9 @@ degenerate_ngrams <- function(x, element_groups, binarize = FALSE) {
     stop("'element_groups' cannot contain '_'.")
   }
   
-  deg_ngrams <- colnames(x) %>% 
-    decode_ngrams %>% 
-    strsplit("") %>% 
-    lapply(degenerate, element_groups = c(element_groups, c("_" = "_"))) %>% 
-    lapply(paste0, collapse = "") %>% 
-    lapply(code_ngrams)
+  decoded <- strsplit(decode_ngrams(colnames(x)), "")
+  degenerated <- lapply(decoded, degenerate, element_groups = c(element_groups, c("_" = "_")))
+  deg_ngrams <- lapply(lapply(degenerated, paste0, collapse = ""), code_ngrams)
   
   res <- do.call(cbind, lapply(unique(deg_ngrams), function(ith_ngram) {
     row_sums(x[, ith_ngram == deg_ngrams, drop = FALSE])
