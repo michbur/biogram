@@ -4,9 +4,11 @@
 \name{human_cleave}
 \alias{human_cleave}
 \title{Human signal peptides cleavage sites}
-\format{A data frame with 1296 observations on the following 10 variables. Columns from
+\format{
+A data frame with 1296 observations on the following 10 variables. Columns from
 \code{P1} to \code{P9} describes positions in an extracted peptide. \code{tar} is a target vector. It
-has value 1 if a peptide is a cleavage site and 0 if not.}
+has value 1 if a peptide is a cleavage site and 0 if not.
+}
 \source{
 \href{http://www.uniprot.org/}{UniProt}
 }

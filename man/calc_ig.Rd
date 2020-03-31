@@ -4,12 +4,12 @@
 \alias{calc_ig}
 \title{Calculate IG for single feature}
 \usage{
-calc_ig(feature, target_b, len_target, pos_target)
+calc_ig(feature, target, len_target, pos_target)
 }
 \arguments{
 \item{feature}{feature vector.}
 
-\item{target_b}{target in bits (as per \code{\link[bit]{as.bit}}).}
+\item{target}{target.}
 
 \item{len_target}{length of the target vector.}
 
@@ -32,14 +32,13 @@ In biogram package information gain is computed using following relationship:
 \note{
 During calculations \eqn{0 \log 0  = 0}. For a justification see References. 
 
-The function was designed to be as fast as possible subroutine of 
+The function was designed to be afast subroutine of 
 \code{\link{calc_criterion}} and might be cumbersome if directly called by a user.
 }
 \examples{
 tar <- sample(0L:1, 100, replace = TRUE)
 feat <- sample(0L:1, 100, replace = TRUE)
-library(bit) # used to code vector as bit
-calc_ig(feat, as.bit(tar), 100, sum(tar))
+calc_ig(feat, tar, 100, sum(tar))
 }
 \references{
 Cover TM, Thomas JA \emph{Elements of Information Theory, 2nd Edition}

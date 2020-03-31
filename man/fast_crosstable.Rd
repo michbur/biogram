@@ -2,12 +2,12 @@
 % Please edit documentation in R/utilities.R
 \name{fast_crosstable}
 \alias{fast_crosstable}
-\title{Very fast 2d cross-tabulation}
+\title{2d cross-tabulation}
 \usage{
-fast_crosstable(target_b, len_target, pos_target, feature)
+fast_crosstable(target, len_target, pos_target, feature)
 }
 \arguments{
-\item{target_b}{target in bits (as per \code{\link[bit]{as.bit}}).}
+\item{target}{target.}
 
 \item{len_target}{length of the target vector.}
 
@@ -28,8 +28,8 @@ a vector of length four:
 Quickly cross-tabulates two binary vectors.
 }
 \details{
-Input looks odd, but the function was build to be as fast 
-as possible subroutine of \code{\link{calc_ig}}, which works on
+Input looks odd, but the function was build to be fast
+subroutine of \code{\link{calc_ig}}, which works on
 many features but only one target.
 }
 \note{
@@ -38,6 +38,5 @@ Binary vector means a numeric vector with 0 or 1.
 \examples{
 tar <- sample(0L:1, 100, replace = TRUE)
 feat <- sample(0L:1, 100, replace = TRUE)
-library(bit) # used to code vector as bit
-fast_crosstable(as.bit(tar), length(tar), sum(tar),  feat)
+fast_crosstable(tar, length(tar), sum(tar),  feat)
 }

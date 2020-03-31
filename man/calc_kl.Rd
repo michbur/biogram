@@ -4,12 +4,12 @@
 \alias{calc_kl}
 \title{Calculate KL divergence of features}
 \usage{
-calc_kl(feature, target_b, len_target, pos_target)
+calc_kl(feature, target, len_target, pos_target)
 }
 \arguments{
 \item{feature}{feature vector.}
 
-\item{target_b}{target in bits (as per \code{\link[bit]{as.bit}}).}
+\item{target}{target.}
 
 \item{len_target}{length of the target vector.}
 
@@ -32,8 +32,7 @@ The function was designed to be as fast as possible subroutine of
 \examples{
 tar <- sample(0L:1, 100, replace = TRUE)
 feat <- sample(0L:1, 100, replace = TRUE)
-library(bit) # used to code vector as bit
-calc_kl(feat, as.bit(tar), 100, sum(tar))
+calc_kl(feat, tar, 100, sum(tar))
 }
 \references{
 Kullback S, Leibler RA \emph{On information and sufficiency}. Annals
