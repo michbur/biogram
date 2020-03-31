@@ -1,19 +1,19 @@
-# Check chosen criterion
-# 
-# Checks if the criterion is viable or matches it to the list of implemented 
-# criterions.
-# 
-# @param input_criterion \code{character} string, criterion from input.
-# @param criterion_names list of implemented criterions, always in lowercase.
-# @export
-# @return a list of three: 
-# \itemize{
-# \item{criterion name,}
-# \item{its function,}
-# \item{nice name for outputs.}
-# }
-# @seealso
-# Calculate the value of criterion: \code{\link{calc_criterion}}.
+#' Check chosen criterion
+#' 
+#' Checks if the criterion is viable or matches it to the list of implemented
+#' criterions.
+#' 
+#' @param input_criterion \code{character} string, criterion from input.
+#' @param criterion_names list of implemented criterions, always in lowercase.
+#' @export
+#' @return a list of three:
+#' \itemize{
+#' \item{criterion name,}
+#' \item{its function,}
+#' \item{nice name for outputs.}
+#' }
+#' @seealso
+#' Calculate the value of criterion: \code{\link{calc_criterion}}.
 check_criterion <- function(input_criterion, criterion_names = c("ig", "kl", "cs")) {
   # think twice about grep
   valid_name <- criterion_names[grepl(tolower(input_criterion), criterion_names)]
