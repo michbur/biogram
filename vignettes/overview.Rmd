@@ -248,21 +248,29 @@ $$
 
 However we have important restriction that $n_{1,\cdot} = n_{1,1} + n_{1,0}$ and
 $n_{\cdot, 1} = n_{1,1} + n_{0,1}$ are known and fixed as they describe the number 
-of ,,ones" for target and feature respectively.
+of "ones" for target and feature respectively.
 
-This might look very complicated but this restrictions in fact simplifies
+This might look very complicated but this restriction in fact simplifies
 our computation significantly.
 
 Observe that $n_{1,1}$ is from range $[0,min(n_{\cdot, 1}, n_{1, \cdot})]$.
 So we get probability of certain contingency table as conditional distribution,
-as impose restrictions on two parameters $n_{\cdot, 1} $ and $n_{1, \cdot}$
+as impose restrictions on two parameters $n_{\cdot, 1}$ and $n_{1, \cdot}$
 We can compute IG for each possible value of $n_{1,1}$ and finally we get
 distribution of Information Gain under hypothesis that target and feature
 are independent.
 
-Having exact distribution lets us perform permutation test much quicker as we 
-no longer need to perform any replications. Furthermore, by using
-exact test we will get precise values of tails which was not guaranteed with
-random permutations.
+The calculation of distributions is performed by `distr_crit` function.
+To facilitate time-consuming computations when dealing with a very large
+number of features, we introduce a possibility to set the limit of 
+calculated contingence matrices using `iter_limit` parameter. By default, 
+IG is calculated for 200 contingence matrices, therefore we get an 
+approximate distribution of Information Gain. 
+
+Having exact or even approximate (when limiting the number of calculated 
+contingence matrices) distribution lets us perform permutation test much 
+quicker as we no longer need to perform any replications. Furthermore, 
+by using exact test we will get precise values of tails which was not 
+guaranteed with random permutations.
 
 # References
