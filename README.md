@@ -38,4 +38,4 @@ citation("biogram")
 ```
 
 or use:
-Michal Burdukiewicz, Piotr Sobczyk and Chris Lauber (2016). biogram: N-Gram Analysis of Biological Sequences. R package version 1.3. https://cran.r-project.org/package=biogram
+Michal Burdukiewicz, Piotr Sobczyk, Chris Lauber, Dominik Rafacz and Katarzyna Sidorczuk (2020). biogram: N-Gram Analysis of Biological Sequences. R package version 1.6.3. https://cran.r-project.org/package=biogram
