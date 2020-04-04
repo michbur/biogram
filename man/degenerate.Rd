@@ -35,6 +35,8 @@ table(deg_seq)
 \seealso{
 \code{\link{l2n}} to easily convert information stored in biological sequences from 
 letters to numbers.
+\code{\link{degenerate_ngrams}} to degenerate counts of n-grams instead of 
+sequences.
 \code{\link{calc_ed}} to calculate distance between encodings.
 }
 \keyword{manip}

@@ -15,6 +15,8 @@
 #' @export
 #' @seealso \code{\link{l2n}} to easily convert information stored in biological sequences from 
 #' letters to numbers.
+#' \code{\link{degenerate_ngrams}} to degenerate counts of n-grams instead of 
+#' sequences.
 #' \code{\link{calc_ed}} to calculate distance between encodings.
 #' @keywords manip
 #' @examples
@@ -58,12 +60,12 @@ degenerate <- function(seq, element_groups) {
 #' 
 #' 'Degenerates' n-grams by aggregating amino acid or nucleotide elements
 #' into bigger groups. 
-#' @param x object containing n-grams.
+#' @param x a \code{\link[slam]{simple_triplet_matrix}} or matrix of n-grams.
 #' @param element_groups encoding of elements: list of groups to which elements 
 #' of n-grams should be aggregated. Must have unique names.
 #' @param binarize logical indicating if n-grams should be binarized
-#' @return A \code{character} vector or matrix (if input is a matrix) 
-#' containing degenerated n-grams.
+#' @return Depending on the \code{x{}} a \code{\link[slam]{simple_triplet_matrix}} 
+#' or matrix of degenerated n-grams.
 #' @export
 
 degenerate_ngrams <- function(x, element_groups, binarize = FALSE) {
@@ -73,7 +75,8 @@ degenerate_ngrams <- function(x, element_groups, binarize = FALSE) {
   }
   
   decoded <- strsplit(decode_ngrams(colnames(x)), "")
-  degenerated <- lapply(decoded, degenerate, element_groups = c(element_groups, c("_" = "_")))
+  degenerated <- lapply(decoded, degenerate, 
+                        element_groups = c(element_groups, c("_" = "_")))
   deg_ngrams <- lapply(lapply(degenerated, paste0, collapse = ""), code_ngrams)
   
   res <- do.call(cbind, lapply(unique(deg_ngrams), function(ith_ngram) {

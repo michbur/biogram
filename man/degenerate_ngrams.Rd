@@ -7,7 +7,7 @@
 degenerate_ngrams(x, element_groups, binarize = FALSE)
 }
 \arguments{
-\item{x}{object containing n-grams.}
+\item{x}{a \code{\link[slam]{simple_triplet_matrix}} or matrix of n-grams.}
 
 \item{element_groups}{encoding of elements: list of groups to which elements 
 of n-grams should be aggregated. Must have unique names.}
@@ -15,8 +15,8 @@ of n-grams should be aggregated. Must have unique names.}
 \item{binarize}{logical indicating if n-grams should be binarized}
 }
 \value{
-A \code{character} vector or matrix (if input is a matrix) 
-containing degenerated n-grams.
+Depending on the \code{x{}} a \code{\link[slam]{simple_triplet_matrix}} 
+or matrix of degenerated n-grams.
 }
 \description{
 'Degenerates' n-grams by aggregating amino acid or nucleotide elements
