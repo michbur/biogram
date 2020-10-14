@@ -64,7 +64,7 @@ distr_crit <- function(target, feature, criterion = "ig", iter_limit = 200) {
     
     k <- c(i, non_zero_feat - i, non_zero_target - i, 
            n - non_zero_target - non_zero_feat + i)
-    
+
     prob_log <- dmultinom(x = k,
                           size = n,
                           prob = c(p*q, (1-p)*q, p*(1-q), (1-p)*(1-q)),

@@ -75,7 +75,7 @@ count_specified <- function(seq, ngrams) {
 
 count_single_positioned_ngram <- function(single_ngram, seq, len_seq) {
   all_ngram_pos <- do.call(rbind, get_ngrams_ind(len_seq, length(single_ngram[["ngram"]]), single_ngram[["distance"]]))
-  as.numeric(rowSums(seq[, all_ngram_pos[, single_ngram[["position"]]]] == single_ngram[["ngram"]]) == 2)
+  as.numeric(rowSums(seq[, all_ngram_pos[, single_ngram[["position"]], drop = FALSE], drop = FALSE] == single_ngram[["ngram"]]) == 2)
 }
 
 count_single_unpositioned_ngram <- function(single_ngram, seq, len_seq) {
