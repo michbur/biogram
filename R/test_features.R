@@ -36,6 +36,7 @@
 #' Features occuring too often and too rarely are considered not informative and may be 
 #' removed using the threshold parameter.
 #' @export
+#' @importFrom Matrix colSums
 #' @keywords nonparametric
 #' @references 
 #' Radivojac P, Obradovic Z, Dunker AK, Vucetic S, 
@@ -105,6 +106,8 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
   
   feature_size <- if ("simple_triplet_matrix" %in% class(features)) {
     slam::col_sums(features)
+  } else if ("dgCMatrix" %in% class(features)) {
+    Matrix::colSums(features)
   } else {
     colSums(features)
   }

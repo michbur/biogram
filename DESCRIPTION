@@ -32,7 +32,8 @@ Depends:
 Imports:
     combinat,
     entropy,
-    partitions
+    partitions,
+    Matrix
 Suggests:
     ggplot2,
     knitr,
