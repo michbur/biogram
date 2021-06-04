@@ -113,7 +113,7 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
     colSums(features)
   }
   
-  # eliminate non-infomative features
+  # eliminate non-informative features
   features <- features[, feature_size > threshold & feature_size < 
                          (nrow(features) - threshold), drop = FALSE]
   
@@ -131,12 +131,11 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
     
     names(dists) <- feature_size
     
-    apply(features, 2, function(feature) {
-      feature <- as.matrix(feature, ncol = 1)
-      estm <- crit_function(target, feature)
-      dist <- dists[[paste(sum(feature))]]
+    setNames(unlist(lapply(1L:ncol(features), function(ith_feature_id) {
+      estm <- crit_function(target, features[, ith_feature_id, drop = FALSE])
+      dist <- dists[[paste(sum(features[, ith_feature_id, drop = FALSE]))]]
       1 - dist[which.max(dist[, "criterion"] >= estm - 1e-15), "cdf"]
-    })
+    })), names(features))
   } else {
     # slow version
     rowMeans(crit_function(target, features) <= 

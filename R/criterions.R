@@ -67,6 +67,7 @@ calc_criterion <- function(target, features, criterion_function) {
   l_tar <- length(target)
   pos_tar <- sum(target)
   
-  apply(features, 2, function(single_feature) 
-    criterion_function(single_feature, tar, l_tar, pos_tar))
+  unlist(lapply(1L:ncol(features), function(ith_feature_id)
+    criterion_function(features[, ith_feature_id, drop = TRUE], tar, l_tar, pos_tar)))
+  
 }
