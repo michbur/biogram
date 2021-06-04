@@ -47,7 +47,7 @@
 #' @import slam
 #' @importFrom entropy KL.plugin
 #' @importFrom graphics axis legend mtext par plot points  
-#' @importFrom stats dmultinom p.adjust runif
+#' @importFrom stats dmultinom p.adjust runif setNames
 #' @importFrom utils combn setTxtProgressBar txtProgressBar 
 #' @author Michal Burdukiewicz, Piotr Sobczyk, Chris Lauber
 #' @docType package
