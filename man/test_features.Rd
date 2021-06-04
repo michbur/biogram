@@ -11,7 +11,8 @@ test_features(
   adjust = "BH",
   threshold = 1,
   quick = TRUE,
-  times = 1e+05
+  times = 1e+05,
+  occurrences = TRUE
 )
 }
 \arguments{
@@ -35,6 +36,8 @@ test.}
 
 \item{times}{number of times procedure should be repeated. Ignored if \code{quick} is 
 \code{TRUE}.}
+
+\item{occurrences}{\code{logical}, if \code{TRUE} occurrences of n-grams are computed.}
 }
 \value{
 an object of class \code{\link{feature_test}}.

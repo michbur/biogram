@@ -17,6 +17,7 @@
 #' \code{FALSE}, normal permutation test is performed.
 #' @param times number of times procedure should be repeated. Ignored if \code{quick} is 
 #' \code{TRUE}.
+#' @param occurrences \code{logical}, if \code{TRUE} occurrences of n-grams are computed.
 #' 
 #' @details Since the procedure involves multiple testing, it is advisable to use one
 #' of the avaible p-value adjustment methods. Such methods can be used directly by 
@@ -82,7 +83,7 @@
 #' bigrams_notpos <- count_ngrams(deg_seqs, 2, letters[1L:3], pos = TRUE)
 #' test_features(human_cleave[ids, 10], binarize(bigrams_notpos))
 test_features <- function(target, features, criterion = "ig", adjust = "BH", 
-                          threshold = 1, quick = TRUE, times = 1e5) {
+                          threshold = 1, quick = TRUE, times = 1e5, occurrences = TRUE) {
   
   valid_criterion <- check_criterion(criterion)
   
@@ -148,7 +149,7 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
   if(!is.null(adjust))
     p_vals <- p.adjust(p_vals, method = adjust)
   
-  occ <- if(length(p_vals) > 0) {
+  occ <- if(occurrences & length(p_vals) > 0) {
     calc_occurences(target, features)
   } else {
     NULL
@@ -161,7 +162,7 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
                       occ = occ)
 }
 
-#calculates occurences of features in target+ and target- groups
+#calculates occurrences of features in target+ and target- groups
 calc_occurences <- function(target, features) {
   target_b <- target
   len_target <- length(target)
