@@ -37,7 +37,8 @@ Imports:
 Suggests:
     ggplot2,
     knitr,
-    testthat
+    testthat,
+    rmarkdown
 NeedsCompilation: no
 Repository: CRAN
 Encoding: UTF-8
