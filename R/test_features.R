@@ -107,11 +107,14 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
   
   feature_size <- if ("simple_triplet_matrix" %in% class(features)) {
     slam::col_sums(features)
-  } else if ("dgCMatrix" %in% class(features)) {
+  } else {
+    if ("dgCMatrix" %in% class(features)) {
     Matrix::colSums(features)
   } else {
     colSums(features)
+    }
   }
+  
   
   # eliminate non-informative features
   features <- features[, feature_size > threshold & feature_size < 
