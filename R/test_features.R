@@ -105,10 +105,10 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
   }
   
   
-  feature_size <- if ("simple_triplet_matrix" %in% class(features)) {
+  feature_size <- if (inherits(features, "simple_triplet_matrix")) {
     slam::col_sums(features)
   } else {
-    if ("dgCMatrix" %in% class(features)) {
+    if (inherits(features, "dgCMatrix")) {
     Matrix::colSums(features)
   } else {
     colSums(features)
