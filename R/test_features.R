@@ -138,7 +138,7 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
       estm <- crit_function(target, features[, ith_feature_id, drop = FALSE])
       dist <- dists[[paste(sum(features[, ith_feature_id, drop = FALSE]))]]
       1 - dist[which.max(dist[, "criterion"] >= estm - 1e-15), "cdf"]
-    })), names(features))
+    })), colNames(features))
   } else {
     # slow version
     rowMeans(crit_function(target, features) <= 
@@ -150,10 +150,6 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
   
   if(!is.null(adjust))
     p_vals <- p.adjust(p_vals, method = adjust)
-
-  names(pvals) <- colnames(features[, feature_size > threshold & feature_size < 
-                         (nrow(features) - threshold), drop = FALSE])
-
   
   occ <- if(occurrences & length(p_vals) > 0) {
     calc_occurences(target, features)
