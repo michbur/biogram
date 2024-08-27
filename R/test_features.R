@@ -38,6 +38,7 @@
 #' removed using the threshold parameter.
 #' @export
 #' @importFrom Matrix colSums
+#' @importFrom pbapply pblapply
 #' @keywords nonparametric
 #' @references 
 #' Radivojac P, Obradovic Z, Dunker AK, Vucetic S, 
@@ -125,7 +126,7 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
     # compute distribution once
     feature_size <- unique(feature_size)
     
-    dists <- lapply(feature_size, function(i){
+    dists <- pblapply(feature_size, function(i){
       t <- create_feature_target(i, abs(sum(target) - i), 0, 
                                  abs(length(target) - sum(target))) 
       
