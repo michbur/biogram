@@ -33,7 +33,8 @@ Imports:
     combinat,
     entropy,
     partitions,
-    Matrix
+    Matrix,
+    pbapply
 Suggests:
     ggplot2,
     knitr,
@@ -42,4 +43,4 @@ Suggests:
 NeedsCompilation: no
 Repository: CRAN
 Encoding: UTF-8
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2

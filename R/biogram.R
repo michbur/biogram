@@ -50,7 +50,6 @@
 #' @importFrom stats dmultinom p.adjust runif setNames
 #' @importFrom utils combn setTxtProgressBar txtProgressBar 
 #' @author Michal Burdukiewicz, Piotr Sobczyk, Chris Lauber
-#' @docType package
 #' @name biogram-package
 #' @aliases biogram
 #' @examples
@@ -91,5 +90,4 @@
 #' # test which of the features of the interest is significant
 #' test2 <- test_features(human_cleave[, "tar"], bigrams)
 #' cut(test2)
-
-NULL
+"_PACKAGE"

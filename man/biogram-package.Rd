@@ -93,6 +93,14 @@ bigrams <- count_specified(deg_seqs, coded)
 test2 <- test_features(human_cleave[, "tar"], bigrams)
 cut(test2)
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/michbur/biogram}
+  \item Report bugs at \url{https://github.com/michbur/biogram/issues}
+}
+
+}
 \author{
 Michal Burdukiewicz, Piotr Sobczyk, Chris Lauber
 }
