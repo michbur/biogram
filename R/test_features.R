@@ -126,7 +126,7 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
     # compute distribution once
     feature_size <- unique(feature_size)
     
-    dists <- pblapply(feature_size, function(i){
+    dists <- lapply(feature_size, function(i){
       t <- create_feature_target(i, abs(sum(target) - i), 0, 
                                  abs(length(target) - sum(target))) 
       
@@ -135,7 +135,7 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
     
     names(dists) <- feature_size
     
-    setNames(unlist(lapply(1L:ncol(features), function(ith_feature_id) {
+    setNames(unlist(pblapply(1L:ncol(features), function(ith_feature_id) {
       estm <- crit_function(target, features[, ith_feature_id, drop = FALSE])
       dist <- dists[[paste(sum(features[, ith_feature_id, drop = FALSE]))]]
       1 - dist[which.max(dist[, "criterion"] >= estm - 1e-15), "cdf"]
