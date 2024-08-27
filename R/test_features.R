@@ -38,7 +38,7 @@
 #' removed using the threshold parameter.
 #' @export
 #' @importFrom Matrix colSums
-#' @importFrom pbapply pblapply
+#' @importFrom parallel mclapply
 #' @keywords nonparametric
 #' @references 
 #' Radivojac P, Obradovic Z, Dunker AK, Vucetic S, 
@@ -135,7 +135,7 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
     
     names(dists) <- feature_size
     
-    setNames(unlist(pblapply(1L:ncol(features), function(ith_feature_id) {
+    setNames(unlist(mclapply(1L:ncol(features), function(ith_feature_id) {
       estm <- crit_function(target, features[, ith_feature_id, drop = FALSE])
       dist <- dists[[paste(sum(features[, ith_feature_id, drop = FALSE]))]]
       1 - dist[which.max(dist[, "criterion"] >= estm - 1e-15), "cdf"]
