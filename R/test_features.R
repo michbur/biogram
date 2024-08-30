@@ -124,16 +124,43 @@ test_features <- function(target, features, criterion = "ig", adjust = "BH",
   p_vals <- if(quick) {
     
     # compute distribution once
-    feature_size <- unique(feature_size)
+    unique_feature_size <- unique(feature_size)
     
-    dists <- lapply(feature_size, function(i){
+    dists <- lapply(unique_feature_size, function(i){
       t <- create_feature_target(i, abs(sum(target) - i), 0, 
                                  abs(length(target) - sum(target))) 
       
       distr_crit(t[, 1], t[, 2], criterion = criterion)
     })
     
-    names(dists) <- feature_size
+    names(dists) <- unique_feature_size
+    
+    all_unique_kmers <- lapply(unique_feature_size[1L:1000], function(ith_feature_size) {
+      names(which(ith_feature_size == feature_size))
+    })
+    
+    subset_features <- sapply(all_unique_kmers, function(i) i [1])
+    features[, c("S", "L.V_3", "Q.F_0"), drop = FALSE]
+    features[, subset_features, drop = FALSE]
+    setdiff(subset_features, colnames(features))
+    
+    which(unique_feature_size[1500] == feature_size)
+    
+    estms <- crit_function(target, features[, subset_features, drop = FALSE]) 
+    considered_dists <- dists[as.character(feature_size[1L:10000])]
+    lapply(1L:10000, function(ith_id)
+      1 - considered_dists[[ith_id]][which.max(considered_dists[, "criterion"] >= estms[ith_id] - 1e-15), "cdf"]
+    )
+    
+    duplicated(feature_size)
+    which(unique_feature_size[1500] == feature_size)
+    
+     
+    # system.time(lapply(1L:10000, function(ith_id)
+    #   1 - considered_dists[[ith_id]][considered_dists[[ith_id]][, "criterion"] >= estms[ith_id] - 1e-15, "cdf"][1]))
+    
+    system.time(lapply(1L:10000, function(ith_id)
+      1 - considered_dists[[ith_id]][which.max(considered_dists[[ith_id]][, "criterion"] >= estms[ith_id] - 1e-15), "cdf"]))
     
     setNames(unlist(mclapply(1L:ncol(features), function(ith_feature_id) {
       estm <- crit_function(target, features[, ith_feature_id, drop = FALSE])
